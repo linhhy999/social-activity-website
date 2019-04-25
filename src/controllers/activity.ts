@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 
 
+export let getAddActivity = (req: Request, res: Response) => {
+    return res.render("admin/posts/add");
+};
+
 export let listOwnActivity = (req: Request, res: Response) => {
     return res.render("admin/posts/list");
 };

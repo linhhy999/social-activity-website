@@ -89,6 +89,7 @@ app.use(
 app.get("/", homeController.index);
 app.get("/admin", homeController.admin);
 app.get("/admin/post/list", activityController.listOwnActivity);
+app.get("/admin/post/add", activityController.getAddActivity);
 
 
 export default app;
