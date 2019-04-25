@@ -21,6 +21,7 @@ const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
+import * as activityController from "./controllers/activity";
 import * as passportConfig from "./config/passport";
 
 // Create Express server
@@ -86,6 +87,8 @@ app.use(
  * Primary app routes.
  */
 app.get("/", homeController.index);
+app.get("/admin", homeController.admin);
+app.get("/admin/post/list", activityController.listOwnActivity);
 
 
 export default app;
