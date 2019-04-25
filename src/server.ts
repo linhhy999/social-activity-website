@@ -13,7 +13,7 @@ app.use(errorHandler());
 
 export const server = app.listen(app.get("port"), () => {
     console.log(
-        "  App is running at https://localhost:%d in %s mode at %s",
+        "  App is running at http://localhost:%d in %s mode at %s",
         app.get("port"),
         app.get("env"),
         new Date()

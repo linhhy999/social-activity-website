@@ -6,7 +6,11 @@ import { Request, Response } from "express";
  * Home page.
  */
 export let index = async (req: Request, res: Response) => {
-    res.render("index", {});
+    res.render("newsfeed", {});
+};
+
+export let admin = async (req: Request, res: Response) => {
+    res.render("admin/index", {});
 };
 
 export let login = async (req: Request, res: Response) => {
