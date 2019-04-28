@@ -43,3 +43,8 @@ export let getComment =  (req: Request, res: Response) => {
 export let getUserActivity = (req: Request, res: Response) => {
     // todo
 };
+
+export let activityDetail = (req: Request, res: Response) => {
+    // todo
+    return res.render("activityDetail",{});
+};

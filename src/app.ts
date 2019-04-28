@@ -28,15 +28,15 @@ import * as passportConfig from "./config/passport";
 const app = express();
 
 // Connect to MongoDB
-const mongoUrl = MONGODB_URI;
-(<any>mongoose).Promise = bluebird;
-// @ts-ignore
-mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true }).then(
-    () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
-).catch((err: any) => {
-    logger.error("MongoDB connection error. Please make sure MongoDB is running. " + err);
-    // process.exit();
-});
+// const mongoUrl = MONGODB_URI;
+// (<any>mongoose).Promise = bluebird;
+// // @ts-ignore
+// mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true }).then(
+//     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
+// ).catch((err: any) => {
+//     logger.error("MongoDB connection error. Please make sure MongoDB is running. " + err);
+//     // process.exit();
+// });
 
 // Express configuration
 app.set("port", APP_PORT);
@@ -50,10 +50,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: SESSION_SECRET,
-    store: new MongoStore({
-        url: mongoUrl,
-        autoReconnect: true
-    })
+   // store: new MongoStore({
+     //   url: mongoUrl,
+       // autoReconnect: true
+    // })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -91,6 +91,7 @@ app.get("/", homeController.index);
 app.get("/admin", homeController.admin);
 app.get("/admin/post/list", activityController.listOwnActivity);
 app.get("/admin/post/add", activityController.getAddActivity);
+app.get("/activity-detail", activityController.activityDetail);
 
 
 export default app;
