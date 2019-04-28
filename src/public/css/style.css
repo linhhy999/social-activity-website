@@ -127,3 +127,33 @@ nav.navbar {
 .testimonial-card .card-title {
     text-align: center;
 }
+
+.btn-rounded {
+    border-radius: 100px;
+}
+
+.input-rounded {
+    border-radius: 100px;
+    padding: 10px;
+    border: 1px solid gray;
+    margin-left: 20px;
+    width: 90%;
+}
+
+ul.comment li.comment-item {
+    list-style: none;
+}
+
+ul.comment li.comment-item i {
+    margin-left: 20px; 
+}
+
+ul.comment li.comment-item .name {
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+ul.comment li.comment-item p {
+    padding-top: 5px;
+    margin-left: 20px;
+}
