@@ -13,15 +13,9 @@ html(lang='en')
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
     body
-        include partials/header
-        
-        .mt-100
-        .container
-            .row
-                .col-lg-3.hidden-sm
-                    include partials/sidebar
-                .col-lg-9.col-sm-12
-                    block content
+        .banner
+            h2.title
+                |   Theo dõi, đắng ký và cập nhật thông tin các hoạt động công tác xã hội một cách nhanh nhất 
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")

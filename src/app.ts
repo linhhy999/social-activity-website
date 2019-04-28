@@ -86,6 +86,7 @@ app.use(
 /**
  * Primary app routes.
  */
+app.get("/intro", homeController.intro);
 app.get("/", homeController.index);
 app.get("/admin", homeController.admin);
 app.get("/admin/post/list", activityController.listOwnActivity);

@@ -5,6 +5,11 @@ import { Request, Response } from "express";
  * GET /
  * Home page.
  */
+
+export let intro = async (req: Request, res: Response) => {
+    res.render("index", {});
+};
+
 export let index = async (req: Request, res: Response) => {
     res.render("newsfeed", {});
 };
