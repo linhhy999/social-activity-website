@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@types/formidable": "^1.0.31",
+    "@types/passport-google-oauth": "^1.0.41",
     "@types/request-promise": "^4.1.42",
     "async": "^2.6.1",
     "bcrypt-nodejs": "0.0.3",
@@ -51,6 +52,7 @@
     "object-to-xml": "^2.0.0",
     "passport": "^0.4.0",
     "passport-custom": "^1.0.5",
+    "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.3",
     "redis": "^2.8.0",

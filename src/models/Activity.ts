@@ -3,7 +3,7 @@ import crypto from "crypto";
 import mongoose from "mongoose";
 import { type } from "os";
 
-export type UserModel = mongoose.Document & {
+export type ActivityModel = mongoose.Document & {
     name: string,
     registerEnd: Date,
     timeStart: Date,
@@ -14,8 +14,8 @@ export type UserModel = mongoose.Document & {
     content: string,
     orgUnit: string,
     hostName: string,
-    image: string,
-    video: string,
+    image: string[],
+    video: string[],
     maxMember: number,
     members: []
     comment: Comment[],
@@ -31,11 +31,11 @@ export type Comment = {
 
 
 
-const userSchema = new mongoose.Schema({
+const activitySchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);
-const User = mongoose.model("User", userSchema);
-export default User;
+const Activity = mongoose.model("Activity", activitySchema);
+export default Activity;

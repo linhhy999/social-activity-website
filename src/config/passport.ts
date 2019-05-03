@@ -1,43 +1,64 @@
 import passport from "passport";
-import passportLocal from "passport-local";
+import passportGoogle from  "passport-google-oauth";
 import _ from "lodash";
-// @ts-ignore
-import passportCustom from "passport-custom";
+
 
 import { Request, Response, NextFunction } from "express";
+import User from "../models/User";
 
-const LocalStrategy = passportLocal.Strategy;
-const CustomStrategy = passportCustom.Strategy;
+const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
-    done(undefined, user.id);
+    done(undefined, user);
 });
 
-passport.deserializeUser((id, done) => {
-    // User.findById(id, (err, user) => {
-    //     done(err, user);
-    // });
+passport.deserializeUser((user: any, done) => {
+    User.findOne({ googleId: user.auth.googleId }, (err, user) => {
+        done(err, user);
+    });
 });
 
-passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-    // User.findOne({ email: email.toLowerCase() }, (err, user: any) => {
-    //     if (err) {
-    //         return done(err);
-    //     }
-    //     if (!user) {
-    //         return done(undefined, false, { message: `Email ${email} not found.` });
-    //     }
-    //     user.comparePassword(password, (err: Error, isMatch: boolean) => {
-    //         if (err) { return done(err); }
-    //         if (isMatch) {
-    //             return done(undefined, user);
-    //         }
-    //         return done(undefined, false, { message: "Invalid email or password." });
-    //     });
-    // });
-}));
+passport.use(new GoogleStrategy({
+    clientID: "790914908087-ei1im9l1nhcbf2qd1gcdqfde3ub9d1c9.apps.googleusercontent.com",
+    clientSecret: "8QEKd0jy5coEI_uNsSwCvRQd",
+    callbackURL: "http://localhost:3000/auth/google/callback"
+}, (accessToken, refreshToken, profile, done) => {
+        if (profile) {
+            if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
+                return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
+            }
+            return done(undefined, {
+                auth: {
+                    googleId: profile.id,
+                    picture: profile.photos[0].value,
+                    displayName: profile.displayName
+                },
+                email: profile.emails[0].value
+            });
+        }
+        return done(new Error("Request to Google Auth error"));
+    }
+));
 
 
+export let isGoogleAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }, (err: Error, user: any) => {
+        if (err) {
+            return res.status(500).json({
+                message: err.message
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                message: "Auth fail."
+            });
+        }
+
+        req.user = user;
+        return next();
+
+    })(req, res, next);
+};
 
 
 /**
@@ -47,7 +68,7 @@ export let isAuthenticated = (req: Request, res: Response, next: NextFunction) =
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect("/login");
+    res.redirect("/intro");
 };
 
   /**
@@ -62,3 +83,5 @@ export let isAuthorized = (req: Request, res: Response, next: NextFunction) => {
         res.redirect(`/auth/${provider}`);
     }
 };
+
+export default passport;

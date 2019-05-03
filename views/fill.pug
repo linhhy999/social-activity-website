@@ -1,0 +1,101 @@
+doctype
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        //- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+        meta(name='description', content='')
+        meta(name='author', content='')
+        title
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
+        link(href="/css/bootstrap.min.css" rel="stylesheet")
+        link(href="/css/mdb.min.css" rel="stylesheet")
+        link(href="/css/style.css" rel="stylesheet")
+    body
+        include partials/header
+        include partials/flash
+        .mt-100
+        .container
+            #modalContactForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
+            // Modal: Contact form
+            .modal-dialog.cascading-modal(role='document')
+              // Content
+              .modal-content
+                // Header
+                .modal-header.primary-color.white-text
+                  h4.title
+                    i.fa.fa-pencil-alt
+                    |  Bạn cần điền một số thông tin sau để tiếp tục
+                // Body
+                .modal-body
+                  form.needs-validation(action="#" method="POST" novalidate)
+                    // Material input name
+                    .md-form.form-sm
+                      input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required)
+                      label(for='materialFormNameModal') Tên của bạn
+                      .valid-feedback
+                        | Looks good!
+                    // Material input email
+                    .md-form.form-sm
+                      input#materialFormEmailModal.form-control.form-control-sm(type='text', name="phone", required)
+                      label(for='materialFormEmailModal') Số điện thoại
+                      .valid-feedback
+                        | Looks good!
+                    // Material input subject
+                    .md-form.form-sm
+                      input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required)
+                      label(for='materialFormMSSVModal') MSSV
+                      .valid-feedback
+                        | Looks good!
+                    // Material input subject
+                    .md-form.form-sm
+                      select.browser-default.custom-select(name="faculty" required="")
+                        option(value="") Khoa
+                        option(value="1") Khoa Điện - Điện tử</option>
+                        option(value="2") Khoa Kỹ thuật Xây dựng</option>
+                        option(value="3") Khoa Cơ khí</option>
+                        option(value="4") Khoa Kỹ thuật Hóa học</option>
+                        option(value="5") Khoa Khoa học và Kỹ thuật Máy tính</option>
+                      </select>
+                      .valid-feedback
+                        | Looks good!
+                      
+                    // Material input subject
+                    .md-form.form-sm
+                      input#materialFormSubjectModal.form-control.form-control-sm(type='number', name="ctxh", required)
+                      label(for='materialFormSubjectModal') Số ngày CTXH hiện tại
+                      .valid-feedback
+                        | Looks good!
+                    // Material textarea message
+                    .text-center.mt-4.mb-2
+                      button.btn.btn-primary
+                        | Xác nhận
+                        i.fa.fa-send.ml-2
+              // /.Content
+            // /Modal: Contact form
+
+        script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
+        script(type="text/javascript" src="/js/popper.min.js")
+        script(type="text/javascript" src="/js/bootstrap.min.js")
+        script(type="text/javascript" src="/js/mdb.min.js")
+        script.
+            (function() {
+              'use strict';
+              window.addEventListener('load', function() {
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.getElementsByClassName('needs-validation');
+              // Loop over them and prevent submission
+              var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+              }, false);
+              });
+              }, false);
+              })();
+        block script
+

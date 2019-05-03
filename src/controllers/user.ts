@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import User from "../models/User";
 
 
 /**
@@ -27,4 +28,41 @@ export let unBlockUser =  (req: Request, res: Response) => {
 
 export let changeRole =  (req: Request, res: Response) => {
     // todo
+};
+
+export let profile = (req: Request, res: Response) => {
+    return res.render("profile",  {
+        user: req.user
+    });
+};
+export let info = (req: Request, res: Response) => {
+    return res.render("fill",  {
+        user: req.user
+    });
+};
+
+export let postInfo = async (req: Request, res: Response) => {
+    req.checkBody("name", "Tên không được để trống").notEmpty();
+    req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
+    req.checkBody("mssv", "MSSV không được để trống").notEmpty();
+    req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
+    req.checkBody("ctxh", "Số ngày công tác xã hội hiện tại không được để trống").notEmpty();
+
+    const errors = req.validationErrors();
+    if (errors) {
+        req.flash("errors", errors);
+        return res.redirect("back");
+    }
+
+    await User.updateOne({"_id": req.user._id}, {
+        $set: {
+            "fullName": req.body.name,
+            "phone": req.body.phone,
+            "code": req.body.mssv,
+            "faculty": req.body.faculty,
+            "numWorkDay": req.body.ctxh
+        }
+    }, {upset: true});
+
+    return res.redirect("/");
 };
