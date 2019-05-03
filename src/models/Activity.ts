@@ -14,8 +14,8 @@ export type UserModel = mongoose.Document & {
     content: string,
     orgUnit: string,
     hostName: string,
-    image: string,
-    video: string,
+    image: string[],
+    video: string[],
     maxMember: number,
     members: []
     comment: Comment[],
