@@ -68,6 +68,7 @@ export let getUserActivity = (req: Request, res: Response) => {
     // todo
 };
 
+<<<<<<< HEAD
 export let activityDetail = async  (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
@@ -115,4 +116,9 @@ export let apply = async (req: Request, res: Response) => {
         console.log(err.message);
         return res.redirect("/");
     }
+=======
+export let activityDetail = (req: Request, res: Response) => {
+    // todo
+    return res.render("activityDetail", {});
+>>>>>>> 696c95193dd5b5ccd65d7e18879944d2bb119646
 };
