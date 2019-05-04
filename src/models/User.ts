@@ -3,6 +3,7 @@ import crypto from "crypto";
 import mongoose from "mongoose";
 
 export type UserModel = mongoose.Document & {
+    auth: any[];
     email: string,
     phone: string,
     code: string,
@@ -33,10 +34,18 @@ export enum Role {
 
 
 const userSchema = new mongoose.Schema({
-
+    auth: [],
+    email: String,
+    phone: String,
+    code: String,
+    role: Number,
+    fullName: String,
+    numWorkDay: Number,
+    faculty: Number,
+    isBlock: Boolean
 }, { timestamps: true });
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<UserModel>("User", userSchema);
 export default User;
