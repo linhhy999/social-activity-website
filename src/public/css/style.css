@@ -128,7 +128,6 @@ nav.navbar {
     text-align: center;
 }
 
-<<<<<<< HEAD
 .btn-rounded {
     border-radius: 100px;
 }
@@ -157,7 +156,8 @@ ul.comment li.comment-item .name {
 ul.comment li.comment-item p {
     padding-top: 5px;
     margin-left: 20px;
-=======
+}
+
 .banner {
     position: relative;
     background-image: url("../img/IMG_1789.JPG");
@@ -186,5 +186,4 @@ ul.comment li.comment-item p {
     color: #ffffff;
     text-shadow: 0px 0px 5px #0d48a1; 
     font-weight: 700;
->>>>>>> login
 }

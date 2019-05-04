@@ -1,6 +1,5 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import User from "../models/User";
-import Activity from "src/models/Activity";
 
 
 /**
@@ -42,7 +41,7 @@ export let info = (req: Request, res: Response) => {
     });
 };
 
-export let postInfo = async (req: Request, res: Response) => {
+export let postInfo = async (req: any, res: any) => {
     req.checkBody("name", "Tên không được để trống").notEmpty();
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("mssv", "MSSV không được để trống").notEmpty();
@@ -68,7 +67,7 @@ export let postInfo = async (req: Request, res: Response) => {
     return res.redirect("/");
 };
 
-export let updateProfile = async (req: Request, res: Response) => {
+export let updateProfile = async (req: any, res: any) => {
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
@@ -94,4 +93,4 @@ export let updateProfile = async (req: Request, res: Response) => {
         console.log(err.message);
         return res.redirect("back");
     }
-}
+};
