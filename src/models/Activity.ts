@@ -17,7 +17,7 @@ export type ActivityModel = mongoose.Document & {
     image: string[],
     video: string[],
     maxMember: number,
-    members: []
+    members: any[]
     comment: Comment[],
     superVisor: []
 };
@@ -52,5 +52,5 @@ const activitySchema = new mongoose.Schema({
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);
-const Activity = mongoose.model("Activity", activitySchema);
+const Activity = mongoose.model<ActivityModel>("Activity", activitySchema);
 export default Activity;
