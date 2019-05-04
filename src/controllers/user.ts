@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User";
+import Activity from "src/models/Activity";
 
 
 /**
@@ -66,3 +67,31 @@ export let postInfo = async (req: Request, res: Response) => {
 
     return res.redirect("/");
 };
+
+export let updateProfile = async (req: Request, res: Response) => {
+    req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
+    req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
+    req.checkBody("name", "Tên không được để trống").notEmpty();
+    req.checkBody("email", "Email không được để trống").notEmpty();
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash("errors", errors);
+        return res.redirect("back");
+    }
+
+    try {
+        await User.updateOne({"_id": req.user._id}, {$set: {
+            "phone": req.body.phone,
+            "faculty": req.body.faculty,
+            "fullName": req.body.name,
+            "email": req.body.email,
+        }}, {upsert: false});
+
+        return res.redirect("back");
+    }
+    catch (err) {
+        console.log(err.message);
+        return res.redirect("back");
+    }
+}

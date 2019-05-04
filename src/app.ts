@@ -98,6 +98,7 @@ app.get("/", Guard.isLoggin, homeController.index);
 app.get("/logout", Guard.isLoggin, homeController.logout);
 app.get("/admin", Guard.isLoggin, homeController.admin);
 app.get("/profile", Guard.isLoggin, UserController.profile);
+app.post("/profile/update", Guard.isLoggin, UserController.updateProfile);
 app.get("/info", Guard.isLoggin, UserController.info);
 app.post("/info", Guard.isLoggin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLoggin, activityController.listOwnActivity);

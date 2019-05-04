@@ -24,24 +24,102 @@ html(lang='en')
                         .avatar.mx-auto.white
                             img.rounded-circle.img-responsive(width="110px" height="110px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" alt="woman avatar")
                         .card-body
-                            h4.card-title
-                                |   Anna Doe
+                            h4.card-title= user.fullName
                             hr
                             .row
-                                .col-sm-4
+                                .col-sm-6
                                     p.grey-text.small MSSV
                                     p.text-primary(style="line-height: 0px;")
-                                        strong.small 1629384
-                                .col-sm-4
+                                        strong.small=user.code
+                                .col-sm-6
                                     p.grey-text.small CTXH
                                     p.text-primary(style="line-height: 0px;")
-                                        strong.small 10.5
-                                .col-sm-4
-                                    p.grey-text.small Level
-                                    p.text-primary(style="line-height: 0px;")
-                                        strong.small 20
+                                        strong.small=user.numWorkDay
+                br                
                 .col-lg-9.col-sm-12
-                    block content
+                  // Card
+                  .card
+                    // Card content
+                    .card-body
+                      // Title
+                      h4.card-title
+                        a Thông tin người dùng
+                      // Text
+                      form(action="/profile/update" method="POST")
+                        .md-form.form-sm
+                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.code)
+                          label(for='inputSMEx') MSSV:
+                        .md-form.form-sm
+                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName, name="name")
+                          label(for='inputSMEx') Họ và tên:
+                        .md-form.form-sm
+                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.email, name="email")
+                          label(for='inputSMEx') Email:
+                        .md-form.form-sm
+                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone, name="phone")
+                          label(for='inputSMEx') Số điện thoại:
+                        .md-form.form-sm
+                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString(), name="faculty")
+                          label(for='inputSMEx') Khoa:
+                        .md-form.form-sm
+                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay)
+                          label(for='inputSMEx')  Số ngày Công tác xã hội:
+                        
+                        // Button
+                        button.btn.btn-primary Cập nhật
+                  // Card
+                  
+                  // Card
+                  .card.mt-3
+                    // Card content
+                    .card-body
+                      // Title
+                      h4.card-title
+                        a Hoạt động cá nhân
+                      // Text
+                      .table-responsive
+                        table.table
+                          thead
+                            tr
+                              th(scope='col') STT
+                              th(scope='col') Mã Hoạt động
+                              th(scope='col') Tên hoạt động
+                              th(scope='col') Ngày thực hiện
+                              th(scope='col') Ngày CTXH
+                              th(scope='col') Minh chứng
+                              th(scope='col') Khoa xác nhận
+                              th(scope='col') Tình trạng
+                          tbody
+                            tr
+                              th(scope='row') 1
+                              td 
+                              td Cell
+                              td Cell
+                              td Cell
+                              td Cell
+                              td Cell
+                              td Cell
+                            tr
+                              th(scope='row') 2
+                              td 
+                              td Cell
+                              td Cell
+                              td Cell
+                              td Cell
+                              td Cell
+                              td Cell
+                            
+                  // Card
+
+
+                  
+
+                    
+
+                    
+                    
+                     
+
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")
