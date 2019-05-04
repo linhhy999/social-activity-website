@@ -68,7 +68,6 @@ export let getUserActivity = (req: Request, res: Response) => {
     // todo
 };
 
-<<<<<<< HEAD
 export let activityDetail = async  (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
@@ -86,20 +85,20 @@ export let activityDetail = async  (req: Request, res: Response) => {
     }
 };
 export let un_apply = async (req: Request, res: Response) => {
-    const activityId = req.params.id;
-    try {
-        const activity = await Activity.findOne({"_id": activityId});
-        activity.members.remove({
-            mssv: req.user.code,
-            name: req.user.fullName
-        });
-        await activity.save();
-        return res.redirect("back");
-    }
-    catch (err) {
-        console.log(err.message);
-        return res.redirect("/");
-    }
+    // const activityId = req.params.id;
+    // try {
+    //     const activity = await Activity.findOne({"_id": activityId});
+    //     activity.members.remove({
+    //         mssv: req.user.code,
+    //         name: req.user.fullName
+    //     });
+    //     await activity.save();
+    //     return res.redirect("back");
+    // }
+    // catch (err) {
+    //     console.log(err.message);
+    //     return res.redirect("/");
+    // }
 };
 export let apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
@@ -116,9 +115,4 @@ export let apply = async (req: Request, res: Response) => {
         console.log(err.message);
         return res.redirect("/");
     }
-=======
-export let activityDetail = (req: Request, res: Response) => {
-    // todo
-    return res.render("activityDetail", {});
->>>>>>> 696c95193dd5b5ccd65d7e18879944d2bb119646
 };
