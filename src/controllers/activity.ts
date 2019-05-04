@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 
 
-/**
- * GET /
- * Home page.
- */
+export let getAddActivity = (req: Request, res: Response) => {
+    return res.render("admin/posts/add");
+};
+
+export let listOwnActivity = (req: Request, res: Response) => {
+    return res.render("admin/posts/list");
+};
 export let getActivity =  (req: Request, res: Response) => {
     // todo
 };
