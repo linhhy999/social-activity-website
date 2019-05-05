@@ -10,19 +10,9 @@ export type UserModel = mongoose.Document & {
     role: Role,
     fullName: string,
     numWorkDay: number,
-    faculty: Faculty,
+    faculty: string,
     isBlock: boolean
 };
-
-
-export enum Faculty {
-    ELECTRONIC = 1,
-    ENGINEERING_CONSTRUCTION = 2,
-    FACULTY_OF_MECHANICS = 3,
-    DEPARTMENT_OF_CHEMICAL_ENGINEERING = 4,
-    SCIENCE_SCIENCE_AND_COMPUTER_ENGINEERING = 5
-
-}
 
 export enum Role {
     Admin = 1,
@@ -40,7 +30,7 @@ const userSchema = new mongoose.Schema({
     role: Number,
     fullName: String,
     numWorkDay: Number,
-    faculty: Number,
+    faculty: String,
     isBlock: Boolean
 }, { timestamps: true });
 

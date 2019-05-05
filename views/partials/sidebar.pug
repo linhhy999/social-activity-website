@@ -2,21 +2,12 @@
     .container
         span.small.grey-text Đơn vị tổ chức
         ul.list-group
-            li.list-group-item.d-flex.justify-content-between.align-items-center
-                a(href="#")
-                    |   Khoa học và kỹ thuật máy tính
-                span.badge.badge-primary.badge-pill
-                    |   1
-            li.list-group-item.d-flex.justify-content-between.align-items-center
-                a(href="#")
-                    |   Khoa Quản lý môi trường
-                span.badge.badge-primary.badge-pill
-                    |   5
-            li.list-group-item.d-flex.justify-content-between.align-items-center
-                a(href="#")
-                    |   Khoa Điện - Điện tử
-                span.badge.badge-primary.badge-pill
-                    |   10
+            each unit in orgUnit
+                li.list-group-item.d-flex.justify-content-between.align-items-center
+                    a(href="#")
+                        =   unit.orgUnit
+                    span.badge.badge-primary.badge-pill
+                        =   unit.num
         .mt-4
         span.small.grey-text Hoạt động tham gia gần đây
         ul.list-group

@@ -105,6 +105,7 @@ app.get("/info", Guard.isLogin, UserController.info);
 app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
 app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
+app.post("/admin/post/add", Guard.isLogin, activityController.postActivity);
 
 
 export default app;

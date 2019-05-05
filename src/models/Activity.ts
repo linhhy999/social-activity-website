@@ -5,21 +5,23 @@ import { type } from "os";
 
 export type ActivityModel = mongoose.Document & {
     name: string,
-    registerEnd: Date,
-    timeStart: Date,
-    timeEnd: Date,
-    location: string,
-    numWorkDay: number,
-    description: string,
+    registerEnd: string,
+    dateStart: string,
+    dateEnd: string,
+    timeStart: string,
+    timeEnd: string,
+    gatheringPlace: string,
+    targetPlace: number,
     content: string,
     orgUnit: string,
-    hostName: string,
+    host: {},
     image: string[],
     video: string[],
     maxMember: number,
-    members: any[]
+    members: any[],
     comment: Comment[],
-    superVisor: []
+    superVisor: [],
+    benefit: number
 };
 
 export type Comment = {
@@ -33,15 +35,17 @@ export type Comment = {
 
 const activitySchema = new mongoose.Schema({
     name: String,
-    registerEnd: Date,
-    timeStart: Date,
-    timeEnd: Date,
-    location: String,
-    numWorkDay: Number,
-    description: String,
+    registerEnd: String,
+    dateStart: String,
+    dateEnd: String,
+    timeStart: String,
+    timeEnd: String,
+    gatheringPlace: String,
+    targetPlace: String,
     content: String,
     orgUnit: String,
-    hostName: String,
+    benefit: Number,
+    host: {},
     image: [],
     video: [],
     maxMember: Number,

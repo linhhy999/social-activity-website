@@ -8,12 +8,13 @@ block content
                         h4.card-title.font-weight-bold.mb-2= activity.name
                         
                         p.card-text
-                            i.far.fa-clock.pr-2= activity.timeStart
+                          i.far.fa-clock.pr-2
+                            =  activity.timeStart + " " +activity.dateStart
                         p.card-text
                             i.far.fa-map.pr-2
-                            |   1210, Đường ĐT743, Ấp Tân Long, Xã Tân Đông Hiệp, Huyện Dĩ An – Bình Dương.
+                              = activity.targetPlace
                     .m-auto
-                    img.float-right.rounded-circle(height="50px", width="50px", src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg", alt="avatar.jpg")
+                    img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.auth[0].picture, alt="avatar.jpg")
                     //<button type="button" class="btn btn-primary btn-rounded">Primary</button>
                 .view.overlay
                     #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
@@ -52,10 +53,10 @@ block content
                                     |   Next
                     a(href="#!")
                         .mask.rgba-white-slight
-                .card-body= activity.content
+                .card-body !{activity.content}
       
                     div
-                        if (is == true)
+                        if (registered == true)
                           button.btn.btn-danger.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalHuy')
                               |   Hủy Đăng Ký
                         else 
@@ -131,7 +132,7 @@ block content
                       th(scope='row')= i
                       td.font-weight-bold= member.name
                       td= member.mssv 
-                      td= member.khoa
+                      td= member.faculty
                     - i++
                     
                   

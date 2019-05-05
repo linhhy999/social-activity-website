@@ -37,3 +37,7 @@ Thumbs.db
 # Ignore built ts files
 dist/**/*
 
+/.vs
+/bin
+/obj
+*.njsproj

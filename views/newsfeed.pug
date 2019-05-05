@@ -12,7 +12,7 @@ block content
                                 = activity.timeStart
                             p.card-text
                                 i.far.fa-map.pr-2
-                                = activity.location
+                                = activity.targetPlace
                         .m-auto
                         img.float-right.rounded-circle(height="50px", width="50px", src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg", alt="avatar.jpg")
                     .view.overlay
@@ -55,7 +55,7 @@ block content
                     .card-body
                         |   Recently, we added several exotic new dishes to the menu of our restaurant. They come from countries such as Mexico, Argentina, and Spain. Come to us, have a delicious wine and enjoy the juicy meals from around the world.
                         div
-                            a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1.collapsed(data-toggle="collapse" href="#collapseContent" aria-expanded="false" aria-controls="collapseContent")
+                            a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="activity-detail/"+activity._id )
                                 |   See more
                             i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
                             i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
