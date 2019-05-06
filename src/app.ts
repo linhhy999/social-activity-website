@@ -7,7 +7,7 @@ import mongo from "connect-mongo";
 import flash from "express-flash";
 import path from "path";
 import mongoose from "mongoose";
-import passport from "passport";
+import passport from "./config/passport";
 import expressValidator from "express-validator";
 import bluebird from "bluebird";
 import moment from "moment-timezone";
@@ -21,7 +21,9 @@ const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
-import * as passportConfig from "./config/passport";
+import * as activityController from "./controllers/activity";
+import * as UserController from "./controllers/user";
+import * as Guard from "./config/guard";
 
 // Create Express server
 const app = express();
@@ -85,7 +87,19 @@ app.use(
 /**
  * Primary app routes.
  */
-app.get("/", homeController.index);
+
+app.get("/intro", homeController.intro);
+app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
+app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }),
+homeController.login);
+app.get("/", Guard.isLoggin, homeController.index);
+app.get("/logout", Guard.isLoggin, homeController.logout);
+app.get("/admin", Guard.isLoggin, homeController.admin);
+app.get("/profile", Guard.isLoggin, UserController.profile);
+app.get("/info", Guard.isLoggin, UserController.info);
+app.post("/info", Guard.isLoggin, UserController.postInfo);
+app.get("/admin/post/list", Guard.isLoggin, activityController.listOwnActivity);
+app.get("/admin/post/add", Guard.isLoggin, activityController.getAddActivity);
 
 
 export default app;
