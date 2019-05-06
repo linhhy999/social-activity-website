@@ -4643,3 +4643,7 @@ body.box-layout {
     bottom: 0;
     width: 100%;
 } */
+
+.mr-3 {
+    margin-right: 10px;
+}

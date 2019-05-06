@@ -50,17 +50,11 @@ html(lang='en')
                         | Looks good!
                     // Material input subject
                     .md-form.form-sm
-                      select.browser-default.custom-select(name="faculty" required="")
-                        option(value="") Khoa
-                        option(value="1") Khoa Điện - Điện tử</option>
-                        option(value="2") Khoa Kỹ thuật Xây dựng</option>
-                        option(value="3") Khoa Cơ khí</option>
-                        option(value="4") Khoa Kỹ thuật Hóa học</option>
-                        option(value="5") Khoa Khoa học và Kỹ thuật Máy tính</option>
-                      </select>
+                      input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required)
+                      label(for='materialFormFacultyModal') Khoa
                       .valid-feedback
                         | Looks good!
-                      
+                                            
                     // Material input subject
                     .md-form.form-sm
                       input#materialFormSubjectModal.form-control.form-control-sm(type='number', name="ctxh", required)

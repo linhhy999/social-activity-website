@@ -15,88 +15,67 @@ block content
                     h2 Danh sách bài đăng
                     p
                       | Bài đăng > Danh sách bài đăng
-  .form-element-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .form-element-list
-            .basic-tb-hd
-              h2 
-                | CTXH MÁI ẤM QUÊ HƯƠNG
-                span.float-right 1
-              p 
-                i.fa.fa-clock-o
-                |   21/04/2019
-              p
-                i.fa.fa-map-o
-                |   1210, Đường ĐT743, Ấp Tân Long, Xã Tân Đông Hiệp, Huyện Dĩ An – Bình Dương.
-            .cmp-tb-hd.bcs-hd
+  each activity in activities
+    .form-element-area
+      .container
+        .row
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .form-element-list
+              .basic-tb-hd
+                h2 
+                  |= activity.name
+                  span.float-right 1
+                p 
+                  i.fa.fa-clock-o
+                  |= activity.dateStart + " " + activity.timeStart 
+                p
+                  i.fa.fa-map-o
+                  |= activity.targetPlace
+              .cmp-tb-hd.bcs-hd
 
-            .row
-              .col-lg-7.col-md-7.col-sm-12.col-xs-12
-                p 👷👨‍🏫[CHIẾN DỊCH TÌNH NGUYỆN MÙA HÈ XANH KHOA KỸ THUẬT XÂY DỰNG 2019]👩‍🏫👷‍♀️
-
-                p ❤️"XÂY nhà! DỰNG cửa! GẮN KẾT yêu thương!"❤️
-                p 📘 "Cuộc đời sinh viên trọn vẹn là khi một lần rớt môn, một lần nhận học bổng, một lần thất tình và một lần đi Mùa hè xanh"
-                p ✨ Mùa hè xanh - Xây dựng: "Xây con đường, xây tình nghĩa, xây yêu thương, xây tình chiến sĩ".
-                p 🏡 Với khẩu hiệu “Ở dân thương, làm dân tin, đi dân nhớ”, Chiến dịch tình nguyện Mùa hè xanh của khoa Kỹ thuật Xây dựng đã để lại nhiều tình cảm, kỷ niệm đẹp cùng nhiều phần việc, công trình thiết thực cho bà con tại địa bàn đóng quân qua các năm. 
-                p Được mệnh danh là Khoa đảm nhận khối lượng công việc nặng nhất của chiến dịch tình nguyện Mùa hè xanh trường ĐH Bách Khoa, Kỹ thuật Xây dựng luôn là đơn vị đi đầu trong việc hoàn thành nhiệm vụ xuất sắc, không những vậy còn luôn mang một nhiệt huyết trẻ, mang niềm kiêu hãnh của sinh viên Bách Khoa.
-                p ⚠ Đặc biệt Mùa hè xanh Xây dựng là đơn vị duy nhất thực hiện đội hình chuyên đường với những công việc khó khăn hơn, đảm nhận những tuyến đường hiểm hóc hơn.
-                p Mùa hè xanh Xây dựng mang đến chiến sĩ một nguồn năng lượng mới, thử thách giới hạn của bản thân, để được thực hiện những điều tưởng chừng như sẽ chẳng bao giờ chạm đến.
-
-                p 🤟 Hãy đến với Chiến dịch tình nguyện Mùa Hè Xanh khoa Kỹ thuật Xây dựng, và hãy hết mình với nó. Vì tuổi trẻ không đến hai lần...
-
-                p 📌 Link đăng kí: https:https://bit.ly/2GyNRh1
-                p #MXH2019KTXD_INFORMATION
-
-                p ⏰Thời gian diễn ra chiến dịch : 28/06/2019 - 28/07/2019.
-                p 🏞️Địa bàn diễn ra chiến dịch :
-                p + Đội hình Xã Hòa Nghĩa, huyện Chợ Lách, tỉnh Bến Tre. (80 chiến sĩ)
-                p + Đội hình chuyên đường: Thị trấn Giồng Trôm, huyện Giồng Trôm, tỉnh Bến Tre. (40 chiến sĩ)
-
-                p _________________________
-
-                p 🔊Mọi thông tin chi tiết về Chiến dịch Mùa Hè Xanh khoa Kỹ Thuật Xây Dựng năm 2019 sẽ được cập nhật liên tục trên Fanpage Focebk, các bạn nhớ theo dõi để không phải bỏ lỡ bất kì thông tin nào nha !!!
-              .col-lg-5.col-md-5.col-sm-12.col-xs-12
-                .wizard-area
-                  .row
-                  .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                    .wizard-wrap-int
-                      .wizard-hd
-                        p
-                          | Hình ảnh hoạt động
-                      #rootwizard-1
-                        .navbar
-                          .navbar-inner
-                            .container-pro.wizard-cts-st
-                              .tab-content
-                                #post1-1.tab-pane.wizard-ctn
-                                  img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide")
-                                #post1-2.tab-pane.wizard-ctn
-                                  img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="First slide")
-                                #post1-3.tab-pane.wizard-ctn
-                                  img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="First slide")
-                              ul
+              .row
+                .col-lg-7.col-md-7.col-sm-12.col-xs-12
+                  | !{activity.content}
+                  .col-lg-5.col-md-5.col-sm-12.col-xs-12
+                  .wizard-area
+                    .row
+                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                      .wizard-wrap-int
+                        .wizard-hd
+                          p
+                            | Hình ảnh hoạt động
+                        #rootwizard-1
+                          .navbar
+                            .navbar-inner
+                              .container-pro.wizard-cts-st
+                                .tab-content
+                                  #post1-1.tab-pane.wizard-ctn
+                                    img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide")
+                                  #post1-2.tab-pane.wizard-ctn
+                                    img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="First slide")
+                                  #post1-3.tab-pane.wizard-ctn
+                                    img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="First slide")
+                                ul
+                                  li
+                                    a(href='#post1-1' data-toggle='tab') 
+                                  li
+                                    a(href='#post1-2' data-toggle='tab') 
+                                  li
+                                    a(href='#post1-3' data-toggle='tab') 
+                            .wizard-action-pro
+                              ul.wizard-nav-ac
                                 li
-                                  a(href='#post1-1' data-toggle='tab') 
+                                  a.button-first.a-prevent(href='#')
+                                    i.notika-icon.notika-more-button
                                 li
-                                  a(href='#post1-2' data-toggle='tab') 
+                                  a.button-previous.a-prevent(href='#')
+                                    i.notika-icon.notika-back
                                 li
-                                  a(href='#post1-3' data-toggle='tab') 
-                          .wizard-action-pro
-                            ul.wizard-nav-ac
-                              li
-                                a.button-first.a-prevent(href='#')
-                                  i.notika-icon.notika-more-button
-                              li
-                                a.button-previous.a-prevent(href='#')
-                                  i.notika-icon.notika-back
-                              li
-                                a.button-next.a-prevent(href='#')
-                                  i.notika-icon.notika-next-pro
-                              li
-                                a.button-last.a-prevent(href='#')
-                                  i.notika-icon.notika-more-button
+                                  a.button-next.a-prevent(href='#')
+                                    i.notika-icon.notika-next-pro
+                                li
+                                  a.button-last.a-prevent(href='#')
+                                    i.notika-icon.notika-more-button
 
 block script
   script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')

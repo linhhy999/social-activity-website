@@ -5,21 +5,23 @@ import { type } from "os";
 
 export type ActivityModel = mongoose.Document & {
     name: string,
-    registerEnd: Date,
-    timeStart: Date,
-    timeEnd: Date,
-    location: string,
-    numWorkDay: number,
-    description: string,
+    registerEnd: string,
+    dateStart: string,
+    dateEnd: string,
+    timeStart: string,
+    timeEnd: string,
+    gatheringPlace: string,
+    targetPlace: number,
     content: string,
     orgUnit: string,
-    hostName: string,
+    host: {},
     image: string[],
     video: string[],
     maxMember: number,
-    members: []
+    members: any[],
     comment: Comment[],
-    superVisor: []
+    superVisor: [],
+    benefit: number
 };
 
 export type Comment = {
@@ -32,10 +34,27 @@ export type Comment = {
 
 
 const activitySchema = new mongoose.Schema({
-
+    name: String,
+    registerEnd: String,
+    dateStart: String,
+    dateEnd: String,
+    timeStart: String,
+    timeEnd: String,
+    gatheringPlace: String,
+    targetPlace: String,
+    content: String,
+    orgUnit: String,
+    benefit: Number,
+    host: {},
+    image: [],
+    video: [],
+    maxMember: Number,
+    members: [],
+    comment: [],
+    superVisor: []
 }, { timestamps: true });
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);
-const Activity = mongoose.model("Activity", activitySchema);
+const Activity = mongoose.model<ActivityModel>("Activity", activitySchema);
 export default Activity;
