@@ -18,24 +18,23 @@ export let index = async (req: Request, res: Response) => {
     if (req.user) {
         try {
             const activityList = await Activity.find().limit(10);
-            const unit = await Activity.find({}, {orgUnit: 1, _id: 0});
+            const unit = await Activity.find({}, { orgUnit: 1, _id: 0 });
             const a = [], b = [];
             let prev;
             unit.sort();
-            for ( let i = 0; i < unit.length; i++ ) {
-                if ( unit[i].orgUnit !== prev ) {
-                    a.push({orgUnit: unit[i].orgUnit});
-                    b.push({num: 1});
+            for (let i = 0; i < unit.length; i++) {
+                if (unit[i].orgUnit !== prev) {
+                    a.push({ orgUnit: unit[i].orgUnit });
+                    b.push({ num: 1 });
                 } else {
                     b[b.length - 1].num++;
                 }
                 prev = unit[i].orgUnit;
             }
-            for ( let i = 0; i < a.length; i++ ) {
-                a[i] = {...a[i], ...b[i]};
+            for (let i = 0; i < a.length; i++) {
+                a[i] = { ...a[i], ...b[i] };
             }
 
-            
             return res.render("newsfeed", {
                 user: req.user,
                 activities: activityList,
@@ -58,7 +57,7 @@ export let admin = async (req: Request, res: Response) => {
 
 export let login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        let user = await User.findOne({"auth.0.googleId": req.user.auth.googleId});
+        let user = await User.findOne({ "auth.0.googleId": req.user.auth.googleId });
         if (!user) {
             user = await new User(req.user);
             user = await user.save();
