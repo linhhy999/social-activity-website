@@ -18,7 +18,7 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activities = await User.find({"host.auth.0.googleId": req.user.auth[0].googleId});
+    const activities = await Activity.find({"host.auth.0.googleId": req.user.auth[0].googleId});
     console.log(activities);
     return res.render("admin/posts/list", {
         activities: activities

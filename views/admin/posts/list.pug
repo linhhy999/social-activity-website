@@ -22,21 +22,20 @@ block content
           .col-lg-12.col-md-12.col-sm-12.col-xs-12
             .form-element-list
               .basic-tb-hd
-                h2 
-                  |= activity.name
+                h2= activity.name
                   span.float-right 1
                 p 
                   i.fa.fa-clock-o
-                  |= activity.dateStart + " " + activity.timeStart 
+                  = activity.dateStart + " " + activity.timeStart 
                 p
                   i.fa.fa-map-o
-                  |= activity.targetPlace
+                  = activity.targetPlace
               .cmp-tb-hd.bcs-hd
 
               .row
                 .col-lg-7.col-md-7.col-sm-12.col-xs-12
                   | !{activity.content}
-                  .col-lg-5.col-md-5.col-sm-12.col-xs-12
+                .col-lg-5.col-md-5.col-sm-12.col-xs-12
                   .wizard-area
                     .row
                     .col-lg-12.col-md-12.col-sm-12.col-xs-12
@@ -44,38 +43,39 @@ block content
                         .wizard-hd
                           p
                             | Hình ảnh hoạt động
-                        #rootwizard-1
-                          .navbar
-                            .navbar-inner
-                              .container-pro.wizard-cts-st
-                                .tab-content
-                                  #post1-1.tab-pane.wizard-ctn
-                                    img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide")
-                                  #post1-2.tab-pane.wizard-ctn
-                                    img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="First slide")
-                                  #post1-3.tab-pane.wizard-ctn
-                                    img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="First slide")
-                                ul
+                        if activity.image !== []
+                          #rootwizard-1
+                            .navbar
+                              .navbar-inner
+                                .container-pro.wizard-cts-st
+                                  .tab-content
+                                    #post1-1.tab-pane.wizard-ctn
+                                      img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide")
+                                    #post1-2.tab-pane.wizard-ctn
+                                      img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="First slide")
+                                    #post1-3.tab-pane.wizard-ctn
+                                      img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="First slide")
+                                  ul
+                                    li
+                                      a(href='#post1-1' data-toggle='tab') 
+                                    li
+                                      a(href='#post1-2' data-toggle='tab') 
+                                    li
+                                      a(href='#post1-3' data-toggle='tab') 
+                              .wizard-action-pro
+                                ul.wizard-nav-ac
                                   li
-                                    a(href='#post1-1' data-toggle='tab') 
+                                    a.button-first.a-prevent(href='#')
+                                      i.notika-icon.notika-more-button
                                   li
-                                    a(href='#post1-2' data-toggle='tab') 
+                                    a.button-previous.a-prevent(href='#')
+                                      i.notika-icon.notika-back
                                   li
-                                    a(href='#post1-3' data-toggle='tab') 
-                            .wizard-action-pro
-                              ul.wizard-nav-ac
-                                li
-                                  a.button-first.a-prevent(href='#')
-                                    i.notika-icon.notika-more-button
-                                li
-                                  a.button-previous.a-prevent(href='#')
-                                    i.notika-icon.notika-back
-                                li
-                                  a.button-next.a-prevent(href='#')
-                                    i.notika-icon.notika-next-pro
-                                li
-                                  a.button-last.a-prevent(href='#')
-                                    i.notika-icon.notika-more-button
+                                    a.button-next.a-prevent(href='#')
+                                      i.notika-icon.notika-next-pro
+                                  li
+                                    a.button-last.a-prevent(href='#')
+                                      i.notika-icon.notika-more-button
 
 block script
   script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
