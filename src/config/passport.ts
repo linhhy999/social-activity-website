@@ -9,11 +9,12 @@ import User from "../models/User";
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
-    done(undefined, user);
+    done(undefined, user.email);
 });
 
 passport.deserializeUser((user: any, done) => {
-    User.findOne({ googleId: user.auth.googleId }, (err, user) => {
+
+    User.findOne({ "email": user }, (err, user) => {
         done(err, user);
     });
 });
@@ -41,25 +42,7 @@ passport.use(new GoogleStrategy({
 ));
 
 
-export let isGoogleAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }, (err: Error, user: any) => {
-        if (err) {
-            return res.status(500).json({
-                message: err.message
-            });
-        }
-        if (!user) {
-            return res.status(401).json({
-                message: "Auth fail."
-            });
-        }
-
-        req.user = user;
-        return next();
-
-    })(req, res, next);
-};
-
+export let isGoogleAuthenticated = passport.authenticate("google", { failureRedirect: "/auth/google" });
 
 /**
  * Login Required middleware.

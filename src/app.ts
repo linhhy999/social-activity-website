@@ -24,6 +24,7 @@ import * as homeController from "./controllers/home";
 import * as activityController from "./controllers/activity";
 import * as UserController from "./controllers/user";
 import * as Guard from "./config/guard";
+import * as passportConfig from "./config/passport";
 
 // Create Express server
 const app = express();
@@ -97,7 +98,7 @@ app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
 
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }),
+app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated,
 homeController.login);
 app.get("/", Guard.isLogin, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
