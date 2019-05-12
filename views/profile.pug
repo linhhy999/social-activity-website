@@ -12,6 +12,9 @@ html(lang='en')
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
+
+        
+
     body
         include partials/header
         
@@ -84,30 +87,20 @@ html(lang='en')
                               th(scope='col') STT
                               th(scope='col') Mã Hoạt động
                               th(scope='col') Tên hoạt động
-                              th(scope='col') Ngày thực hiện
+                              th(scope='col') Khoa tổ chức
                               th(scope='col') Ngày CTXH
-                              th(scope='col') Minh chứng
-                              th(scope='col') Khoa xác nhận
-                              th(scope='col') Tình trạng
                           tbody
-                            tr
-                              th(scope='row') 1
-                              td 
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                            tr
-                              th(scope='row') 2
-                              td 
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
+                            - let i= 0
+                            each act in activity
+                              - i++
+                              tr
+                                th(scope='row')= i
+                                td= act.id
+                                td= act.name
+                                td= act.orgUnit
+                                td= act.benefit
+                                
+                            
                             
                   // Card
 

@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import User from "../models/User";
+import Activity from "../models/Activity";
+import { activityDetail } from "./activity";
 
 
 /**
@@ -30,9 +32,12 @@ export let changeRole =  (req: Request, res: Response) => {
     // todo
 };
 
-export let profile = (req: Request, res: Response) => {
+export let profile = async (req: Request, res: Response) => {
+    const activity=await Activity.find({"members.mssv": req.user.code});
+    console.log (activity);
     return res.render("profile",  {
-        user: req.user
+        user: req.user,
+        activity: activity
     });
 };
 export let info = (req: Request, res: Response) => {
