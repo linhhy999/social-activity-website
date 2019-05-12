@@ -20,9 +20,10 @@ import logger from "./util/logger";
 const MongoStore = mongo(session);
 
 // Controllers (route handlers)
-import * as homeController from "./controllers/home";
-import * as activityController from "./controllers/activity";
+import * as HomeController from "./controllers/home";
+import * as ActivityController from "./controllers/activity";
 import * as UserController from "./controllers/user";
+import * as AccountController from "./controllers/account";
 import * as Guard from "./config/guard";
 
 // Create Express server
@@ -87,25 +88,27 @@ app.use(
 /**
  * Primary app routes.
  */
-app.get("/activity-detail/:id", Guard.isLogin, activityController.activityDetail);
-app.get("/apply/:id", Guard.isLogin, activityController.apply);
-app.get("/un_apply/:id", Guard.isLogin, activityController.un_apply);
-app.post("/comment/:id", Guard.isLogin, activityController.postComment);
+app.get("/activity-detail/:id", Guard.isLogin, ActivityController.activityDetail);
+app.get("/apply/:id", Guard.isLogin, ActivityController.apply);
+app.get("/un_apply/:id", Guard.isLogin, ActivityController.un_apply);
+app.post("/comment/:id", Guard.isLogin, ActivityController.postComment);
 
 
-app.get("/intro", homeController.intro);
+app.get("/intro", HomeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }),
-homeController.login);
-app.get("/", Guard.isLogin, homeController.index);
-app.get("/logout", Guard.isLogin, homeController.logout);
-app.get("/admin", Guard.isLogin, homeController.admin);
+HomeController.login);
+app.get("/", Guard.isLogin, HomeController.index);
+app.get("/logout", Guard.isLogin, HomeController.logout);
+app.get("/admin", Guard.isLogin, HomeController.admin);
 app.get("/profile", Guard.isLogin, UserController.profile);
 app.get("/info", Guard.isLogin, UserController.info);
 app.post("/info", Guard.isLogin, UserController.postInfo);
-app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
-app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, activityController.postActivity);
-
+app.get("/admin/post/list", Guard.isLogin, ActivityController.listOwnActivity);
+app.get("/admin/post/add", Guard.isLogin, ActivityController.getAddActivity);
+app.post("/admin/post/add", Guard.isLogin, ActivityController.postActivity);
+app.get("/admin/account/list", Guard.isLogin, AccountController.getListAccounts);
+app.get("/admin/account/block/:id", Guard.isLogin, AccountController.postBlockAccount)
+app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, AccountController.postChangeRole)
 
 export default app;
