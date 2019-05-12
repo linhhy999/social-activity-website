@@ -1,0 +1,76 @@
+#sidebar
+    .container
+      form(method="POST")
+        span.small.grey-text Tìm kiếm theo
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#name.custom-control-input(type='radio' name="type" value="1").small
+                  label.custom-control-label(for='name', style="padding-top: 3px;").small Tên
+
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#unit.custom-control-input(type='radio' name="type" value="2").small
+                  label.custom-control-label(for='unit', style="padding-top: 3px;").small Đơn vị tổ chức
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#place.custom-control-input(type='radio' name="type" value="3").small
+                  label.custom-control-label(for='place', style="padding-top: 3px;").small Địa điểm
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#people.custom-control-input(type='radio' name="type" value="4").small
+                  label.custom-control-label(for='people', style="padding-top: 3px;").small Người tổ chức  
+        .mt-4
+        span.small.grey-text Trạng thái hoạt động
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#now.custom-control-input(type='radio' name="status" value="1").small
+                  label.custom-control-label(for='now', style="padding-top: 3px;").small Đang diễn ra
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#end.custom-control-input(type='radio' name="status" value="2").small
+                  label.custom-control-label(for='end', style="padding-top: 3px;").small Đã kết thúc   
+        .mt-4
+        span.small.grey-text Số ngày công tác xã hội
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#dot5.custom-control-input(type='radio' name="benefit" value="0.5").small
+                  label.custom-control-label(for='dot5', style="padding-top: 3px;").small 0.5  
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#one.custom-control-input(type='radio' name="benefit" value="1").small
+                  label.custom-control-label(for='one', style="padding-top: 3px;").small 1  
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#onedot5.custom-control-input(type='radio' name="benefit" value="1.5").small
+                  label.custom-control-label(for='onedot5', style="padding-top: 3px;").small 1.5  
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#two.custom-control-input(type='radio' name="benefit" value="2").small
+                  label.custom-control-label(for='two', style="padding-top: 3px;").small 2   
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                  input#over2.custom-control-input(type='radio' name="benefit" value="up").small
+                  label.custom-control-label(for='over2', style="padding-top: 3px;").small Nhiều hơn 2     
+        .mt-4
+        span.small.grey-text Khóa
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k16.custom-control-input(type='radio' name="grade" value="1").small
+              label.custom-control-label(for='k16', style="padding-top: 3px;").small k16 
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k17.custom-control-input(type='radio' name="grade" value="2").small
+              label.custom-control-label(for='k17', style="padding-top: 3px;").small k17 
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k18.custom-control-input(type='radio' name="grade" value="3").small
+              label.custom-control-label(for='k18', style="padding-top: 3px;").small k18 
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k19.custom-control-input(type='radio' name="grade" value="4").small
+              label.custom-control-label(for='k19', style="padding-top: 3px;").small k19 
+        .mt-4

@@ -90,8 +90,91 @@ export let updateActivity =  (req: Request, res: Response) => {
     // todo
 };
 
-export let searchActivity =  (req: Request, res: Response) => {
-    // todo
+export let searchActivity =  async (req: Request, res: Response) => {
+    const activities = await Activity.find( {$or:
+        [
+            { name: { $regex: req.query.keyword, $options: "$i" }},
+            { content: { $regex: req.query.keyword, $options: "$i" }},
+            { targetPlace: { $regex: req.query.keyword, $options: "$i" }},
+            { gatheringPlace: { $regex: req.query.keyword, $options: "$i" }},
+            { dateStart: { $regex: req.query.keyword, $options: "$i" }},
+            { orgUnit: { $regex: req.query.keyword, $options: "$i" }},
+            { "host.fullName": { $regex: req.query.keyword, $options: "$i" }},
+        ]});
+    return res.render("search", {
+        title: "Search",
+        activities: activities
+    });
+};
+
+export let searchAdvancedActivity = async (req: Request, res: Response) => {
+    console.log(req.body);
+    console.log(req.query.keyword);
+    const query = [
+        // { name: { $regex: req.query.keyword, $options: "$i" }},
+        // { content: { $regex: req.query.keyword, $options: "$i" }},
+        // { targetPlace: { $regex: req.query.keyword, $options: "$i" }},
+        // { gatheringPlace: { $regex: req.query.keyword, $options: "$i" }},
+        // { dateStart: { $regex: req.query.keyword, $options: "$i" }},
+        // { orgUnit: { $regex: req.query.keyword, $options: "$i" }},
+        // { "host.fullName": { $regex: req.query.keyword, $options: "$i" }},
+    ];
+    switch (req.body.type) {
+        case "1": {
+            query.push({ name: { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+        case "2": {
+            query.push({ orgUnit: { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+        case "3": {
+            query.push({ gatheringPlace: { $regex: req.query.keyword, $options: "$i" }});
+            query.push({ targetPlace: { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+        case "4": {
+            query.push({ "host.fullName": { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+    }
+    switch (req.body.status) {
+        case "1": {
+            query.push({ status: true});
+            break;
+        }
+        case "2": {
+            query.push({ status: false});
+            break;
+        }
+    }
+    switch (req.body.benefit) {
+        case "1": {
+            query.push({ benefit: 0.5});
+            break;
+        }
+        case "2": {
+            query.push({ status: false});
+            break;
+        }
+        case "3": {
+            query.push({ status: false});
+            break;
+        }
+        case "4": {
+            query.push({ status: false});
+            break;
+        }
+        case "5": {
+            query.push({ status: false});
+            break;
+        }
+    }
+    const activities = await Activity.find({$or: query});
+    return res.render("search", {
+        title: "Search",
+        activities: activities
+    });
 };
 
 export let createReport =  (req: Request, res: Response) => {

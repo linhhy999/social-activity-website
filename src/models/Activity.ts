@@ -21,7 +21,8 @@ export type ActivityModel = mongoose.Document & {
     members: any[],
     comment: Comment[],
     superVisor: [],
-    benefit: number
+    benefit: number,
+    status: boolean
 };
 
 export type Comment = {
@@ -51,7 +52,8 @@ const activitySchema = new mongoose.Schema({
     maxMember: Number,
     members: [],
     comment: [],
-    superVisor: []
+    superVisor: [],
+    status: Boolean
 }, { timestamps: true });
 
 

@@ -91,6 +91,8 @@ app.get("/activity-detail/:id", Guard.isLogin, activityController.activityDetail
 app.get("/apply/:id", Guard.isLogin, activityController.apply);
 app.get("/un_apply/:id", Guard.isLogin, activityController.un_apply);
 app.post("/comment/:id", Guard.isLogin, activityController.postComment);
+app.get("/search/", Guard.isLogin, activityController.searchActivity);
+app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
 
 
 app.get("/intro", homeController.intro);
@@ -106,6 +108,7 @@ app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
 app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
 app.post("/admin/post/add", Guard.isLogin, activityController.postActivity);
+app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity);
 
 
 export default app;
