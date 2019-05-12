@@ -60,8 +60,13 @@ block content
                           button.btn.btn-danger.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalHuy')
                               |   Hủy Đăng Ký
                         else 
-                          button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm')
-                              |   Đăng Ký
+                          if activity.members.length == activity.maxMember  
+                                  button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  disabled='')
+                                      |   Đăng Ký
+                          else 
+                                  button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  enabled='')
+                                      |   Đăng Ký
+                                
                         button.btn.btn-primary.btn-rounded.btn-sm
                             |   Bình Luận
                         button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalMember') 

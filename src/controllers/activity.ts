@@ -287,3 +287,4 @@ export let apply = async (req: Request, res: Response) => {
         return res.redirect("/");
     }
 };
+

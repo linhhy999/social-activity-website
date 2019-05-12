@@ -7,6 +7,9 @@ block content
                     .card-body.d-flex.flex-row
                         div
                             h4.card-title.font-weight-bold.mb-2= activity.name
+                            
+                                if activity.members.length == activity.maxMember
+                                    .badge.badge-danger Đã đu thành viên 
                             p.card-text
                                 i.far.fa-clock.pr-2
                                 = activity.timeStart
