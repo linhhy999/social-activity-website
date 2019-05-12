@@ -24,9 +24,9 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
         if (profile) {
-            if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
-                return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
-            }
+            // if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
+            //     return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
+            // }
             return done(undefined, {
                 auth: {
                     googleId: profile.id,
