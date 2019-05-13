@@ -36,7 +36,7 @@ mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true }).then
     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
 ).catch((err: any) => {
     logger.error("MongoDB connection error. Please make sure MongoDB is running. " + err);
-    // process.exit();
+    process.exit();
 });
 
 // Express configuration
@@ -52,8 +52,8 @@ app.use(session({
     saveUninitialized: true,
     secret: SESSION_SECRET,
     store: new MongoStore({
-       url: mongoUrl,
-       autoReconnect: true
+        url: mongoUrl,
+        autoReconnect: true
     })
 }));
 app.use(passport.initialize());
@@ -95,8 +95,7 @@ app.post("/comment/:id", Guard.isLogin, activityController.postComment);
 
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }),
-homeController.login);
+app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), homeController.login);
 app.get("/", Guard.isLogin, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, homeController.admin);

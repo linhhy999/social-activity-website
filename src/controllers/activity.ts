@@ -6,7 +6,7 @@ import User from "../models/User";
 export let getAddActivity = async (req: Request, res: Response) => {
 
     try {
-        const sp = await User.find({"role": 1}, {"_id": 1, "fullName": 1});
+        const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1 });
         return res.render("admin/posts/add", {
             superVisors: sp
         });
@@ -18,13 +18,13 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activities = await Activity.find({"host.auth.0.googleId": req.user.auth[0].googleId});
-    console.log(activities);
+    const activities = await Activity.find({ "host.auth.0.googleId": req.user.auth[0].googleId });
+    // console.log(activities);
     return res.render("admin/posts/list", {
         activities: activities
     });
 };
-export let getActivity =  (req: Request, res: Response) => {
+export let getActivity = (req: Request, res: Response) => {
     // todo
 };
 
@@ -86,19 +86,19 @@ export let postActivity = async (req: any, res: Response) => {
 
 };
 
-export let updateActivity =  (req: Request, res: Response) => {
+export let updateActivity = (req: Request, res: Response) => {
     // todo
 };
 
-export let searchActivity =  (req: Request, res: Response) => {
+export let searchActivity = (req: Request, res: Response) => {
     // todo
 };
 
-export let createReport =  (req: Request, res: Response) => {
+export let createReport = (req: Request, res: Response) => {
     // todo
 };
 
-export let getMember =  (req: Request, res: Response) => {
+export let getMember = (req: Request, res: Response) => {
     // todo
 };
 
@@ -113,7 +113,7 @@ export let postComment = async (req: any, res: Response) => {
 
     const activityId = req.params.id;
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         activity.comment.push({
             userId: req.user._id,
             timeComment: new Date,
@@ -129,7 +129,7 @@ export let postComment = async (req: any, res: Response) => {
     }
 };
 
-export let getComment =  (req: Request, res: Response) => {
+export let getComment = (req: Request, res: Response) => {
     // todo
 };
 
@@ -137,26 +137,26 @@ export let getUserActivity = (req: Request, res: Response) => {
     // todo
 };
 
-export let activityDetail = async  (req: Request, res: Response) => {
+export let activityDetail = async (req: Request, res: Response) => {
     const activityId = req.params.id;
-    const unit = await Activity.find({}, {orgUnit: 1, _id: 0});
+    const unit = await Activity.find({}, { orgUnit: 1, _id: 0 });
     const a = [], b = [];
     let prev;
     unit.sort();
-    for ( let i = 0; i < unit.length; i++ ) {
-        if ( unit[i].orgUnit !== prev ) {
-            a.push({orgUnit: unit[i].orgUnit});
-            b.push({num: 1});
+    for (let i = 0; i < unit.length; i++) {
+        if (unit[i].orgUnit !== prev) {
+            a.push({ orgUnit: unit[i].orgUnit });
+            b.push({ num: 1 });
         } else {
             b[b.length - 1].num++;
         }
         prev = unit[i].orgUnit;
     }
-    for ( let i = 0; i < a.length; i++ ) {
-        a[i] = {...a[i], ...b[i]};
+    for (let i = 0; i < a.length; i++) {
+        a[i] = { ...a[i], ...b[i] };
     }
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         let registered = false;
         if (activity.members.filter(member => member.mssv === req.user.code).length > 0) registered = true;
         return res.render("activityDetail", {
@@ -174,11 +174,11 @@ export let activityDetail = async  (req: Request, res: Response) => {
 export let un_apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         const membersAfterRemove = activity.members.filter(member => member.mssv !== req.user.code);
-        await Activity.updateOne({"_id": activityId}, {
+        await Activity.updateOne({ "_id": activityId }, {
             members: membersAfterRemove
-        }, {upset: false});
+        }, { upset: false });
         await activity.save();
         return res.redirect("back");
     }
@@ -187,10 +187,11 @@ export let un_apply = async (req: Request, res: Response) => {
         return res.redirect("/");
     }
 };
+
 export let apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         activity.members.push({
             mssv: req.user.code,
             name: req.user.fullName,
