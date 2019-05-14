@@ -19,6 +19,7 @@ import * as UserController from "./controllers/user";
 import logger from "./util/logger";
 // Load secret and logger
 import { APP_PORT, MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { remindTrigger } from "./util/reminder";
 const rateLimit = require("express-rate-limit");
 
 const MongoStore = mongo(session);
@@ -87,7 +88,7 @@ app.use((req, res, next) => {
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
-
+remindTrigger();
 const apiLimiter = rateLimit({
     windowMs: 5 * 1000, // 5 seconds
     max: 1,
