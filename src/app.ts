@@ -10,7 +10,6 @@ import mongoose from "mongoose";
 import passport from "./config/passport";
 import expressValidator from "express-validator";
 import bluebird from "bluebird";
-import moment from "moment-timezone";
 
 // Load secret and logger
 import { MONGODB_URI, APP_PORT, SESSION_SECRET } from "./util/secrets";
