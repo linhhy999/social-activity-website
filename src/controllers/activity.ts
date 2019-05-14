@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Activity from "../models/Activity";
 import User from "../models/User";
 
@@ -188,17 +188,23 @@ export let un_apply = async (req: Request, res: Response) => {
     }
 };
 
-export let apply = async (req: Request, res: Response) => {
+
+export let apply = async (req: Request, res: Response, next: NextFunction) => {
     const activityId = req.params.id;
     try {
         const activity = await Activity.findOne({ "_id": activityId });
+        const registered = (activity.members.filter(member => member.mssv === req.user.code).length > 0);
+        if (registered) return res.redirect("back");
         activity.members.push({
+            _id: req.user.code,
             mssv: req.user.code,
             name: req.user.fullName,
             faculty: req.user.faculty
         });
         await activity.save();
-        return res.redirect("back");
+        res.locals.activity = activity;
+        res.locals.user = req.user;
+        next();
     }
     catch (err) {
         console.log(err.message);

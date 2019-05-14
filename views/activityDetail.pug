@@ -6,143 +6,139 @@ block content
                 .card-body.d-flex.flex-row
                     div
                         h4.card-title.font-weight-bold.mb-2= activity.name
-                        
                         p.card-text
-                          i.far.fa-clock.pr-2
-                            =  activity.timeStart + " " +activity.dateStart
+                            i.far.fa-clock.pr-2
+                                =  activity.timeStart + " " +activity.dateStart
                         p.card-text
                             i.far.fa-map.pr-2
-                              = activity.targetPlace
+                                = activity.targetPlace
                     .m-auto
                     img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.auth[0].picture, alt="avatar.jpg")
                     //<button type="button" class="btn btn-primary btn-rounded">Primary</button>
                 .view.overlay
                     #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
                         ol.carousel-indicators
-                                - let i = 0
-                                //- each video in activity.video
-                                //-     li(data-target="#carousel-example-1z" data-slide-to=i)
-                                //-     - i++
-                                each image in activity.image
-                                  if i == 0
+                            - let i = 0
+                            //- each video in activity.video
+                            //-     li(data-target="#carousel-example-1z" data-slide-to=i)
+                            //-     - i++
+                            each image in activity.image
+                                if i == 0
                                     li(data-target="#carousel-example-1z" data-slide-to=i).active
-                                  else
+                                else
                                     li(data-target="#carousel-example-1z" data-slide-to=i)
-                                  - i++
+                                - i++
                         .carousel-inner(role="listbox")
-                                - i = 0
-                                    //- each video in activity.video
-                                    //-     .carousel-item
-                                    //-         img.d-block.w-100(src=video alt="First slide")
-                                    //-     - i++
-                                each image in activity.image
-                                  if i == 0
+                            - i = 0
+                                //- each video in activity.video
+                                //-     .carousel-item
+                                //-         img.d-block.w-100(src=video alt="First slide")
+                                //-     - i++
+                            each image in activity.image
+                                if i == 0
                                     .carousel-item.active
                                         img.d-block.w-100(src=image alt="First slide")
-                                  else
+                                else
                                     .carousel-item
                                         img.d-block.w-100(src=image alt="First slide")
-                                  - i++
+                                - i++
                         a.carousel-control-prev(href="#carousel-example-1z" role="button" data-slide="prev")
-                                span.carousel-control-prev-iconz(aria-hidden="true")
-                                span.sr-only
-                                    |   Previous
+                            span.carousel-control-prev-iconz(aria-hidden="true")
+                            span.sr-only
+                                |   Previous
                         a.carousel-control-next(href="#carousel-example-1z" role="button" data-slide="next")
-                                span.carousel-control-next-icon(aria-hidden="true")
-                                span.sr-only
-                                    |   Next
+                            span.carousel-control-next-icon(aria-hidden="true")
+                            span.sr-only
+                                |   Next
                     a(href="#!")
                         .mask.rgba-white-slight
                 .card-body !{activity.content}
-      
+
                     div
                         if (registered == true)
-                          button.btn.btn-danger.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalHuy')
-                              |   Hủy Đăng Ký
+                            button.btn.btn-danger.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalHuy')
+                                |   Hủy Đăng Ký
                         else 
-                          if activity.members.length == activity.maxMember  
-                                  button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  disabled='')
-                                      |   Đăng Ký
-                          else 
-                                  button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  enabled='')
-                                      |   Đăng Ký
-                                
+                            if activity.members.length == activity.maxMember
+                                button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  disabled='')
+                                    |   Đăng Ký
+                            else 
+                                button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  enabled='')
+                                    |   Đăng Ký
                         button.btn.btn-primary.btn-rounded.btn-sm
                             |   Bình Luận
                         button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalMember') 
                             |   Thành Viên
-                           
                         i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
                         i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
                             |  200
                 .card-body
-                  form(action="/comment/"+activity._id, method="POST")
-                    img.rounded-circle(height="50px", width="50px", src=user.auth[0].picture, alt="avatar.jpg")
-                    input#comment.input-rounded(type="text", name="comment", placeholder="comment...")
+                    form(action="/comment/"+activity._id, method="POST")
+                        img.rounded-circle(height="50px", width="50px", src=user.auth[0].picture, alt="avatar.jpg")
+                        input#comment.input-rounded(type="text", name="comment", placeholder="comment...")
                 .card-body
                     ul.comment
-                      each comment in activity.comment
-                        li.comment-item
-                            img.rounded-circle(height="50px", width="50px", src=user.auth[0].picture, alt="avatar.jpg")
-                            span.name= user.auth[0].displayName
-                            i.far.fa-clock.pr-2= comment.timeComment
-                            
-                            p= comment.content
+                        each comment in activity.comment
+                            li.comment-item
+                                img.rounded-circle(height="50px", width="50px", src=user.auth[0].picture, alt="avatar.jpg")
+                                span.name= user.auth[0].displayName
+                                i.far.fa-clock.pr-2= comment.timeComment
+                                p= comment.content
     #modalSubscriptionForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
-      .modal-dialog(role='document')
-        .modal-content
-          .modal-header.text-center
-            h4.modal-title.w-100.font-weight-bold Xác nhận tham gia hoạt động
-            button.close(type='button' data-dismiss='modal' aria-label='Close')
-              span(aria-hidden='true') &times;
-          .modal-body.mx-3  
-            a.btn.btn-indigo(href="/apply/"+activity._id)
-              | Đăng Ký 
-              i.fas.fa-paper-plane-o.ml-1
-          .modal-footer.d-flex.justify-content-center
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header.text-center
+                    h4.modal-title.w-100.font-weight-bold Xác nhận tham gia hoạt động
+                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                .modal-body.mx-3  
+                    a.btn.btn-indigo(href="/apply/"+activity._id)
+                        | Đăng Ký 
+                        i.fas.fa-paper-plane-o.ml-1
+                .modal-footer.d-flex.justify-content-center
     #modalHuy.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
-      .modal-dialog(role='document')
-        .modal-content
-          .modal-header.text-center
-            h4.modal-title.w-100.font-weight-bold Xác nhận tham gia hoạt động
-            button.close(type='button' data-dismiss='modal' aria-label='Close')
-              span(aria-hidden='true') &times;
-          .modal-body.mx-3  
-            a.btn.btn-indigo(href="/un_apply/"+activity._id)
-              | Hủy Đăng Ký
-              i.fas.fa-paper-plane-o.ml-1
-          .modal-footer.d-flex.justify-content-center
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header.text-center
+                    h4.modal-title.w-100.font-weight-bold Xác nhận tham gia hoạt động
+                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                .modal-body.mx-3  
+                    a.btn.btn-indigo(href="/un_apply/"+activity._id)
+                        | Hủy Đăng Ký
+                        i.fas.fa-paper-plane-o.ml-1
+                .modal-footer.d-flex.justify-content-center
     #modalMember.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
-      .modal-dialog(role='document')
-        .modal-content
-          //Header
-          .modal-header
-            h4#myModalLabel.modal-title.font-weight-bold Thành viên đăng ký hoạt động
-            button.close(type='button' data-dismiss='modal' aria-label='Close')
-              span(aria-hidden='true') &times;
-          // Body
-          .modal-body
-            table.table.table-hover
-              thead
-                tr
-                  th Stt
-                  th Họ và tên 
-                  th mssv
-                  th Khoa
-                  
-              tbody
-                - i=1
-                each member in activity.members
-                    tr
-                      th(scope='row')= i
-                      td.font-weight-bold= member.name
-                      td= member.mssv 
-                      td= member.faculty
-                    - i++
-                    
-                  
-                    
-            // Footer
-            .modal-footer
-             // button.btn.btn-outline-primary(type='button' data-dismiss='modal') Close
-      // Modal: modalMember
+        .modal-dialog(role='document')
+            .modal-content
+                //Header
+                .modal-header
+                    h4#myModalLabel.modal-title.font-weight-bold Thành viên đăng ký hoạt động
+                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                // Body
+                .modal-body
+                    table.table.table-hover
+                        thead
+                            tr
+                                th Stt
+                                th Họ và tên 
+                                th mssv
+                                th Khoa
+
+                        tbody
+                            - i=1
+                            each member in activity.members
+                                tr
+                                    th(scope='row')= i
+                                    td.font-weight-bold= member.name
+                                    td= member.mssv 
+                                    td= member.faculty
+                                - i++
+
+
+
+                    // Footer
+                    .modal-footer
+                        // button.btn.btn-outline-primary(type='button' data-dismiss='modal') Close
+                        // Modal: modalMember
