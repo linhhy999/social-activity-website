@@ -7,7 +7,12 @@ block content
                     div
                         h4.card-title.font-weight-bold.mb-2
                           = activity.name 
-                        label.badge-pill.badge.badge-warning Request Pending
+                        if status == 1
+                          label.badge-pill.badge.badge-warning Request Pending
+                        else if status == 2
+                          label.badge-pill.badge.badge-success Accepted
+                        else if status == 3
+                          label.badge-pill.badge.badge-danger Rejected
                         p.card-text
                           i.far.fa-clock.pr-2
                             =  activity.timeStart + " " +activity.dateStart
@@ -57,16 +62,22 @@ block content
                 .card-body !{activity.content}
       
                     div
-                        if (registered == true)
+                        if status == 1
+                          button.btn.btn-danger.btn-rounded.btn-sm(disabled)
+                            |   Đang chờ duyệt
+                        else if status == 2
                           button.btn.btn-danger.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalHuy')
-                              |   Hủy Đăng Ký
-                        else 
-                          if activity.members.length == activity.maxMember  
-                                  button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  disabled='')
-                                      |   Đăng Ký
+                            |   Hủy Đăng Ký
+                        else
+                          if status == 3
+                            button.btn.btn-primary.btn-rounded.btn-sm( disabled)
+                                      |   Không thể đăng ký
+                          else if activity.members.length == activity.maxMember  
+                            button.btn.btn-primary.btn-rounded.btn-sm( disabled)
+                                |   Không thể đăng ký
                           else 
-                                  button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm'  enabled='')
-                                      |   Đăng Ký
+                            button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalSubscriptionForm')
+                                |   Đăng ký
                                 
                         button.btn.btn-primary.btn-rounded.btn-sm
                             |   Bình Luận
@@ -105,11 +116,12 @@ block content
       .modal-dialog(role='document')
         .modal-content
           .modal-header.text-center
-            h4.modal-title.w-100.font-weight-bold Xác nhận tham gia hoạt động
+            h4.modal-title.w-100.font-weight-bold Xác nhận hủy tham gia hoạt động
             button.close(type='button' data-dismiss='modal' aria-label='Close')
               span(aria-hidden='true') &times;
-          .modal-body.mx-3  
-            a.btn.btn-indigo(href="/un_apply/"+activity._id)
+          .modal-body.mx-3.text-center
+            p.model-body Nếu bạn hủy đăng ký, bạn sẽ không thể đăng ký lại. Xác nhận?
+            a.btn.btn-indigo(href="/")
               | Hủy Đăng Ký
               i.fas.fa-paper-plane-o.ml-1
           .modal-footer.d-flex.justify-content-center

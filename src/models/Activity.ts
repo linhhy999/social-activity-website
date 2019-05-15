@@ -41,6 +41,7 @@ export type Member = {
     name: string,
     faculty: string,
     phone: string,
+    email: string,
     status: Status
 };
 

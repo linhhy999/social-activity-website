@@ -52,7 +52,7 @@ export let getActivityDetail = async (req: Request, res: Response) => {
         console.log(superVisor);
         return res.render("admin/posts/detail", {
             activity: activity,
-            superVisor: superVisor
+            superVisor: superVisor,
         });
     }
     catch (er) {
@@ -117,7 +117,8 @@ export let postActivity = async (req: any, res: Response) => {
             members: [],
             comment: [],
             superVisor: superVisor,
-            benefit: req.body.benefit
+            benefit: req.body.benefit,
+            status: true
         });
         await activity.save();
         req.flash("info", {message: "OK!"});
@@ -129,6 +130,8 @@ export let postActivity = async (req: any, res: Response) => {
     }
 
 };
+
+
 
 export let postEditActivity = async (req: any, res: Response) => {
     req.checkBody("activityName", "Tên hoạt động không được để trống").notEmpty();
@@ -288,8 +291,40 @@ export let createReport =  (req: Request, res: Response) => {
     // todo
 };
 
-export let getMember =  (req: Request, res: Response) => {
-    // todo
+export let getMember = async (req: Request, res: Response) => {
+    try {
+        const members = (await Activity.findById(req.params.activity)).members;
+        return res.render("admin/posts/member", {
+            members: members,
+            pending: members.filter((obj) => obj.status === 1).length,
+            accept: members.filter((obj) => obj.status === 2).length,
+            refuse: members.filter((obj) => obj.status === 3).length,
+            activity: req.params.activity
+        });
+    }
+    catch (err) {
+        console.log(err);
+        return res.redirect("back");
+    }
+
+};
+
+export let getAcceptMember = async (req: Request, res: Response) => {
+    await Activity.updateOne({_id: req.params.activity, "members.mssv": req.params.mssv}, {
+        "$set": {
+            "members.$.status": 2
+        }
+    });
+    return res.redirect("back");
+};
+
+export let getRefuseMember = async (req: Request, res: Response) => {
+    await Activity.updateOne({_id: req.params.activity, "members.mssv": req.params.mssv}, {
+        "$set": {
+            "members.$.status": 3
+        }
+    });
+    return res.redirect("back");
 };
 
 export let postComment = async (req: any, res: Response) => {
@@ -349,11 +384,17 @@ export let activityDetail = async  (req: Request, res: Response) => {
         const activity = await Activity.findOne({"_id": activityId});
         let registered = false;
         if (activity.members.filter(member => member.mssv === req.user.code).length > 0) registered = true;
+        const userActivity = activity.members.find(function(element) {
+            return element.mssv == req.user.code;
+        });
+        let status = 0;
+        userActivity ? status = userActivity.status : status = 0;
         return res.render("activityDetail", {
             user: req.user,
             activity: activity,
             registered: registered,
-            orgUnit: a
+            orgUnit: a,
+            status: status
         });
     }
     catch (err) {
@@ -386,6 +427,7 @@ export let apply = async (req: Request, res: Response) => {
             name: req.user.fullName,
             faculty: req.user.faculty,
             phone: req.user.phone,
+            email: req.user.email,
             status: Status.PENDING
         });
         await activity.save();

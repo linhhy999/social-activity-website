@@ -126,6 +126,9 @@ app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
 app.post("/admin/post/add", Guard.isLogin, upload.array("image"), activityController.postActivity);
 app.post("/admin/post/edit/:id", Guard.isLogin, upload.array("image"), activityController.postEditActivity);
 app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity);
+app.get("/admin/post/member/:activity", Guard.isLogin, activityController.getMember);
+app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, activityController.getAcceptMember);
+app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, activityController.getRefuseMember);
 
 app.post("/ajax/delete/image", activityController.postDeleteImage);
 
