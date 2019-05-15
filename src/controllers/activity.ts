@@ -196,7 +196,6 @@ export let apply = async (req: Request, res: Response, next: NextFunction) => {
         const registered = (activity.members.filter(member => member.mssv === req.user.code).length > 0);
         if (registered) return res.redirect("back");
         activity.members.push({
-            _id: req.user.code,
             mssv: req.user.code,
             name: req.user.fullName,
             faculty: req.user.faculty
