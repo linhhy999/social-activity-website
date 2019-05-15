@@ -12,16 +12,16 @@ block content
                   .breadcomb-icon
                     i.notika-icon.notika-form
                   .breadcomb-ctn
-                    h2 Thêm bài viết
+                    h2 Thêm hoạt động
                     p
-                      | Bài đăng > Thêm bài viết
+                      | Hoạt động > Thêm hoạt động
   .form-element-area
     .container
       .row
         .col-lg-12.col-md-12.col-sm-12.col-xs-12
           .form-element-list
 
-            form(action="/admin/post/add" method="POST")
+            form(action="/admin/post/add" method="POST" enctype="multipart/form-data")
               
                 <!-- Activity name -->
                 .form-group.ic-cmp-int.float-lb.floating-lb
@@ -103,7 +103,7 @@ block content
                   .form-ic-cmp
                     i.notika-icon.notika-star
                   .nk-int-st
-                    input.form-control(type='number' step=any name="benefit")
+                    input.form-control(type='number' step='0.5' name="benefit")
                     label.nk-label Quyền lợi sẽ được hưởng
 
                 <!-- Number of volunteers -->
@@ -175,7 +175,12 @@ block content
                               .bootstrap-select
                                   select.selectpicker(name="superVisor" multiple)
                                     each sp in superVisors
-                                      option(value=sp._id)= sp.fullName                    
+                                      option(value=sp._id)= sp.fullName      
+                .form-group.ic-cmp-int.float-lb.floating-lb
+                    .form-ic-cmp
+                          i.notika-icon.notika-start
+                    h4 Hình ảnh
+                    input(type="file", name="image" multiple)
                 <!-- Button -->
                 .btn-demo-notika
                 .btn-list

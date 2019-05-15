@@ -5,8 +5,9 @@ block content
             .card.promoting-card.mb-2
                 .card-body.d-flex.flex-row
                     div
-                        h4.card-title.font-weight-bold.mb-2= activity.name
-                        
+                        h4.card-title.font-weight-bold.mb-2
+                          = activity.name 
+                        label.badge-pill.badge.badge-warning Request Pending
                         p.card-text
                           i.far.fa-clock.pr-2
                             =  activity.timeStart + " " +activity.dateStart
@@ -133,6 +134,7 @@ block content
               tbody
                 - i=1
                 each member in activity.members
+                  if member.status == 2
                     tr
                       th(scope='row')= i
                       td.font-weight-bold= member.name

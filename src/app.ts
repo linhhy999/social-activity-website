@@ -11,7 +11,21 @@ import passport from "./config/passport";
 import expressValidator from "express-validator";
 import bluebird from "bluebird";
 import moment from "moment-timezone";
+import multer from "multer";
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(undefined, "src/public/uploads/");
+    },
+    filename: function (req, file, cb) {
+        const tmp = file.originalname.split(".");
+        const ext = tmp[tmp.length - 1];
+        console.log(file.filename, ext);
+        cb(undefined, tmp[0] + Date.now() + "." + ext);
+  }
+});
 
+
+const upload = multer({ storage: storage });
 // Load secret and logger
 import { MONGODB_URI, APP_PORT, SESSION_SECRET } from "./util/secrets";
 import logger from "./util/logger";
@@ -107,9 +121,13 @@ app.get("/profile", Guard.isLogin, UserController.profile);
 app.get("/info", Guard.isLogin, UserController.info);
 app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
+app.get("/admin/post/detail/:id", Guard.isLogin, activityController.getActivityDetail);
 app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, activityController.postActivity);
+app.post("/admin/post/add", Guard.isLogin, upload.array("image"), activityController.postActivity);
+app.post("/admin/post/edit/:id", Guard.isLogin, upload.array("image"), activityController.postEditActivity);
 app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity);
+
+app.post("/ajax/delete/image", activityController.postDeleteImage);
 
 
 export default app;
