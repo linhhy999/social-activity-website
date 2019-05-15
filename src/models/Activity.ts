@@ -12,10 +12,10 @@ export type ActivityModel = mongoose.Document & {
     content: string,
     orgUnit: string,
     host: {},
-    image: string[],
-    video: string[],
+    image: Media[],
+    video: Media[],
     maxMember: number,
-    members: any[],
+    members: Member[],
     comment: Comment[],
     superVisor: [],
     benefit: number,
@@ -29,6 +29,24 @@ export type Comment = {
     reply: Comment[]
 };
 
+export type Media = {
+    id: string,
+    link: string
+};
+export type Member = {
+    mssv: string,
+    name: string,
+    faculty: string,
+    phone: string,
+    email: string,
+    status: Status
+};
+
+export enum Status {
+    PENDING = 1,
+    ACCEPT = 2,
+    REFUSE = 3
+}
 
 
 const activitySchema = new mongoose.Schema({

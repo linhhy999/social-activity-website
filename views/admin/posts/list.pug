@@ -1,81 +1,51 @@
 extends ../layout
 
 block content
-    .breadcomb-area
-        .container
-            .row
-                .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                    .breadcomb-list
-                        .row
-                            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                                .breadcomb-wp
-                                    .breadcomb-icon
-                                        i.notika-icon.notika-form
-                                    .breadcomb-ctn
-                                        h2 Danh sách bài đăng
-                                        p
-                                            | Bài đăng > Danh sách bài đăng
-    each activity in activities
-        .form-element-area
-            .container
-                .row
-                    .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                        .form-element-list
-                            .basic-tb-hd
-                                h2= activity.name
-                                    span.float-right 1
-                                p 
-                                    i.fa.fa-clock-o
-                                    = activity.dateStart + " " + activity.timeStart 
-                                p
-                                    i.fa.fa-map-o
-                                    = activity.targetPlace
-                            .cmp-tb-hd.bcs-hd
-
-                            .row
-                                .col-lg-7.col-md-7.col-sm-12.col-xs-12
-                                    | !{activity.content}
-                                .col-lg-5.col-md-5.col-sm-12.col-xs-12
-                                    .wizard-area
-                                        .row
-                                        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                                            .wizard-wrap-int
-                                                .wizard-hd
-                                                    p
-                                                        | Hình ảnh hoạt động
-                                                if activity.image !== []
-                                                    #rootwizard-1
-                                                        .navbar
-                                                            .navbar-inner
-                                                                .container-pro.wizard-cts-st
-                                                                    .tab-content
-                                                                        #post1-1.tab-pane.wizard-ctn
-                                                                            img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg" alt="First slide")
-                                                                        #post1-2.tab-pane.wizard-ctn
-                                                                            img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg" alt="First slide")
-                                                                        #post1-3.tab-pane.wizard-ctn
-                                                                            img(src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg" alt="First slide")
-                                                                    ul
-                                                                        li
-                                                                            a(href='#post1-1' data-toggle='tab') 
-                                                                        li
-                                                                            a(href='#post1-2' data-toggle='tab') 
-                                                                        li
-                                                                            a(href='#post1-3' data-toggle='tab') 
-                                                            .wizard-action-pro
-                                                                ul.wizard-nav-ac
-                                                                    li
-                                                                        a.button-first.a-prevent(href='#')
-                                                                            i.notika-icon.notika-more-button
-                                                                    li
-                                                                        a.button-previous.a-prevent(href='#')
-                                                                            i.notika-icon.notika-back
-                                                                    li
-                                                                        a.button-next.a-prevent(href='#')
-                                                                            i.notika-icon.notika-next-pro
-                                                                    li
-                                                                        a.button-last.a-prevent(href='#')
-                                                                            i.notika-icon.notika-more-button
+  .breadcomb-area
+      .container
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              .breadcomb-wp
+                .breadcomb-icon
+                  i.notika-icon.notika-form
+                .breadcomb-ctn
+                  h2 Danh sách Hoạt động
+                  p
+                    | Hoạt động > Danh sách Hoạt động
+  .normal-table-area
+    .container
+      .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          .normal-table-list
+            .basic-tb-hd
+              h2 Danh sách hoạt động
+            .bsc-tbl
+              table.table.table-sc-ex
+                thead
+                  tr
+                    th #
+                    th Tên hoạt động
+                    th Thời gian tổ chức
+                    th Số thành viên
+                    th Đang chờ duyệt
+                    th Trạng thái
+                    th Hành động
+                tbody
+                  each activity, index in activities
+                    tr
+                      td= index + 1
+                      td= activity.name
+                      td= activity.start
+                      td= activity.numMember
+                      td= activity.numPendingMember
+                      td= activity.status
+                      th
+                        a(href="/admin/post/detail/"+activity.id  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Chi tiết hoạt động").mr-3
+                          i.fa.fa-info
+                        a(href="/admin/post/member/"+activity.id data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Danh sách thành viên").mr-3
+                          i.fa.fa-users
+                        a(href="#" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Khóa hoạt động").mr-3
+                          i.fa.fa-lock
 
 block script
     script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')

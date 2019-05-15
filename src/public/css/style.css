@@ -208,3 +208,18 @@ ul.comment li.comment-item p {
     background: #0d48a148;
     box-shadow: 5px 5px 9999px #ffffff;
 }
+
+.sub-title {
+    font-size: 10px !important;
+}
+.custom-popover-width {
+    width: 50% !important;
+}
+
+.custom-card {
+    padding: 5px;
+}
+
+.custom-card .card-body{
+    padding: 0px;
+}
