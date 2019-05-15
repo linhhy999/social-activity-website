@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import Activity, { Status } from "../models/Activity";
 import User from "../models/User";
 
@@ -18,7 +18,7 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activityList = await Activity.find({"host.auth.0.googleId": req.user.auth[0].googleId});
+    const activityList = await Activity.find({ "host.auth.0.googleId": req.user.auth[0].googleId });
     const activities = [];
     for (const activity of activityList) {
         let numMember = 0;
@@ -36,7 +36,6 @@ export let listOwnActivity = async (req: Request, res: Response) => {
             status: activity.status ? "Đang diễn ra" : "Đã xong"
         });
     }
-    console.log(activities);
     return res.render("admin/posts/list", {
         activities: activities
     });
@@ -49,7 +48,6 @@ export let getActivityDetail = async (req: Request, res: Response) => {
         for (const visor of activity.superVisor) {
             superVisor.push(await User.findById(visor));
         }
-        console.log(superVisor);
         return res.render("admin/posts/detail", {
             activity: activity,
             superVisor: superVisor,
@@ -60,7 +58,7 @@ export let getActivityDetail = async (req: Request, res: Response) => {
     }
     const activity = await Activity.findById(req.params.id);
 };
-export let getActivity =  (req: Request, res: Response) => {
+export let getActivity = (req: Request, res: Response) => {
     // todo
 };
 
@@ -98,7 +96,6 @@ export let postActivity = async (req: any, res: Response) => {
                 link: "/uploads/" + file.filename
             });
         }
-        console.log(images);
         const activity = await new Activity({
             name: req.body.activityName,
             registerEnd: req.body.register_deadline,
@@ -121,7 +118,7 @@ export let postActivity = async (req: any, res: Response) => {
             status: true
         });
         await activity.save();
-        req.flash("info", {message: "OK!"});
+        req.flash("info", { message: "OK!" });
         return res.redirect("/admin/post/list");
     }
     catch (err) {
@@ -159,7 +156,6 @@ export let postEditActivity = async (req: any, res: Response) => {
         else {
             superVisor.push(req.body.superVisor);
         }
-        console.log(req.files);
         const images = [];
         for (const file of req.files) {
             images.push({
@@ -167,8 +163,7 @@ export let postEditActivity = async (req: any, res: Response) => {
                 link: "/uploads/" + file.filename
             });
         }
-        console.log(images);
-        await Activity.updateOne({_id: req.params.id}, {
+        await Activity.updateOne({ _id: req.params.id }, {
             name: req.body.activityName,
             registerEnd: req.body.register_deadline,
             dateStart: req.body.startDate,
@@ -183,11 +178,11 @@ export let postEditActivity = async (req: any, res: Response) => {
             video: [],
             maxMember: req.body.numMember,
             superVisor: superVisor,
-        }, {upset: false});
-        await Activity.updateOne({_id: req.params.id}, {
+        }, { upset: false });
+        await Activity.updateOne({ _id: req.params.id }, {
             $push: { image: images }
-        }, {upset: false});
-        req.flash("info", {message: "Updated!"});
+        }, { upset: false });
+        req.flash("info", { message: "Updated!" });
         return res.redirect("/admin/post/list");
     }
     catch (err) {
@@ -196,21 +191,23 @@ export let postEditActivity = async (req: any, res: Response) => {
     }
 
 };
-export let updateActivity =  (req: Request, res: Response) => {
+export let updateActivity = (req: Request, res: Response) => {
     // todo
 };
 
-export let searchActivity =  async (req: Request, res: Response) => {
-    const activities = await Activity.find( {$or:
-        [
-            { name: { $regex: req.query.keyword, $options: "$i" }},
-            { content: { $regex: req.query.keyword, $options: "$i" }},
-            { targetPlace: { $regex: req.query.keyword, $options: "$i" }},
-            { gatheringPlace: { $regex: req.query.keyword, $options: "$i" }},
-            { dateStart: { $regex: req.query.keyword, $options: "$i" }},
-            { orgUnit: { $regex: req.query.keyword, $options: "$i" }},
-            { "host.fullName": { $regex: req.query.keyword, $options: "$i" }},
-        ]});
+export let searchActivity = async (req: Request, res: Response) => {
+    const activities = await Activity.find({
+        $or:
+            [
+                { name: { $regex: req.query.keyword, $options: "$i" } },
+                { content: { $regex: req.query.keyword, $options: "$i" } },
+                { targetPlace: { $regex: req.query.keyword, $options: "$i" } },
+                { gatheringPlace: { $regex: req.query.keyword, $options: "$i" } },
+                { dateStart: { $regex: req.query.keyword, $options: "$i" } },
+                { orgUnit: { $regex: req.query.keyword, $options: "$i" } },
+                { "host.fullName": { $regex: req.query.keyword, $options: "$i" } },
+            ]
+    });
     return res.render("search", {
         title: "Search",
         activities: activities,
@@ -219,64 +216,64 @@ export let searchActivity =  async (req: Request, res: Response) => {
 };
 
 export let searchAdvancedActivity = async (req: Request, res: Response) => {
-    console.log(req.body);
-    console.log(req.query.keyword);
     const query = [];
     switch (req.body.type) {
         case "1": {
-            query.push({ name: { $regex: req.query.keyword, $options: "$i" }});
+            query.push({ name: { $regex: req.query.keyword, $options: "$i" } });
             break;
         }
         case "2": {
-            query.push({ orgUnit: { $regex: req.query.keyword, $options: "$i" }});
+            query.push({ orgUnit: { $regex: req.query.keyword, $options: "$i" } });
             break;
         }
         case "3": {
-            query.push({ gatheringPlace: { $regex: req.query.keyword, $options: "$i" }});
-            query.push({ targetPlace: { $regex: req.query.keyword, $options: "$i" }});
+            query.push({ gatheringPlace: { $regex: req.query.keyword, $options: "$i" } });
+            query.push({ targetPlace: { $regex: req.query.keyword, $options: "$i" } });
             break;
         }
         case "4": {
-            query.push({ "host.fullName": { $regex: req.query.keyword, $options: "$i" }});
+            query.push({ "host.fullName": { $regex: req.query.keyword, $options: "$i" } });
             break;
         }
     }
     switch (req.body.status) {
         case "1": {
-            query.push({ status: true});
+            query.push({ status: true });
             break;
         }
         case "2": {
-            query.push({ $or: [
-                {status: false},
-                {status: undefined}
-            ]});
+            query.push({
+                $or: [
+                    { status: false },
+                    { status: undefined }
+                ]
+            });
             break;
         }
     }
     switch (req.body.benefit) {
         case "1": {
-            query.push({ benefit: 0.5});
+            query.push({ benefit: 0.5 });
             break;
         }
         case "2": {
-            query.push({ benefit: 1});
+            query.push({ benefit: 1 });
             break;
         }
         case "3": {
-            query.push({ benefit: 1.5});
+            query.push({ benefit: 1.5 });
             break;
         }
         case "4": {
-            query.push({ benefit: 2});
+            query.push({ benefit: 2 });
             break;
         }
         case "5": {
-            query.push({ benefit : {$gt: 2}});
+            query.push({ benefit: { $gt: 2 } });
             break;
         }
     }
-    const activities = await Activity.find({$and: query});
+    const activities = await Activity.find({ $and: query });
     return res.render("search", {
         title: "Search",
         activities: activities,
@@ -310,17 +307,16 @@ export let getMember = async (req: Request, res: Response) => {
 
 };
 
-export let getAcceptMember = async (req: Request, res: Response) => {
-    await Activity.updateOne({_id: req.params.activity, "members.mssv": req.params.mssv}, {
-        "$set": {
-            "members.$.status": 2
-        }
-    });
-    return res.redirect("back");
+export let getAcceptMember = async (req: Request, res: Response, next: NextFunction) => {
+    await Activity.updateOne({ _id: req.params.activity, "members.mssv": req.params.mssv }, { "$set": { "members.$.status": 2 } });
+    res.locals.mssv = req.params.mssv;
+    res.locals.activity = req.params.activity;
+    next();
+    // return res.redirect("back");
 };
 
 export let getRefuseMember = async (req: Request, res: Response) => {
-    await Activity.updateOne({_id: req.params.activity, "members.mssv": req.params.mssv}, {
+    await Activity.updateOne({ _id: req.params.activity, "members.mssv": req.params.mssv }, {
         "$set": {
             "members.$.status": 3
         }
@@ -385,7 +381,7 @@ export let activityDetail = async (req: Request, res: Response) => {
         const activity = await Activity.findOne({ "_id": activityId });
         let registered = false;
         if (activity.members.filter(member => member.mssv === req.user.code).length > 0) registered = true;
-        const userActivity = activity.members.find(function(element) {
+        const userActivity = activity.members.find(function (element) {
             return element.mssv == req.user.code;
         });
         let status = 0;
@@ -421,7 +417,7 @@ export let un_apply = async (req: Request, res: Response) => {
 };
 
 
-export let apply = async (req: Request, res: Response, next: NextFunction) => {
+export let apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
         const activity = await Activity.findOne({ "_id": activityId });
@@ -438,7 +434,7 @@ export let apply = async (req: Request, res: Response, next: NextFunction) => {
         await activity.save();
         res.locals.activity = activity;
         res.locals.user = req.user;
-        next();
+        return res.redirect("back");
     }
     catch (err) {
         console.log(err.message);
@@ -448,11 +444,11 @@ export let apply = async (req: Request, res: Response, next: NextFunction) => {
 
 export let postDeleteImage = async (req: Request, res: Response) => {
     try {
-        const activity = await Activity.findOne({"_id": req.body.activity});
+        const activity = await Activity.findOne({ "_id": req.body.activity });
         const image = activity.image.filter(function (el) {
             return el.id != req.body.id;
         });
-        await Activity.updateOne({"_id": req.body.activity}, {image: image}, {upset: false});
+        await Activity.updateOne({ "_id": req.body.activity }, { image: image }, { upset: false });
         return res.status(200).json("ok");
     }
     catch (err) {

@@ -4,190 +4,188 @@ block content
     .breadcomb-area
         .container
             .row
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                .breadcomb-wp
-                  .breadcomb-icon
-                    i.notika-icon.notika-form
-                  .breadcomb-ctn
-                    h2 Thêm hoạt động
-                    p
-                      | Hoạt động > Thêm hoạt động
-  .form-element-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .form-element-list
-
-            form(action="/admin/post/add" method="POST" enctype="multipart/form-data")
-              
-                <!-- Activity name -->
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                  .form-ic-cmp
-                    i.notika-icon.notika-support
-                  .nk-int-st
-                    input.form-control.input-lg(type='text' name='activityName')
-                    label.nk-label Tên Hoạt động
-                
-                <!-- Processing Time -->
+                .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                    .breadcomb-wp
+                        .breadcomb-icon
+                            i.notika-icon.notika-form
+                        .breadcomb-ctn
+                            h2 Thêm hoạt động
+                            p
+                                | Hoạt động > Thêm hoạt động
+    .form-element-area
+        .container
                 .row
-                  .col-sm-4
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-calendar
-                      .nk-int-st
-                        #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                          label Hạn cuối đăng ký
-                          .input-group.date.nk-int-st
-                            span.input-group-addon
-                            input.form-control(type='text' value='dd/mm/yyyy' name='register_deadline')
-                  .col-sm-4
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-calendar
-                      .nk-int-st
-                        #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                          label Ngày bắt đầu
-                          .input-group.date.nk-int-st
-                            span.input-group-addon
-                            input.form-control(type='text' value='dd/mm/yyyy' name='startDate')
-                  .col-sm-4
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-calendar
-                      .nk-int-st
-                        #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                          label Ngày kết thúc
-                          .input-group.date.nk-int-st
-                            span.input-group-addon
-                            input.form-control(type='text' value='dd/mm/yyyy' name='endDate')
-                
-                .row
-                  .col-sm-6
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-calendar
-                      .nk-int-st
-                          input.form-control(type='text' data-mask='99:99' name="startTime" )
-                          label.nk-label Thời gian bắt đầu
-                  .col-sm-6
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-calendar
-                      .nk-int-st
-                          input.form-control(type='text' data-mask='99:99' name="endTime")
-                          label.nk-label Thời gian kết thúc
-                
-                <!-- Start Location -->
-                .row
-                  .col-sm-6
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-map
-                      .nk-int-st
-                        input.form-control.input-lg(type='text' name="gathering_place")
-                        label.nk-label Địa điểm nhận tập chung
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .form-element-list
+                        form(action="/admin/post/add" method="POST" enctype="multipart/form-data")
+                            <!-- Activity name -->
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                    i.notika-icon.notika-support
+                                .nk-int-st
+                                    input.form-control.input-lg(type='text' name='activityName')
+                                    label.nk-label Tên Hoạt động
+    
+                            <!-- Processing Time -->
+                            .row
+                                .col-sm-4
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-calendar
+                                        .nk-int-st
+                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
+                                                label Hạn cuối đăng ký
+                                                .input-group.date.nk-int-st
+                                                    span.input-group-addon
+                                                    input.form-control(type='text' value='dd/mm/yyyy' name='register_deadline')
+                                .col-sm-4
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-calendar
+                                        .nk-int-st
+                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
+                                                label Ngày bắt đầu
+                                                .input-group.date.nk-int-st
+                                                    span.input-group-addon
+                                                    input.form-control(type='text' value='dd/mm/yyyy' name='startDate')
+                                .col-sm-4
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-calendar
+                                        .nk-int-st
+                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
+                                                label Ngày kết thúc
+                                                .input-group.date.nk-int-st
+                                                    span.input-group-addon
+                                                    input.form-control(type='text' value='dd/mm/yyyy' name='endDate')
+    
+                            .row
+                                .col-sm-6
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-calendar
+                                        .nk-int-st
+                                            input.form-control(type='text' data-mask='99:99' name="startTime" )
+                                            label.nk-label Thời gian bắt đầu
+                                .col-sm-6
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-calendar
+                                        .nk-int-st
+                                            input.form-control(type='text' data-mask='99:99' name="endTime")
+                                            label.nk-label Thời gian kết thúc
+    
+                            <!-- Start Location -->
+                            .row
+                                .col-sm-6
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-map
+                                        .nk-int-st
+                                            input.form-control.input-lg(type='text' name="gathering_place")
+                                            label.nk-label Địa điểm nhận tập chung
+    
+                                .col-sm-6
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-map
+                                        .nk-int-st
+                                            input.form-control.input-lg(type='text' name='target_place')
+                                            label.nk-label Địa điểm di chuyển đến (nếu có)
+    
+                            <!-- Benefit -->
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                    i.notika-icon.notika-star
+                                .nk-int-st
+                                    input.form-control(type='number' step='0.5' name="benefit")
+                                    label.nk-label Quyền lợi sẽ được hưởng
+    
+                            <!-- Number of volunteers -->
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                    i.notika-icon.notika-star
+                                .nk-int-st
+                                    input.form-control(type='number' name="numMember")
+                                    label.nk-label Số lượng tình nguyện viên cần tuyển
+                            <!-- Number of volunteers -->
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                    i.notika-icon.notika-star
+                                .nk-int-st
+                                    input.form-control(type='text' name="orgUnit")
+                                    label.nk-label Đơn vị tổ chức
+                            <!-- Number of volunteers -->
+    
+                            <!-- Description -->
+    
+                            <!-- Content -->
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                .nk-int-st
+                                    h4 Nội dung hoạt động
+                                    <textarea name="content"></textarea>
+    
+                            <!-- Video -->
+                            //- .dropdone-nk.mg-t-30
+                            //-   .cmp-tb-hd
+                            //-     h2 Video
+                            //-     p
+                            //-       | Video mô tả hoạt động (nếu có)
+                            //-   #dropzone1.multi-uploader-cs.text-center
+                            //-     form#demo1-upload.dropzone.dropzone-nk.needsclick.dz-clickable(action='/upload').p-5
+                            //-       .dz-message.needsclick.download-custom
+                            //-         i.notika-icon.notika-cloud
+                            //-         h2 Drop files here or click to upload.
+                            //-         p
+                            //-           span.note.needsclick
+                            //-             | (This is just a demo dropzone. Selected files are 
+                            //-             strong not
+                            //-             |  actually uploaded.)
+    
+                            //- <!-- Image -->
+                            //- .dropdone-nk.mg-t-30
+                            //-   .cmp-tb-hd
+                            //-     h2 Hình ảnh
+                            //-     p
+                            //-       | Hình ảnh mô tả hoạt động (nếu có)
+                            //-   #dropzone1.multi-uploader-cs.text-center
+                            //-     form#demo1-upload.dropzone.dropzone-nk.needsclick.dz-clickable(action='/upload')
+                            //-       .dz-message.needsclick.download-custom
+                            //-         i.notika-icon.notika-cloud
+                            //-         h2 Drop files here or click to upload.
+                            //-         p
+                            //-           span.note.needsclick
+                            //-             | (This is just a demo dropzone. Selected files are 
+                            //-             strong not
+                            //-             |  actually uploaded.)
+    
+    
+    
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                .nk-int-st
+                                    label Người giám sát
+                                    .fm-checkbox
+                                        .bootstrap-select
+                                            select.selectpicker(name="superVisor" multiple)
+                                                each sp in superVisors
+                                                    option(value=sp._id)= sp.fullName      
+                            .form-group.ic-cmp-int.float-lb.floating-lb
+                                .form-ic-cmp
+                                    i.notika-icon.notika-start
+                                h4 Hình ảnh
+                                input(type="file", name="image" multiple)
+                            <!-- Button -->
+                            .btn-demo-notika
+                            .btn-list
+                                button.btn.btn-default.notika-btn-default.btn-lg(type="submit")
+                                    | Thêm
+                                a.btn.btn-danger.notika-btn-danger.btn-lg(href="/admin/post/list")
+                                    | Hủy
 
-                  .col-sm-6
-                    .form-group.ic-cmp-int.float-lb.floating-lb
-                      .form-ic-cmp
-                        i.notika-icon.notika-map
-                      .nk-int-st
-                        input.form-control.input-lg(type='text' name='target_place')
-                        label.nk-label Địa điểm di chuyển đến (nếu có)
-
-                <!-- Benefit -->
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                  .form-ic-cmp
-                    i.notika-icon.notika-star
-                  .nk-int-st
-                    input.form-control(type='number' step='0.5' name="benefit")
-                    label.nk-label Quyền lợi sẽ được hưởng
-
-                <!-- Number of volunteers -->
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                  .form-ic-cmp
-                    i.notika-icon.notika-star
-                  .nk-int-st
-                    input.form-control(type='number' name="numMember")
-                    label.nk-label Số lượng tình nguyện viên cần tuyển
-                <!-- Number of volunteers -->
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                  .form-ic-cmp
-                    i.notika-icon.notika-star
-                  .nk-int-st
-                    input.form-control(type='text' name="orgUnit")
-                    label.nk-label Đơn vị tổ chức
-                <!-- Number of volunteers -->
-                
-                <!-- Description -->
-
-                <!-- Content -->
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                  .form-ic-cmp
-                  .nk-int-st
-                    h4 Nội dung hoạt động
-                    <textarea name="content"></textarea>
-
-                <!-- Video -->
-                //- .dropdone-nk.mg-t-30
-                //-   .cmp-tb-hd
-                //-     h2 Video
-                //-     p
-                //-       | Video mô tả hoạt động (nếu có)
-                //-   #dropzone1.multi-uploader-cs.text-center
-                //-     form#demo1-upload.dropzone.dropzone-nk.needsclick.dz-clickable(action='/upload').p-5
-                //-       .dz-message.needsclick.download-custom
-                //-         i.notika-icon.notika-cloud
-                //-         h2 Drop files here or click to upload.
-                //-         p
-                //-           span.note.needsclick
-                //-             | (This is just a demo dropzone. Selected files are 
-                //-             strong not
-                //-             |  actually uploaded.)
-
-                //- <!-- Image -->
-                //- .dropdone-nk.mg-t-30
-                //-   .cmp-tb-hd
-                //-     h2 Hình ảnh
-                //-     p
-                //-       | Hình ảnh mô tả hoạt động (nếu có)
-                //-   #dropzone1.multi-uploader-cs.text-center
-                //-     form#demo1-upload.dropzone.dropzone-nk.needsclick.dz-clickable(action='/upload')
-                //-       .dz-message.needsclick.download-custom
-                //-         i.notika-icon.notika-cloud
-                //-         h2 Drop files here or click to upload.
-                //-         p
-                //-           span.note.needsclick
-                //-             | (This is just a demo dropzone. Selected files are 
-                //-             strong not
-                //-             |  actually uploaded.)
-
-                      
-                    
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                        .form-ic-cmp
-                        .nk-int-st
-                            label Người giám sát
-                            .fm-checkbox
-                              .bootstrap-select
-                                  select.selectpicker(name="superVisor" multiple)
-                                    each sp in superVisors
-                                      option(value=sp._id)= sp.fullName      
-                .form-group.ic-cmp-int.float-lb.floating-lb
-                    .form-ic-cmp
-                          i.notika-icon.notika-start
-                    h4 Hình ảnh
-                    input(type="file", name="image" multiple)
-                <!-- Button -->
-                .btn-demo-notika
-                .btn-list
-                    button.btn.btn-default.notika-btn-default.btn-lg(type="submit")
-                      | Thêm
-                    a.btn.btn-danger.notika-btn-danger.btn-lg(href="/admin/post/list")
-                      | Hủy
 
 
-           
 block script
     script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
     script(src='/assets/js/wizard/wizard-active.js')
