@@ -13,16 +13,35 @@ import * as Guard from "./config/guard";
 import passport from "./config/passport";
 import * as activityController from "./controllers/activity";
 import * as emailController from "./controllers/email";
+
+import moment from "moment-timezone";
+import multer from "multer";
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(undefined, "src/public/uploads/");
+    },
+    filename: function (req, file, cb) {
+        const tmp = file.originalname.split(".");
+        const ext = tmp[tmp.length - 1];
+        console.log(file.filename, ext);
+        cb(undefined, tmp[0] + Date.now() + "." + ext);
+  }
+});
+
+
+const upload = multer({ storage: storage });
+// Load secret and logger
+import { MONGODB_URI, APP_PORT, SESSION_SECRET } from "./util/secrets";
+import logger from "./util/logger";
+
+
+const MongoStore = mongo(session);
+
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
 import * as UserController from "./controllers/user";
-import logger from "./util/logger";
-// Load secret and logger
-import { APP_PORT, MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-import { remindTrigger } from "./util/reminder";
-const rateLimit = require("express-rate-limit");
+import * as passportConfig from "./config/passport";
 
-const MongoStore = mongo(session);
 
 // Create Express server
 const app = express();
@@ -65,10 +84,10 @@ app.use((req, res, next) => {
     next();
 });
 // app.enable("trust proxy");
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100 // limit each IP to 100 requests per windowMs
-});
+// const limiter = rateLimit({
+//     windowMs: 15 * 60 * 1000, // 15 minutes
+//     max: 100 // limit each IP to 100 requests per windowMs
+// });
 // app.use(limiter);
 app.use((req, res, next) => {
     // After successful login, redirect back to the intended page
@@ -88,25 +107,28 @@ app.use((req, res, next) => {
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
-remindTrigger();
-const apiLimiter = rateLimit({
-    windowMs: 5 * 1000, // 5 seconds
-    max: 1,
-    handler: () => { }
-});
+// remindTrigger();
+// const apiLimiter = rateLimit({
+//     windowMs: 5 * 1000, // 5 seconds
+//     max: 1,
+//     handler: () => { }
+// });
 
 /**
  * Primary app routes.
  */
 app.get("/activity-detail/:id", Guard.isLogin, activityController.activityDetail);
-app.get("/apply/:id", apiLimiter, Guard.isLogin, activityController.apply, emailController.registered);
+app.get("/apply/:id", Guard.isLogin, activityController.apply, emailController.registered);
 app.get("/un_apply/:id", Guard.isLogin, activityController.un_apply);
-app.post("/comment/:id", apiLimiter, Guard.isLogin, activityController.postComment);
+app.post("/comment/:id", Guard.isLogin, activityController.postComment);
+app.get("/search/", Guard.isLogin, activityController.searchActivity);
+app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
 
 
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), homeController.login);
+app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated,
+homeController.login);
 app.get("/", Guard.isLogin, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, homeController.admin);
@@ -115,8 +137,16 @@ app.post("/profile/update", Guard.isLogin, UserController.updateProfile);
 app.get("/info", Guard.isLogin, UserController.info);
 app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
+app.get("/admin/post/detail/:id", Guard.isLogin, activityController.getActivityDetail);
 app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, activityController.postActivity);
+app.post("/admin/post/add", Guard.isLogin, upload.array("image"), activityController.postActivity);
+app.post("/admin/post/edit/:id", Guard.isLogin, upload.array("image"), activityController.postEditActivity);
+app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity);
+app.get("/admin/post/member/:activity", Guard.isLogin, activityController.getMember);
+app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, activityController.getAcceptMember);
+app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, activityController.getRefuseMember);
+
+app.post("/ajax/delete/image", activityController.postDeleteImage);
 
 
 export default app;

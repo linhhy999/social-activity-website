@@ -8,10 +8,12 @@ html(lang='en')
         meta(name='description', content='')
         meta(name='author', content='')
         title
+        
         link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
+        
     body
         include partials/header
 
@@ -19,13 +21,20 @@ html(lang='en')
         .container
             .row
                 .col-lg-3.hidden-sm
-                    include partials/sidebar
+                    
+                    if title != "Search"
+                        include partials/sidebar
+                    else
+                        include partials/filter
                 .col-lg-9.col-sm-12
                     block content
+        script(src='/js/jquery-3.3.1.min.js')
+        script(src='/js/bootstrap.min.js')
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")
         script(type="text/javascript" src="/js/mdb.min.js")
+        script(type="text/javascript" src="/js/script.js")
         script.
             $('.toast').toast()
         block script

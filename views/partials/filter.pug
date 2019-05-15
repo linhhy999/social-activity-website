@@ -1,0 +1,109 @@
+#sidebar
+    .container
+      form(method="POST")
+        span.small.grey-text Tìm kiếm theo
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.type == 1
+                  input#name.custom-control-input(type='radio' name="type" value="1" checked).small
+                else 
+                  input#name.custom-control-input(type='radio' name="type" value="1").small
+                label.custom-control-label(for='name', style="padding-top: 3px;").small Tên
+
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.type == 2
+                  input#unit.custom-control-input(type='radio' name="type" value="2" checked).small
+                else
+                  input#unit.custom-control-input(type='radio' name="type" value="2").small
+                label.custom-control-label(for='unit', style="padding-top: 3px;").small Đơn vị tổ chức
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.type == 3
+                  input#place.custom-control-input(type='radio' name="type" value="3" checked).small
+                else
+                  input#place.custom-control-input(type='radio' name="type" value="3").small
+                label.custom-control-label(for='place', style="padding-top: 3px;").small Địa điểm
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.type == 4
+                  input#people.custom-control-input(type='radio' name="type" value="4" checked).small
+                else 
+                  input#people.custom-control-input(type='radio' name="type" value="4").small
+                label.custom-control-label(for='people', style="padding-top: 3px;").small Người tổ chức  
+        .mt-4
+        span.small.grey-text Trạng thái hoạt động
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.status == 1
+                  input#now.custom-control-input(type='radio' name="status" value="1" checked).small
+                else
+                  input#now.custom-control-input(type='radio' name="status" value="1").small
+                label.custom-control-label(for='now', style="padding-top: 3px;").small Đang diễn ra
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.status == 2
+                  input#end.custom-control-input(type='radio' name="status" value="2" checked).small
+                else 
+                  input#end.custom-control-input(type='radio' name="status" value="2").small
+                label.custom-control-label(for='end', style="padding-top: 3px;").small Đã kết thúc   
+        .mt-4
+        span.small.grey-text Số ngày công tác xã hội
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.benefit == 1
+                  input#dot5.custom-control-input(type='radio' name="benefit" value="1" checked).small
+                else
+                  input#dot5.custom-control-input(type='radio' name="benefit" value="1").small
+                label.custom-control-label(for='dot5', style="padding-top: 3px;").small 0.5  
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.benefit == 2
+                  input#one.custom-control-input(type='radio' name="benefit" value="2" checked).small
+                else
+                  input#one.custom-control-input(type='radio' name="benefit" value="2").small
+                label.custom-control-label(for='one', style="padding-top: 3px;").small 1  
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.benefit == 3
+                  input#onedot5.custom-control-input(type='radio' name="benefit" value="3" checked).small
+                else
+                  input#onedot5.custom-control-input(type='radio' name="benefit" value="3").small
+                label.custom-control-label(for='onedot5', style="padding-top: 3px;").small 1.5  
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.benefit == 4
+                  input#two.custom-control-input(type='radio' name="benefit" value="4" checked).small
+                else
+                  input#two.custom-control-input(type='radio' name="benefit" value="4").small
+                label.custom-control-label(for='two', style="padding-top: 3px;").small 2   
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+              .custom-control.custom-radio
+                if action.benefit == 5
+                  input#over2.custom-control-input(type='radio' name="benefit" value="5" checked).small
+                else
+                  input#over2.custom-control-input(type='radio' name="benefit" value="5").small
+                label.custom-control-label(for='over2', style="padding-top: 3px;").small Nhiều hơn 2     
+        .mt-4
+        span.small.grey-text Khóa
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k16.custom-control-input(type='radio' name="grade" value="1").small
+              label.custom-control-label(for='k16', style="padding-top: 3px;").small k16 
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k17.custom-control-input(type='radio' name="grade" value="2").small
+              label.custom-control-label(for='k17', style="padding-top: 3px;").small k17 
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k18.custom-control-input(type='radio' name="grade" value="3").small
+              label.custom-control-label(for='k18', style="padding-top: 3px;").small k18 
+          li.list-group-item.d-flex.justify-content-between.align-items-center(style="padding: 5px 20px")
+            .custom-control.custom-radio
+              input#k19.custom-control-input(type='radio' name="grade" value="4").small
+              label.custom-control-label(for='k19', style="padding-top: 3px;").small k19 
+        .mt-4

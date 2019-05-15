@@ -55,12 +55,12 @@ export let admin = async (req: Request, res: Response) => {
 
 export let login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        let user = await User.findOne({ "auth.0.googleId": req.user.auth.googleId });
+        let user = await User.findOne({ "auth.googleId": req.user.auth.googleId });
+
         if (!user) {
-            user = await new User(req.user);
+            user = new User(req.user);
             user = await user.save();
         }
-
         req.logIn(user, (err) => {
             if (err) {
                 console.log(err.message);

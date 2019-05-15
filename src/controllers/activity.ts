@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import Activity from "../models/Activity";
+import { Request, Response, NextFunction } from "express";
+import Activity, { Status } from "../models/Activity";
 import User from "../models/User";
 
 
@@ -18,28 +18,64 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activities = await Activity.find({ "host.auth.0.googleId": req.user.auth[0].googleId });
-    // console.log(activities);
+    const activityList = await Activity.find({"host.auth.0.googleId": req.user.auth[0].googleId});
+    const activities = [];
+    for (const activity of activityList) {
+        let numMember = 0;
+        let numPendingMember = 0;
+        for (const member of activity.members) {
+            if (member.status == 1) numPendingMember++;
+            if (member.status == 2) numMember++;
+        }
+        activities.push({
+            id: activity.id,
+            name: activity.name,
+            start: activity.dateStart + " " + activity.timeStart,
+            numMember: numMember,
+            numPendingMember: numPendingMember,
+            status: activity.status ? "Đang diễn ra" : "Đã xong"
+        });
+    }
+    console.log(activities);
     return res.render("admin/posts/list", {
         activities: activities
     });
 };
-export let getActivity = (req: Request, res: Response) => {
+
+export let getActivityDetail = async (req: Request, res: Response) => {
+    try {
+        const activity = await Activity.findById(req.params.id);
+        const superVisor = [];
+        for (const visor of activity.superVisor) {
+            superVisor.push(await User.findById(visor));
+        }
+        console.log(superVisor);
+        return res.render("admin/posts/detail", {
+            activity: activity,
+            superVisor: superVisor,
+        });
+    }
+    catch (er) {
+        console.log(er.message);
+    }
+    const activity = await Activity.findById(req.params.id);
+};
+export let getActivity =  (req: Request, res: Response) => {
     // todo
 };
 
 export let postActivity = async (req: any, res: Response) => {
-    req.checkBody("activityName").notEmpty();
-    req.checkBody("register_deadline").notEmpty();
-    req.checkBody("startDate").notEmpty();
-    req.checkBody("endDate").notEmpty();
-    req.checkBody("startTime").notEmpty();
-    req.checkBody("endTime").notEmpty();
-    req.checkBody("gathering_place").notEmpty();
-    req.checkBody("target_place").notEmpty();
-    req.checkBody("benefit").notEmpty();
-    req.checkBody("numMember").notEmpty();
-    req.checkBody("content").notEmpty();
+    req.checkBody("activityName", "Tên hoạt động không được để trống").notEmpty();
+    req.checkBody("register_deadline", "Hạn đăng ký không được để trống").notEmpty();
+    req.checkBody("startDate", "Ngày bắt đầu không được để trống").notEmpty();
+    req.checkBody("endDate", "Ngày kết thúc không được để trống").notEmpty();
+    req.checkBody("startTime", "Giờ bắt đầu không được để trống").notEmpty();
+    req.checkBody("endTime", "Giờ kết thúc không được để trống").notEmpty();
+    req.checkBody("gathering_place", "Địa điểm tập trung không được để trống").notEmpty();
+    req.checkBody("benefit", "Số ngày công tác xã hội không được để trống").notEmpty();
+    req.checkBody("numMember", "Số thành viên tối đa không được để trống").notEmpty();
+    req.checkBody("content", "Nội dung hoạt động không được để trống").notEmpty();
+    req.checkBody("superVisor", "Người giám sát không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -55,7 +91,14 @@ export let postActivity = async (req: any, res: Response) => {
         else {
             superVisor.push(req.body.superVisor);
         }
-
+        const images = [];
+        for (const file of req.files) {
+            images.push({
+                id: Date.now(),
+                link: "/uploads/" + file.filename
+            });
+        }
+        console.log(images);
         const activity = await new Activity({
             name: req.body.activityName,
             registerEnd: req.body.register_deadline,
@@ -68,15 +111,17 @@ export let postActivity = async (req: any, res: Response) => {
             content: req.body.content,
             orgUnit: req.body.orgUnit,
             host: req.user,
-            images: [],
-            videos: [],
+            image: images,
+            video: [],
             maxMember: req.body.numMember,
             members: [],
             comment: [],
             superVisor: superVisor,
-            benefit: req.body.benefit
+            benefit: req.body.benefit,
+            status: true
         });
         await activity.save();
+        req.flash("info", {message: "OK!"});
         return res.redirect("/admin/post/list");
     }
     catch (err) {
@@ -86,20 +131,201 @@ export let postActivity = async (req: any, res: Response) => {
 
 };
 
-export let updateActivity = (req: Request, res: Response) => {
+
+
+export let postEditActivity = async (req: any, res: Response) => {
+    req.checkBody("activityName", "Tên hoạt động không được để trống").notEmpty();
+    req.checkBody("register_deadline", "Hạn đăng ký không được để trống").notEmpty();
+    req.checkBody("startDate", "Ngày bắt đầu không được để trống").notEmpty();
+    req.checkBody("endDate", "Ngày kết thúc không được để trống").notEmpty();
+    req.checkBody("startTime", "Giờ bắt đầu không được để trống").notEmpty();
+    req.checkBody("endTime", "Giờ kết thúc không được để trống").notEmpty();
+    req.checkBody("gathering_place", "Địa điểm tập trung không được để trống").notEmpty();
+    req.checkBody("numMember", "Số thành viên tối đa không được để trống").notEmpty();
+    req.checkBody("edit_content", "Nội dung hoạt động không được để trống").notEmpty();
+    req.checkBody("superVisor", "Người giám sát không được để trống").notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash("errors", errors);
+        return res.redirect("back");
+    }
+    try {
+        let superVisor = [];
+        if (Array.isArray(req.body.superVisor)) {
+            superVisor = req.body.superVisor;
+        }
+        else {
+            superVisor.push(req.body.superVisor);
+        }
+        console.log(req.files);
+        const images = [];
+        for (const file of req.files) {
+            images.push({
+                id: (file.filename + Date.now()).replace(".", ""),
+                link: "/uploads/" + file.filename
+            });
+        }
+        console.log(images);
+        await Activity.updateOne({_id: req.params.id}, {
+            name: req.body.activityName,
+            registerEnd: req.body.register_deadline,
+            dateStart: req.body.startDate,
+            dateEnd: req.body.endDate,
+            timeStart: req.body.endTime,
+            timeEnd: req.body.endTime,
+            gatheringPlace: req.body.gathering_place,
+            targetPlace: req.body.target_place,
+            content: req.body.edit_content,
+            orgUnit: req.body.orgUnit,
+            host: req.user,
+            video: [],
+            maxMember: req.body.numMember,
+            superVisor: superVisor,
+        }, {upset: false});
+        await Activity.updateOne({_id: req.params.id}, {
+            $push: { image: images }
+        }, {upset: false});
+        req.flash("info", {message: "Updated!"});
+        return res.redirect("/admin/post/list");
+    }
+    catch (err) {
+        console.log(err.message);
+        return res.redirect("back");
+    }
+
+};
+export let updateActivity =  (req: Request, res: Response) => {
     // todo
 };
 
-export let searchActivity = (req: Request, res: Response) => {
-    // todo
+export let searchActivity =  async (req: Request, res: Response) => {
+    const activities = await Activity.find( {$or:
+        [
+            { name: { $regex: req.query.keyword, $options: "$i" }},
+            { content: { $regex: req.query.keyword, $options: "$i" }},
+            { targetPlace: { $regex: req.query.keyword, $options: "$i" }},
+            { gatheringPlace: { $regex: req.query.keyword, $options: "$i" }},
+            { dateStart: { $regex: req.query.keyword, $options: "$i" }},
+            { orgUnit: { $regex: req.query.keyword, $options: "$i" }},
+            { "host.fullName": { $regex: req.query.keyword, $options: "$i" }},
+        ]});
+    return res.render("search", {
+        title: "Search",
+        activities: activities,
+        action: {}
+    });
+};
+
+export let searchAdvancedActivity = async (req: Request, res: Response) => {
+    console.log(req.body);
+    console.log(req.query.keyword);
+    const query = [];
+    switch (req.body.type) {
+        case "1": {
+            query.push({ name: { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+        case "2": {
+            query.push({ orgUnit: { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+        case "3": {
+            query.push({ gatheringPlace: { $regex: req.query.keyword, $options: "$i" }});
+            query.push({ targetPlace: { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+        case "4": {
+            query.push({ "host.fullName": { $regex: req.query.keyword, $options: "$i" }});
+            break;
+        }
+    }
+    switch (req.body.status) {
+        case "1": {
+            query.push({ status: true});
+            break;
+        }
+        case "2": {
+            query.push({ $or: [
+                {status: false},
+                {status: undefined}
+            ]});
+            break;
+        }
+    }
+    switch (req.body.benefit) {
+        case "1": {
+            query.push({ benefit: 0.5});
+            break;
+        }
+        case "2": {
+            query.push({ benefit: 1});
+            break;
+        }
+        case "3": {
+            query.push({ benefit: 1.5});
+            break;
+        }
+        case "4": {
+            query.push({ benefit: 2});
+            break;
+        }
+        case "5": {
+            query.push({ benefit : {$gt: 2}});
+            break;
+        }
+    }
+    const activities = await Activity.find({$and: query});
+    return res.render("search", {
+        title: "Search",
+        activities: activities,
+        action: {
+            type: req.body.type,
+            status: req.body.status,
+            benefit: req.body.benefit
+        }
+    });
 };
 
 export let createReport = (req: Request, res: Response) => {
     // todo
 };
 
-export let getMember = (req: Request, res: Response) => {
-    // todo
+export let getMember = async (req: Request, res: Response) => {
+    try {
+        const members = (await Activity.findById(req.params.activity)).members;
+        return res.render("admin/posts/member", {
+            members: members,
+            pending: members.filter((obj) => obj.status === 1).length,
+            accept: members.filter((obj) => obj.status === 2).length,
+            refuse: members.filter((obj) => obj.status === 3).length,
+            activity: req.params.activity
+        });
+    }
+    catch (err) {
+        console.log(err);
+        return res.redirect("back");
+    }
+
+};
+
+export let getAcceptMember = async (req: Request, res: Response) => {
+    await Activity.updateOne({_id: req.params.activity, "members.mssv": req.params.mssv}, {
+        "$set": {
+            "members.$.status": 2
+        }
+    });
+    return res.redirect("back");
+};
+
+export let getRefuseMember = async (req: Request, res: Response) => {
+    await Activity.updateOne({_id: req.params.activity, "members.mssv": req.params.mssv}, {
+        "$set": {
+            "members.$.status": 3
+        }
+    });
+    return res.redirect("back");
 };
 
 export let postComment = async (req: any, res: Response) => {
@@ -159,11 +385,17 @@ export let activityDetail = async (req: Request, res: Response) => {
         const activity = await Activity.findOne({ "_id": activityId });
         let registered = false;
         if (activity.members.filter(member => member.mssv === req.user.code).length > 0) registered = true;
+        const userActivity = activity.members.find(function(element) {
+            return element.mssv == req.user.code;
+        });
+        let status = 0;
+        userActivity ? status = userActivity.status : status = 0;
         return res.render("activityDetail", {
             user: req.user,
             activity: activity,
             registered: registered,
-            orgUnit: a
+            orgUnit: a,
+            status: status
         });
     }
     catch (err) {
@@ -198,7 +430,10 @@ export let apply = async (req: Request, res: Response, next: NextFunction) => {
         activity.members.push({
             mssv: req.user.code,
             name: req.user.fullName,
-            faculty: req.user.faculty
+            faculty: req.user.faculty,
+            phone: req.user.phone,
+            email: req.user.email,
+            status: Status.PENDING
         });
         await activity.save();
         res.locals.activity = activity;
@@ -211,3 +446,17 @@ export let apply = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+export let postDeleteImage = async (req: Request, res: Response) => {
+    try {
+        const activity = await Activity.findOne({"_id": req.body.activity});
+        const image = activity.image.filter(function (el) {
+            return el.id != req.body.id;
+        });
+        await Activity.updateOne({"_id": req.body.activity}, {image: image}, {upset: false});
+        return res.status(200).json("ok");
+    }
+    catch (err) {
+        console.log(err.message);
+        return res.status(404).json("fail");
+    }
+};

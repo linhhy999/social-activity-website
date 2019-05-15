@@ -57,8 +57,7 @@ export let postInfo = async (req: any, res: any) => {
         req.flash("errors", errors);
         return res.redirect("back");
     }
-
-    await User.updateOne({ "_id": req.user._id }, {
+    await User.updateOne({"_id": req.user._id}, {
         $set: {
             "fullName": req.body.name,
             "phone": req.body.phone,
