@@ -13,7 +13,7 @@ module.exports = {
         const htmlData =
             '<p>Dear ' + username + ',</p>\
             <p>Sociofy is pleased to announce that you has been <font color="green">accept</font> to join in <font color="red">' + activityName + '</font>.<br>\
-            Detail: <a>' + link + '</a></p>\
+            Detail: <a href = "' + link + '">' + link + '</a></p>\
             <p>Best regards,<br/>\
             Sociofy team<br/>\
             Website: http://localhost:3000</p>'
