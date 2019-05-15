@@ -1,30 +1,29 @@
-import express from "express";
-import compression from "compression";  // compresses requests
-import session from "express-session";
-import bodyParser from "body-parser";
-import lusca from "lusca";
-import mongo from "connect-mongo";
-import flash from "express-flash";
-import path from "path";
-import mongoose from "mongoose";
-import passport from "./config/passport";
-import expressValidator from "express-validator";
 import bluebird from "bluebird";
-import moment from "moment-timezone";
-
-// Load secret and logger
-import { MONGODB_URI, APP_PORT, SESSION_SECRET } from "./util/secrets";
-import logger from "./util/logger";
-
-
-const MongoStore = mongo(session);
-
+import bodyParser from "body-parser";
+import compression from "compression"; // compresses requests
+import mongo from "connect-mongo";
+import express from "express";
+import flash from "express-flash";
+import session from "express-session";
+import expressValidator from "express-validator";
+import lusca from "lusca";
+import mongoose from "mongoose";
+import path from "path";
+import * as Guard from "./config/guard";
+import passport from "./config/passport";
+import * as activityController from "./controllers/activity";
+import * as emailController from "./controllers/email";
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
-import * as activityController from "./controllers/activity";
 import * as UserController from "./controllers/user";
-import * as Guard from "./config/guard";
 import * as passportConfig from "./config/passport";
+import logger from "./util/logger";
+// Load secret and logger
+import { APP_PORT, MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { remindTrigger } from "./util/reminder";
+const rateLimit = require("express-rate-limit");
+
+const MongoStore = mongo(session);
 
 // Create Express server
 const app = express();
@@ -37,7 +36,7 @@ mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true }).then
     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
 ).catch((err: any) => {
     logger.error("MongoDB connection error. Please make sure MongoDB is running. " + err);
-    // process.exit();
+    process.exit();
 });
 
 // Express configuration
@@ -53,8 +52,8 @@ app.use(session({
     saveUninitialized: true,
     secret: SESSION_SECRET,
     store: new MongoStore({
-       url: mongoUrl,
-       autoReconnect: true
+        url: mongoUrl,
+        autoReconnect: true
     })
 }));
 app.use(passport.initialize());
@@ -66,7 +65,12 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
-
+// app.enable("trust proxy");
+// const limiter = rateLimit({
+//     windowMs: 15 * 60 * 1000, // 15 minutes
+//     max: 100 // limit each IP to 100 requests per windowMs
+// });
+// app.use(limiter);
 app.use((req, res, next) => {
     // After successful login, redirect back to the intended page
     if (!req.user &&
@@ -85,11 +89,18 @@ app.use((req, res, next) => {
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
+// remindTrigger();
+// const apiLimiter = rateLimit({
+//     windowMs: 5 * 1000, // 5 seconds
+//     max: 1,
+//     handler: () => { }
+// });
+
 /**
  * Primary app routes.
  */
 app.get("/activity-detail/:id", Guard.isLogin, activityController.activityDetail);
-app.get("/apply/:id", Guard.isLogin, activityController.apply);
+app.get("/apply/:id", Guard.isLogin, activityController.apply, emailController.registered);
 app.get("/un_apply/:id", Guard.isLogin, activityController.un_apply);
 app.post("/comment/:id", Guard.isLogin, activityController.postComment);
 app.get("/search/", Guard.isLogin, activityController.searchActivity);
@@ -104,6 +115,7 @@ app.get("/", Guard.isLogin, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, homeController.admin);
 app.get("/profile", Guard.isLogin, UserController.profile);
+app.post("/profile/update", Guard.isLogin, UserController.updateProfile);
 app.get("/info", Guard.isLogin, UserController.info);
 app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);

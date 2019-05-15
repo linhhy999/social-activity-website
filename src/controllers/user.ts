@@ -1,4 +1,5 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
+import Activity from "../models/Activity";
 import User from "../models/User";
 
 
@@ -6,37 +7,40 @@ import User from "../models/User";
  * GET /
  * Home page.
  */
-export let getUser =  (req: Request, res: Response) => {
+export let getUser = (req: Request, res: Response) => {
     // todo
 };
 
-export let postUser =  (req: Request, res: Response) => {
+export let postUser = (req: Request, res: Response) => {
     // todo
 };
 
-export let updateUserInfo =  (req: Request, res: Response) => {
+export let updateUserInfo = (req: Request, res: Response) => {
     // todo
 };
 
-export let blockUser =  (req: Request, res: Response) => {
+export let blockUser = (req: Request, res: Response) => {
     // todo
 };
 
-export let unBlockUser =  (req: Request, res: Response) => {
+export let unBlockUser = (req: Request, res: Response) => {
     // todo
 };
 
-export let changeRole =  (req: Request, res: Response) => {
+export let changeRole = (req: Request, res: Response) => {
     // todo
 };
 
-export let profile = (req: Request, res: Response) => {
-    return res.render("profile",  {
-        user: req.user
+export let profile = async (req: Request, res: Response) => {
+    const activity = await Activity.find({ "members.mssv": req.user.code });
+    // console.log(activity);
+    return res.render("profile", {
+        user: req.user,
+        activity: activity
     });
 };
 export let info = (req: Request, res: Response) => {
-    return res.render("fill",  {
+    return res.render("fill", {
         user: req.user
     });
 };
@@ -61,7 +65,7 @@ export let postInfo = async (req: any, res: any) => {
             "faculty": req.body.faculty,
             "numWorkDay": req.body.ctxh
         }
-    }, {upset: true});
+    }, { upset: true });
 
     return res.redirect("/");
 };
@@ -79,12 +83,14 @@ export let updateProfile = async (req: any, res: any) => {
     }
 
     try {
-        await User.updateOne({"_id": req.user._id}, {$set: {
-            "phone": req.body.phone,
-            "faculty": req.body.faculty,
-            "fullName": req.body.name,
-            "email": req.body.email,
-        }}, {upsert: false});
+        await User.updateOne({ "_id": req.user._id }, {
+            $set: {
+                "phone": req.body.phone,
+                "faculty": req.body.faculty,
+                "fullName": req.body.name,
+                "email": req.body.email,
+            }
+        }, { upsert: false });
 
         return res.redirect("back");
     }

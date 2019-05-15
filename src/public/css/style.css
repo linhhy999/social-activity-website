@@ -11,7 +11,12 @@ nav.navbar {
     height: auto;
 }
 
-.searchbar{
+.navbar-brand2 img {
+    width: 200px;
+    height: auto;
+}
+
+.searchbar {
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
@@ -20,30 +25,30 @@ nav.navbar {
     padding: 10px;
 }
 
-.search_input{
+.search_input {
     color: white;
     border: 0;
     outline: 0;
     background: none;
     width: 0;
-    caret-color:transparent;
+    caret-color: transparent;
     line-height: 40px;
     transition: width 0.4s linear;
 }
 
-.searchbar:hover > .search_input{
+.searchbar:hover>.search_input {
     padding: 0 10px;
     width: 450px;
-    caret-color:red;
+    caret-color: red;
     transition: width 0.4s linear;
 }
 
-.searchbar:hover > .search_icon{
+.searchbar:hover>.search_icon {
     background: white;
     color: #e74c3c;
 }
 
-.search_icon{
+.search_icon {
     height: 40px;
     width: 40px;
     float: right;
@@ -51,7 +56,7 @@ nav.navbar {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color:white;
+    color: white;
 }
 
 .form-round {
@@ -66,6 +71,7 @@ nav.navbar {
     line-height: 20px;
     width: 400px;
 }
+
 .form-round input:focus {
     outline: none;
 }
@@ -77,6 +83,7 @@ nav.navbar {
     margin-left: 17px;
     box-shadow: none;
 }
+
 .btn-search:hover,
 .btn-search:focus {
     box-shadow: none;
@@ -85,6 +92,7 @@ nav.navbar {
 .collapse-content .fa.fa-heart:hover {
     color: #f44336 !important;
 }
+
 .collapse-content .fa.fa-share-alt:hover {
     color: #0d47a1 !important;
 }
@@ -99,11 +107,12 @@ nav.navbar {
     transition: 0.1s;
 }
 
-#sidebar ul li:hover{
+#sidebar ul li:hover {
     background-color: #4267b2;
     color: white !important;
 }
-#sidebar ul li:hover a{
+
+#sidebar ul li:hover a {
     color: white !important;
 }
 
@@ -145,7 +154,7 @@ ul.comment li.comment-item {
 }
 
 ul.comment li.comment-item i {
-    margin-left: 20px; 
+    margin-left: 20px;
 }
 
 ul.comment li.comment-item .name {
@@ -174,16 +183,28 @@ ul.comment li.comment-item p {
     top: 0;
     left: 0;
     height: 100vh;
-    padding-top: 35vh;
+    padding-top: 10vh;
     background: #0d48a148;
-    box-shadow: 5px 5px 9999px #ffffff; 
+    box-shadow: 5px 5px 9999px #ffffff;
 }
 
-.banner .caption-left h1{
+.banner .caption-left h1 {
     width: 80%;
     text-align: center;
     margin: auto;
     color: #ffffff;
-    text-shadow: 0px 0px 5px #0d48a1; 
+    text-shadow: 0px 0px 5px #0d48a1;
     font-weight: 700;
+}
+
+.banner .caption-right {
+    position: absolute;
+    width: 70%;
+    text-align: center;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    padding-top: 50vh;
+    background: #0d48a148;
+    box-shadow: 5px 5px 9999px #ffffff;
 }

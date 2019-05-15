@@ -12,9 +12,12 @@ html(lang='en')
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
+
+
+
     body
         include partials/header
-        
+
         .mt-100
         .container
             .row
@@ -37,88 +40,67 @@ html(lang='en')
                                         strong.small=user.numWorkDay
                 br                
                 .col-lg-9.col-sm-12
-                  // Card
-                  .card
-                    // Card content
-                    .card-body
-                      // Title
-                      h4.card-title
-                        a Thông tin người dùng
-                      // Text
-                      form(action="/profile/update" method="POST")
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.code)
-                          label(for='inputSMEx') MSSV:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName, name="name")
-                          label(for='inputSMEx') Họ và tên:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.email, name="email")
-                          label(for='inputSMEx') Email:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone, name="phone")
-                          label(for='inputSMEx') Số điện thoại:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString(), name="faculty")
-                          label(for='inputSMEx') Khoa:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay)
-                          label(for='inputSMEx')  Số ngày Công tác xã hội:
-                        
-                        // Button
-                        button.btn.btn-primary Cập nhật
-                  // Card
-                  
-                  // Card
-                  .card.mt-3
-                    // Card content
-                    .card-body
-                      // Title
-                      h4.card-title
-                        a Hoạt động cá nhân
-                      // Text
-                      .table-responsive
-                        table.table
-                          thead
-                            tr
-                              th(scope='col') STT
-                              th(scope='col') Mã Hoạt động
-                              th(scope='col') Tên hoạt động
-                              th(scope='col') Ngày thực hiện
-                              th(scope='col') Ngày CTXH
-                              th(scope='col') Minh chứng
-                              th(scope='col') Khoa xác nhận
-                              th(scope='col') Tình trạng
-                          tbody
-                            tr
-                              th(scope='row') 1
-                              td 
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                            tr
-                              th(scope='row') 2
-                              td 
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                            
-                  // Card
+                    // Card
+                    .card
+                        // Card content
+                        .card-body
+                            // Title
+                            h4.card-title
+                                a Thông tin người dùng
+                            // Text
+                            form(action="/profile/update" method="POST")
+                                .md-form.form-sm
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.code)
+                                    label(for='inputSMEx') MSSV:
+                                .md-form.form-sm
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName, name="name")
+                                    label(for='inputSMEx') Họ và tên:
+                                .md-form.form-sm
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.email, name="email")
+                                    label(for='inputSMEx') Email:
+                                .md-form.form-sm
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone, name="phone")
+                                    label(for='inputSMEx') Số điện thoại:
+                                .md-form.form-sm
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString(), name="faculty")
+                                    label(for='inputSMEx') Khoa:
+                                .md-form.form-sm
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay)
+                                    label(for='inputSMEx')  Số ngày Công tác xã hội:
 
+                                // Button
+                                button.btn.btn-primary Cập nhật
+                    // Card
 
-                  
+                    // Card
+                    .card.mt-3
+                        // Card content
+                        .card-body
+                            // Title
+                            h4.card-title
+                                a Hoạt động cá nhân
+                            // Text
+                            .table-responsive
+                                table.table
+                                    thead
+                                        tr
+                                            th(scope='col') STT
+                                            th(scope='col') Mã Hoạt động
+                                            th(scope='col') Tên hoạt động
+                                            th(scope='col') Khoa tổ chức
+                                            th(scope='col') Ngày CTXH
+                                    tbody
+                                        - let i= 0
+                                        each act in activity
+                                            - i++
+                                            tr
+                                                th(scope='row')= i
+                                                td= act.id
+                                                td= act.name
+                                                td= act.orgUnit
+                                                td= act.benefit
 
-                    
-
-                    
-                    
-                     
+                    // Card
 
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")

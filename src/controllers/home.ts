@@ -1,8 +1,6 @@
-import { Request, Response } from "express";
-import * as passportConfig from "../config/passport";
-import { NextFunction } from "express";
-import User from "../models/User";
+import { NextFunction, Request, Response } from "express";
 import Activity from "../models/Activity";
+import User from "../models/User";
 
 /**
  * GET /

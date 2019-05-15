@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Activity from "../models/Activity";
 import User from "../models/User";
 
@@ -6,7 +6,7 @@ import User from "../models/User";
 export let getAddActivity = async (req: Request, res: Response) => {
 
     try {
-        const sp = await User.find({"role": 1}, {"_id": 1, "fullName": 1});
+        const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1 });
         return res.render("admin/posts/add", {
             superVisors: sp
         });
@@ -18,13 +18,13 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activities = await Activity.find({"host.auth.0.googleId": req.user.auth[0].googleId});
-    console.log(activities);
+    const activities = await Activity.find({ "host.auth.0.googleId": req.user.auth[0].googleId });
+    // console.log(activities);
     return res.render("admin/posts/list", {
         activities: activities
     });
 };
-export let getActivity =  (req: Request, res: Response) => {
+export let getActivity = (req: Request, res: Response) => {
     // todo
 };
 
@@ -86,7 +86,7 @@ export let postActivity = async (req: any, res: Response) => {
 
 };
 
-export let updateActivity =  (req: Request, res: Response) => {
+export let updateActivity = (req: Request, res: Response) => {
     // todo
 };
 
@@ -103,22 +103,15 @@ export let searchActivity =  async (req: Request, res: Response) => {
         ]});
     return res.render("search", {
         title: "Search",
-        activities: activities
+        activities: activities,
+        action: {}
     });
 };
 
 export let searchAdvancedActivity = async (req: Request, res: Response) => {
     console.log(req.body);
     console.log(req.query.keyword);
-    const query = [
-        // { name: { $regex: req.query.keyword, $options: "$i" }},
-        // { content: { $regex: req.query.keyword, $options: "$i" }},
-        // { targetPlace: { $regex: req.query.keyword, $options: "$i" }},
-        // { gatheringPlace: { $regex: req.query.keyword, $options: "$i" }},
-        // { dateStart: { $regex: req.query.keyword, $options: "$i" }},
-        // { orgUnit: { $regex: req.query.keyword, $options: "$i" }},
-        // { "host.fullName": { $regex: req.query.keyword, $options: "$i" }},
-    ];
+    const query = [];
     switch (req.body.type) {
         case "1": {
             query.push({ name: { $regex: req.query.keyword, $options: "$i" }});
@@ -144,7 +137,10 @@ export let searchAdvancedActivity = async (req: Request, res: Response) => {
             break;
         }
         case "2": {
-            query.push({ status: false});
+            query.push({ $or: [
+                {status: false},
+                {status: undefined}
+            ]});
             break;
         }
     }
@@ -154,34 +150,39 @@ export let searchAdvancedActivity = async (req: Request, res: Response) => {
             break;
         }
         case "2": {
-            query.push({ status: false});
+            query.push({ benefit: 1});
             break;
         }
         case "3": {
-            query.push({ status: false});
+            query.push({ benefit: 1.5});
             break;
         }
         case "4": {
-            query.push({ status: false});
+            query.push({ benefit: 2});
             break;
         }
         case "5": {
-            query.push({ status: false});
+            query.push({ benefit : {$gt: 2}});
             break;
         }
     }
-    const activities = await Activity.find({$or: query});
+    const activities = await Activity.find({$and: query});
     return res.render("search", {
         title: "Search",
-        activities: activities
+        activities: activities,
+        action: {
+            type: req.body.type,
+            status: req.body.status,
+            benefit: req.body.benefit
+        }
     });
 };
 
-export let createReport =  (req: Request, res: Response) => {
+export let createReport = (req: Request, res: Response) => {
     // todo
 };
 
-export let getMember =  (req: Request, res: Response) => {
+export let getMember = (req: Request, res: Response) => {
     // todo
 };
 
@@ -196,7 +197,7 @@ export let postComment = async (req: any, res: Response) => {
 
     const activityId = req.params.id;
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         activity.comment.push({
             userId: req.user._id,
             timeComment: new Date,
@@ -212,7 +213,7 @@ export let postComment = async (req: any, res: Response) => {
     }
 };
 
-export let getComment =  (req: Request, res: Response) => {
+export let getComment = (req: Request, res: Response) => {
     // todo
 };
 
@@ -220,26 +221,26 @@ export let getUserActivity = (req: Request, res: Response) => {
     // todo
 };
 
-export let activityDetail = async  (req: Request, res: Response) => {
+export let activityDetail = async (req: Request, res: Response) => {
     const activityId = req.params.id;
-    const unit = await Activity.find({}, {orgUnit: 1, _id: 0});
+    const unit = await Activity.find({}, { orgUnit: 1, _id: 0 });
     const a = [], b = [];
     let prev;
     unit.sort();
-    for ( let i = 0; i < unit.length; i++ ) {
-        if ( unit[i].orgUnit !== prev ) {
-            a.push({orgUnit: unit[i].orgUnit});
-            b.push({num: 1});
+    for (let i = 0; i < unit.length; i++) {
+        if (unit[i].orgUnit !== prev) {
+            a.push({ orgUnit: unit[i].orgUnit });
+            b.push({ num: 1 });
         } else {
             b[b.length - 1].num++;
         }
         prev = unit[i].orgUnit;
     }
-    for ( let i = 0; i < a.length; i++ ) {
-        a[i] = {...a[i], ...b[i]};
+    for (let i = 0; i < a.length; i++) {
+        a[i] = { ...a[i], ...b[i] };
     }
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         let registered = false;
         if (activity.members.filter(member => member.mssv === req.user.code).length > 0) registered = true;
         return res.render("activityDetail", {
@@ -257,11 +258,11 @@ export let activityDetail = async  (req: Request, res: Response) => {
 export let un_apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
         const membersAfterRemove = activity.members.filter(member => member.mssv !== req.user.code);
-        await Activity.updateOne({"_id": activityId}, {
+        await Activity.updateOne({ "_id": activityId }, {
             members: membersAfterRemove
-        }, {upset: false});
+        }, { upset: false });
         await activity.save();
         return res.redirect("back");
     }
@@ -270,17 +271,24 @@ export let un_apply = async (req: Request, res: Response) => {
         return res.redirect("/");
     }
 };
-export let apply = async (req: Request, res: Response) => {
+
+
+export let apply = async (req: Request, res: Response, next: NextFunction) => {
     const activityId = req.params.id;
     try {
-        const activity = await Activity.findOne({"_id": activityId});
+        const activity = await Activity.findOne({ "_id": activityId });
+        const registered = (activity.members.filter(member => member.mssv === req.user.code).length > 0);
+        if (registered) return res.redirect("back");
         activity.members.push({
+            _id: req.user.code,
             mssv: req.user.code,
             name: req.user.fullName,
             faculty: req.user.faculty
         });
         await activity.save();
-        return res.redirect("back");
+        res.locals.activity = activity;
+        res.locals.user = req.user;
+        next();
     }
     catch (err) {
         console.log(err.message);

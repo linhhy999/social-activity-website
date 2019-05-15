@@ -1,10 +1,10 @@
-import passport from "passport";
-import passportGoogle from  "passport-google-oauth";
+import { NextFunction, Request, Response } from "express";
 import _ from "lodash";
-
-
-import { Request, Response, NextFunction } from "express";
+import passport from "passport";
+import passportGoogle from "passport-google-oauth";
 import User from "../models/User";
+
+
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
@@ -24,21 +24,21 @@ passport.use(new GoogleStrategy({
     clientSecret: "8QEKd0jy5coEI_uNsSwCvRQd",
     callbackURL: "http://localhost:3000/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
-        if (profile) {
-            // if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
-            //     return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
-            // }
-            return done(undefined, {
-                auth: {
-                    googleId: profile.id,
-                    picture: profile.photos[0].value,
-                    displayName: profile.displayName
-                },
-                email: profile.emails[0].value
-            });
-        }
-        return done(new Error("Request to Google Auth error"));
+    if (profile) {
+        // if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
+        //     return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
+        // }
+        return done(undefined, {
+            auth: {
+                googleId: profile.id,
+                picture: profile.photos[0].value,
+                displayName: profile.displayName
+            },
+            email: profile.emails[0].value
+        });
     }
+    return done(new Error("Request to Google Auth error"));
+}
 ));
 
 
@@ -54,9 +54,9 @@ export let isAuthenticated = (req: Request, res: Response, next: NextFunction) =
     res.redirect("/intro");
 };
 
-  /**
-   * Authorization Required middleware.
-   */
+/**
+ * Authorization Required middleware.
+ */
 export let isAuthorized = (req: Request, res: Response, next: NextFunction) => {
     const provider = req.path.split("/").slice(-1)[0];
 
