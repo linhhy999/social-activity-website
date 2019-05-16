@@ -115,8 +115,8 @@ app.use(
  * Primary app routes.
  */
 app.get("/activity-detail/:id", Guard.isLogin, activityController.activityDetail);
-app.get("/apply/:id", Guard.isLogin, activityController.apply);
-app.get("/un_apply/:id", Guard.isLogin, activityController.un_apply);
+app.post("/apply/:id", Guard.isLogin, activityController.apply);
+app.post("/un_apply/:id", Guard.isLogin, activityController.un_apply);
 app.post("/comment/:id", Guard.isLogin, activityController.postComment);
 app.get("/search/", Guard.isLogin, activityController.searchActivity);
 app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
@@ -141,8 +141,8 @@ app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity
 app.get("/admin/post/member/:activity", Guard.isLogin, activityController.getMember);
 app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, activityController.getAcceptMember, emailController.registered);
 app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, activityController.getRefuseMember);
-
+// app.post();
 app.post("/ajax/delete/image", activityController.postDeleteImage);
-
+app.get("*", (req, res) => { res.render("404"); });
 
 export default app;

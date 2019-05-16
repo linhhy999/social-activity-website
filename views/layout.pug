@@ -8,12 +8,12 @@ html(lang='en')
         meta(name='description', content='')
         meta(name='author', content='')
         title
-        
+
         link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
-        
+
     body
         include partials/header
 
@@ -21,7 +21,7 @@ html(lang='en')
         .container
             .row
                 .col-lg-3.hidden-sm
-                    
+
                     if title != "Search"
                         include partials/sidebar
                     else
