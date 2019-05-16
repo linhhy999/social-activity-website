@@ -90,24 +90,11 @@ block content
                         h6.card-title.font-weight-bold.mb-2
                             |   Thông Báo
                 .list-group
-                    a.list-group-item.list-group-item-action.flex-column.align-items-start(href='#!')
-                        .w-100.justify-content-between
-                            strong.mb-2 List group item heading
-                            p.small 3 days ago
-                        p.small.mb-2
-                            | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-                            | blandit.
-                    a.list-group-item.list-group-item-action.flex-column.align-items-start(href='#!')
-                        .w-100.justify-content-between
-                            strong.mb-2 List group item heading
-                            p.small 3 days ago
-                        p.small.mb-2
-                            | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-                            | blandit.
-                    a.list-group-item.list-group-item-action.flex-column.align-items-start(href='#!')
-                        .w-100.justify-content-between
-                            strong.mb-2 List group item heading
-                            p.small 3 days ago
-                        p.small.mb-2
-                            | Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-                            | blandit.
+                    each notification in user.notifications
+                        a.list-group-item.list-group-item-action.flex-column.align-items-start(href=notification.link)
+                            .w-100.justify-content-between
+                                strong.mb-2= notification.title
+                                p.small= moment(notification.time).format("DD/MM/YYYY HH:mm")
+                            p.small.mb-2= notification.content
+                                
+                    

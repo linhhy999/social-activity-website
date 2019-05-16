@@ -24,13 +24,14 @@ export enum Role {
 export type Notification = {
     image: string,
     title: string,
-    time: string,
+    time: Date,
     content: string,
     link: string;
 };
 
 const userSchema = new mongoose.Schema({
     auth: [],
+    notifications: [],
     email: String,
     phone: String,
     code: String,

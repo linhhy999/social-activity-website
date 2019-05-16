@@ -77,6 +77,7 @@ app.use(flash());
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
+    app.locals.moment = moment;
     res.locals.user = req.user;
     next();
 });
