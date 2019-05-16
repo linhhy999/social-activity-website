@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export type UserModel = mongoose.Document & {
     auth: any[],
+    notifications: Notification[],
     email: string,
     phone: string,
     code: string,
@@ -18,10 +19,17 @@ export enum Role {
     Host = 10
 }
 
-
+export type Notification = {
+    image: string,
+    title: string,
+    time: Date,
+    content: string,
+    link: string;
+};
 
 const userSchema = new mongoose.Schema({
     auth: [],
+    notifications: [],
     email: String,
     phone: String,
     code: String,

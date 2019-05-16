@@ -1,14 +1,14 @@
 body {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 nav.navbar {
-    background-color: #4267b2;
+  background-color: #4267b2;
 }
 
 .navbar-brand img {
-    width: 40px;
-    height: auto;
+  width: 40px;
+  height: auto;
 }
 
 .navbar-brand2 img {
@@ -60,51 +60,51 @@ nav.navbar {
 }
 
 .form-round {
-    border-radius: 50px;
-    width: 500px !important;
-    background: #ffffff;
-    padding-left: 10px;
+  border-radius: 50px;
+  width: 500px !important;
+  background: #ffffff;
+  padding-left: 10px;
 }
 
 .form-round input {
-    border: none;
-    line-height: 20px;
-    width: 400px;
+  border: none;
+  line-height: 20px;
+  width: 400px;
 }
 
 .form-round input:focus {
-    outline: none;
+  outline: none;
 }
 
 .btn-search {
-    border-radius: 50px;
-    height: 30px;
-    margin: 2px;
-    margin-left: 17px;
-    box-shadow: none;
+  border-radius: 50px;
+  height: 30px;
+  margin: 2px;
+  margin-left: 17px;
+  box-shadow: none;
 }
 
 .btn-search:hover,
 .btn-search:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .collapse-content .fa.fa-heart:hover {
-    color: #f44336 !important;
+  color: #f44336 !important;
 }
 
 .collapse-content .fa.fa-share-alt:hover {
-    color: #0d47a1 !important;
+  color: #0d47a1 !important;
 }
 
 .mt-100 {
-    margin-top: 5em;
+  margin-top: 5em;
 }
 
 #sidebar ul li {
-    list-style-type: none;
-    border: none;
-    transition: 0.1s;
+  list-style-type: none;
+  border: none;
+  transition: 0.1s;
 }
 
 #sidebar ul li:hover {
@@ -117,40 +117,40 @@ nav.navbar {
 }
 
 #sidebar button {
-    padding: 10px;
-    font-size: 10px;
-    text-align: left;
+  padding: 10px;
+  font-size: 10px;
+  text-align: left;
 }
 
 #sidebar a {
-    color: black;
-    transition: 0.1s;
+  color: black;
+  transition: 0.1s;
 }
 
 .testimonial-card .avatar {
-    margin-top: -60px;
-    border: 5px solid #ffffff;
-    border-radius: 50%;
+  margin-top: -60px;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
 }
 
 .testimonial-card .card-title {
-    text-align: center;
+  text-align: center;
 }
 
 .btn-rounded {
-    border-radius: 100px;
+  border-radius: 100px;
 }
 
 .input-rounded {
-    border-radius: 100px;
-    padding: 10px;
-    border: 1px solid gray;
-    margin-left: 20px;
-    width: 90%;
+  border-radius: 100px;
+  padding: 10px;
+  border: 1px solid gray;
+  margin-left: 20px;
+  width: 90%;
 }
 
 ul.comment li.comment-item {
-    list-style: none;
+  list-style: none;
 }
 
 ul.comment li.comment-item i {
@@ -158,22 +158,22 @@ ul.comment li.comment-item i {
 }
 
 ul.comment li.comment-item .name {
-    font-weight: 500;
-    margin-left: 20px;
+  font-weight: 500;
+  margin-left: 20px;
 }
 
 ul.comment li.comment-item p {
-    padding-top: 5px;
-    margin-left: 20px;
+  padding-top: 5px;
+  margin-left: 20px;
 }
 
 .banner {
-    position: relative;
-    background-image: url("../img/IMG_1789.JPG");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
+  position: relative;
+  background-image: url("../img/IMG_1789.JPG");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
 }
 
 .banner .caption-left {
@@ -210,17 +210,140 @@ ul.comment li.comment-item p {
 }
 
 .sub-title {
-    font-size: 10px !important;
+  font-size: 10px !important;
 }
 
 .custom-popover-width {
-    width: 50% !important;
+  width: 50% !important;
 }
 
 .custom-card {
-    padding: 5px;
+  padding: 5px;
 }
 
 .custom-card .card-body {
     padding: 0px;
+}
+
+.scrollbar {
+  float: left;
+  background: #fff;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
+.force-overflow {
+  min-height: 450px;
+}
+
+.scrollbar-primary::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285f4;
+}
+
+.scrollbar-danger::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-danger::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-danger::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #ff3547;
+}
+
+.scrollbar-warning::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-warning::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-warning::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #ff8800;
+}
+
+.scrollbar-success::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-success::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-success::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #00c851;
+}
+
+.scrollbar-info::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-info::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-info::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #33b5e5;
+}
+
+.scrollbar-default::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-default::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-default::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #2bbbad;
+}
+
+.scrollbar-secondary::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-secondary::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-secondary::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #aa66cc;
 }

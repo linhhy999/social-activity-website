@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import Activity, { Status } from "../models/Activity";
 import User from "../models/User";
+import { createNotificationByCode } from "./notification";
+import moment = require("moment");
 
 
 export let getAddActivity = async (req: Request, res: Response) => {
@@ -309,6 +311,13 @@ export let getMember = async (req: Request, res: Response) => {
 
 export let getAcceptMember = async (req: Request, res: Response, next: NextFunction) => {
     await Activity.updateOne({ _id: req.params.activity, "members.mssv": req.params.mssv }, { "$set": { "members.$.status": 2 } });
+    await createNotificationByCode(req.params.mssv, {
+        image: req.user.auth[0].picture,
+        title: "Đăng ký hoạt động thành công",
+        time: new Date(),
+        content: "Yêu cầu tham gia hoạt động của bạn đã được chấp nhận",
+        link: "/activity-detail/" + req.params.activity
+    });
     res.locals.mssv = req.params.mssv;
     res.locals.activity = req.params.activity;
     next();
