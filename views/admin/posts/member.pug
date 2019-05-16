@@ -54,9 +54,10 @@ block content
                                                         td= member.phone
                                                         td= member.email
                                                         th
-                                                            a(href="/admin/post/member/"+activity+"/refuse/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Hủy đăng ký").mr-3
-                                                                i.fa.fa-times-circle
-                                                                | Hủy đăng ký
+                                                            form(action="/admin/post/member/"+activity+"/refuse/"+member.mssv method='post')
+                                                                button.btn.btn-primary.btn-rounded.btn-sm.waves-light
+                                                                    | Hủy đăng ký
+                                                            //a(href="/admin/post/member/"+activity+"/refuse/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Hủy đăng ký").mr-3
 
                             #pending.tab-pane.fade
                                 .tab-ctn
@@ -81,9 +82,9 @@ block content
                                                         td= member.phone
                                                         td= member.email
                                                         th
-                                                            a(href="/admin/post/member/"+activity+"/accept/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Chấp nhận").mr-3
-                                                                i.fa.fa-check-circle
-                                                                | Chấp nhận
+                                                            form(action="/admin/post/member/"+activity+"/accept/"+member.mssv method='post')
+                                                                button.btn.btn-primary.btn-rounded.btn-sm.waves-light
+                                                                    | Chấp nhận
                             #reject.tab-pane.fade
                                 .tab-ctn
                                     table.table.table-sc-ex

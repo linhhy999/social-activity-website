@@ -12,8 +12,7 @@ html(lang='en')
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
-
-
+        link(href="/css/styleprofile.css" rel="stylesheet")
 
     body
         include partials/header
@@ -47,27 +46,29 @@ html(lang='en')
                             // Title
                             h4.card-title
                                 a Thông tin người dùng
+                            div.errmessage(id="errorContainer")
+                                p Please correct the following errors and try again:
+                                <ul />
                             // Text
-                            form(action="/profile/update" method="POST")
+                            form(id="infoform" action="/profile/update" method="POST")
                                 .md-form.form-sm
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.code)
                                     label(for='inputSMEx') MSSV:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.code name="mssv")
                                 .md-form.form-sm
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName, name="name")
                                     label(for='inputSMEx') Họ và tên:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName name="name")
                                 .md-form.form-sm
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.email, name="email")
                                     label(for='inputSMEx') Email:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.email name="email" disabled)
                                 .md-form.form-sm
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone, name="phone")
                                     label(for='inputSMEx') Số điện thoại:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone name="phone")
                                 .md-form.form-sm
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString(), name="faculty")
                                     label(for='inputSMEx') Khoa:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString() name="faculty")
                                 .md-form.form-sm
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay)
                                     label(for='inputSMEx')  Số ngày Công tác xã hội:
-
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay name="socialday")
                                 // Button
                                 button.btn.btn-primary Cập nhật
                     // Card
@@ -101,11 +102,57 @@ html(lang='en')
                                                 td= act.benefit
 
                     // Card
-
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")
         script(type="text/javascript" src="/js/mdb.min.js")
+        script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js")
         script.
             $('.toast').toast()
+        script.
+            $(document).ready(function() {
+                $("#infoform").validate({
+                    rules: {
+                        mssv: {
+                            required: true,
+                            rangelength: [7,7],
+                            range: [1400000, 1899999]
+                        },
+                        name: "required",
+                        phone: {
+                            required: true,
+                            number: true,
+                            rangelength: [10,10],
+                            range: [0, 999999999]
+                        },
+                        socialday: {
+                            required: true,
+                            number: true,
+                            range: [0,200]
+                        },
+                    },
+                    messages: {
+                        mssv: {
+                            required: "Vui lòng nhập mã số sinh viên",
+                            rangelength: "Vui lòng nhập mã số sinh viên hợp lệ",
+                            range: "Vui lòng nhập mã số sinh viên hợp lệ"
+                        },
+                        name: "Vui lòng nhập họ và tên",
+                        phone: {
+                            required: "Vui lòng nhập số điện thoại",
+                            number: "Vui lòng nhập số điện thoại hợp lệ",
+                            rangelength: "Vui lòng nhập số điện thoại hợp lệ",
+                            range: "Vui lòng nhập số điện thoại hợp lệ"
+                        },
+                        socialday: {
+                            required: "Vui lòng nhập ngày ctxh",
+                            number: "Vui lòng nhập ngày ctxh hợp lệ",
+                            range: "Vui lòng nhập ngày ctxh hợp lệ"
+                        }
+                    },
+                    errorContainer: $('#errorContainer'),
+                    errorLabelContainer: $('#errorContainer ul'),
+                    wrapper: 'li'
+                });
+            });
         block script

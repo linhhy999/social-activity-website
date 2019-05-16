@@ -141,8 +141,8 @@ app.post("/admin/post/add", Guard.isLogin, upload.array("image"), activityContro
 app.post("/admin/post/edit/:id", Guard.isLogin, upload.array("image"), activityController.postEditActivity);
 app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity);
 app.get("/admin/post/member/:activity", Guard.isLogin, activityController.getMember);
-app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, activityController.getAcceptMember, emailController.registered);
-app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, activityController.getRefuseMember);
+app.post("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, activityController.getAcceptMember, emailController.registered);
+app.post("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, activityController.getRefuseMember);
 // app.post();
 app.post("/ajax/delete/image", activityController.postDeleteImage);
 app.get("*", (req, res) => { res.render("404"); });

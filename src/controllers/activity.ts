@@ -417,6 +417,7 @@ export let un_apply = async (req: Request, res: Response) => {
             members: membersAfterRemove
         }, { upset: false });
         await activity.save();
+
         return res.redirect("back");
     }
     catch (err) {

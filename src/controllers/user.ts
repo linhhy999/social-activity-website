@@ -57,7 +57,7 @@ export let postInfo = async (req: any, res: any) => {
         req.flash("errors", errors);
         return res.redirect("back");
     }
-    await User.updateOne({"_id": req.user._id}, {
+    await User.updateOne({ "_id": req.user._id }, {
         $set: {
             "fullName": req.body.name,
             "phone": req.body.phone,
@@ -71,6 +71,7 @@ export let postInfo = async (req: any, res: any) => {
 };
 
 export let updateProfile = async (req: any, res: any) => {
+    req.checkBody("mssv", "").notEmpty();
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
@@ -85,6 +86,7 @@ export let updateProfile = async (req: any, res: any) => {
     try {
         await User.updateOne({ "_id": req.user._id }, {
             $set: {
+                "code": req.body.mssv,
                 "phone": req.body.phone,
                 "faculty": req.body.faculty,
                 "fullName": req.body.name,
