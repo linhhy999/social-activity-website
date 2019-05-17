@@ -66,7 +66,7 @@ app.use(expressValidator());
 app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: SESSION_SECRET,
+    secret: "anything",
     store: new MongoStore({
         url: mongoUrl,
         autoReconnect: true

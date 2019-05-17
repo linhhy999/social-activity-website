@@ -24,16 +24,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {
-        console.log("passport.ts done:");
-        console.log(done(undefined, {
-            auth: {
-                googleId: profile.id,
-                picture: profile.photos[0].value,
-                displayName: profile.displayName
-            },
-            email: profile.emails[0].value,
-            fullName: profile.displayName
-        }));
+        console.log("# passport.ts done returning");
         return done(undefined, {
             auth: {
                 googleId: profile.id,
