@@ -61,11 +61,21 @@ export let login = async (req: Request, res: Response, next: NextFunction) => {
         if (!user) {
             user = new User(req.user);
             user = await user.save();
+            console.log("home.ts => res.redirect('/')");
+            res.redirect("/");
         }
         req.logIn(user, (err) => {
             if (err) console.log(err.message);
-            if (user.code == undefined) return res.redirect("/info");
-            else return res.redirect("/");
+            if (user.code == undefined) {
+                console.log("home.ts => res.redirect('/info')");
+                return res.redirect("/info");
+            }
+            else {
+                console.log("req.user:");
+                console.log(req.user);
+                console.log('home.ts2 => res.redirect("/")');
+                return res.redirect("/");
+            }
         });
     }
     catch (err) { console.log(err.message); }

@@ -33,7 +33,6 @@ export let changeRole = (req: Request, res: Response) => {
 
 export let profile = async (req: Request, res: Response) => {
     const activity = await Activity.find({ "members.mssv": req.user.code });
-    // console.log(activity);
     return res.render("profile", {
         user: req.user,
         activity: activity

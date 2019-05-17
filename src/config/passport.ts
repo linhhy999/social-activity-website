@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import _ from "lodash";
 import passport from "passport";
-import passportGoogle from "passport-google-oauth";
+import passportGoogle from "passport-google-oauth20";
 import User from "../models/User";
 
 
@@ -21,7 +21,7 @@ passport.deserializeUser((user: any, done) => {
 passport.use(new GoogleStrategy({
     clientID: "790914908087-ei1im9l1nhcbf2qd1gcdqfde3ub9d1c9.apps.googleusercontent.com",
     clientSecret: "8QEKd0jy5coEI_uNsSwCvRQd",
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {
         return done(undefined, {

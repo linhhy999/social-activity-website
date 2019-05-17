@@ -82,14 +82,7 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
-// app.enable("trust proxy");
-// const limiter = rateLimit({
-//     windowMs: 15 * 60 * 1000, // 15 minutes
-//     max: 100 // limit each IP to 100 requests per windowMs
-// });
-// app.use(limiter);
 app.use((req, res, next) => {
-    // After successful login, redirect back to the intended page
     if (!req.user &&
         req.path !== "/login" &&
         req.path !== "/signup" &&
@@ -106,12 +99,6 @@ app.use((req, res, next) => {
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
-// remindTrigger();
-// const apiLimiter = rateLimit({
-//     windowMs: 5 * 1000, // 5 seconds
-//     max: 1,
-//     handler: () => { }
-// });
 
 /**
  * Primary app routes.
@@ -125,11 +112,7 @@ app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
 
 
 app.get("/intro", homeController.intro);
-app.get("/auth/google",
-    passport.authenticate("google",
-        { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }
-    )
-);
+app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
 app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
 app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
