@@ -2,8 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/User";
 
 export let isLogin = (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.user);
-    console.log(req.user ? "guard.ts isLogin => next()" : "guard.ts isLogin => /intro");
+    console.log((req.user ? "guard.ts isLogin => next()" : "guard.ts isLogin => /intro") + ", req.user:" + req.user);
     if (req.user) next();
     else return res.redirect("/intro");
 };

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import _ from "lodash";
 import passport from "passport";
-import passportGoogle from "passport-google-oauth20";
+import passportGoogle from "passport-google-oauth";
 import User from "../models/User";
 
 
@@ -24,6 +24,16 @@ passport.use(new GoogleStrategy({
     callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {
+        console.log("passport.ts done:");
+        console.log(done(undefined, {
+            auth: {
+                googleId: profile.id,
+                picture: profile.photos[0].value,
+                displayName: profile.displayName
+            },
+            email: profile.emails[0].value,
+            fullName: profile.displayName
+        }));
         return done(undefined, {
             auth: {
                 googleId: profile.id,
@@ -34,7 +44,8 @@ passport.use(new GoogleStrategy({
             fullName: profile.displayName
         });
     }
-    return done(new Error("Request to Google Auth error"));
+    else
+        return done(new Error("Request to Google Auth error"));
 }
 ));
 
