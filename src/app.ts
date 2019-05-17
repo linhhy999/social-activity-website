@@ -120,7 +120,7 @@ app.get("/logout", Guard.isLogin, Guard.isFill, homeController.logout);
 app.get("/admin", Guard.isLogin, Guard.isFill, homeController.admin);
 app.get("/profile", Guard.isLogin, Guard.isFill, UserController.profile);
 app.get("/info", Guard.isLogin, UserController.info);
-app.post("/info", Guard.isLogin, Guard.isFill, UserController.postInfo);
+app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, Guard.isFill, activityController.listOwnActivity);
 app.get("/admin/post/detail/:id", Guard.isLogin, Guard.isFill, activityController.getActivityDetail);
 app.get("/admin/post/add", Guard.isLogin, Guard.isFill, activityController.getAddActivity);
