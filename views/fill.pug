@@ -29,10 +29,10 @@ html(lang='en')
                             | Bạn cần điền một số thông tin sau để tiếp tục
                     // Body
                     .modal-body
-                        form.needs-validation(action="#" method="POST" novalidate)
+                        form.needs-validation(action="/profile/update" method="POST" novalidate)
                             // Material input name
                             .md-form.form-sm
-                                input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required)
+                                input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required, value = user.fullName autofocus)
                                 label(for='materialFormNameModal') Tên của bạn
                                 .valid-feedback
                                     | Looks good!
@@ -45,20 +45,13 @@ html(lang='en')
                             // Material input subject
                             .md-form.form-sm
                                 input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required)
-                                label(for='materialFormMSSVModal') MSSV
+                                label(for='materialFormMSSVModal' oninput="console.log('asdasd')") MSSV
                                 .valid-feedback
                                     | Looks good!
                             // Material input subject
                             .md-form.form-sm
                                 input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required)
                                 label(for='materialFormFacultyModal') Khoa
-                                .valid-feedback
-                                    | Looks good!
-
-                            // Material input subject
-                            .md-form.form-sm
-                                input#materialFormSubjectModal.form-control.form-control-sm(type='number', name="ctxh", required)
-                                label(for='materialFormSubjectModal') Số ngày CTXH hiện tại
                                 .valid-feedback
                                     | Looks good!
                             // Material textarea message

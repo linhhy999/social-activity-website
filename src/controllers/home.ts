@@ -13,6 +13,7 @@ export let intro = async (req: Request, res: Response) => {
     });
 };
 export let index = async (req: Request, res: Response) => {
+    console.log(req.user);
     if (req.user) {
         try {
             const activityList = await Activity.find().limit(10);
@@ -62,18 +63,12 @@ export let login = async (req: Request, res: Response, next: NextFunction) => {
             user = await user.save();
         }
         req.logIn(user, (err) => {
-            if (err) {
-                console.log(err.message);
-            }
-            if (user.fullName == undefined)
-                return res.redirect("/info");
-            else
-                return res.redirect("/");
+            if (err) console.log(err.message);
+            if (user.code == undefined) return res.redirect("/info");
+            else return res.redirect("/");
         });
     }
-    catch (err) {
-        console.log(err.message);
-    }
+    catch (err) { console.log(err.message); }
 
 };
 

@@ -22,9 +22,18 @@ html(lang='en')
             .row
                 .col-lg-3.hidden-sm
                     .card.testimonial-card.mb-2
-                        .card-up.aqua-gradient(style="height:100px")
-                        .avatar.mx-auto.white
-                            img.rounded-circle.img-responsive(width="110px" height="110px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" alt="woman avatar")
+                        form()
+                            center
+                                .avatar-wrapper
+                                    if user.avatar.set == true
+                                        img.profile-pic(src=user.avatar.link)
+                                    else
+                                        img.profile-pic(src=user.auth[0].picture)
+                                    .upload-button
+                                        //i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                    input.file-upload(type='file', accept='image/*')
+                                button.btn.btn-primary Đổi ảnh đại diện
+                        // Bỏ là vừa nè
                         .card-body
                             h4.card-title= user.fullName
                             hr
@@ -37,6 +46,7 @@ html(lang='en')
                                     p.grey-text.small CTXH
                                     p.text-primary(style="line-height: 0px;")
                                         strong.small=user.numWorkDay
+                        // End of bỏ
                 br                
                 .col-lg-9.col-sm-12
                     // Card
@@ -46,10 +56,9 @@ html(lang='en')
                             // Title
                             h4.card-title
                                 a Thông tin người dùng
-                            div.errmessage(id="errorContainer")
+                            .errmessage(id="errorContainer")
                                 p Please correct the following errors and try again:
                                 <ul />
-                            // Text
                             form(id="infoform" action="/profile/update" method="POST")
                                 .md-form.form-sm
                                     label(for='inputSMEx') MSSV:
@@ -153,6 +162,24 @@ html(lang='en')
                     errorContainer: $('#errorContainer'),
                     errorLabelContainer: $('#errorContainer ul'),
                     wrapper: 'li'
+                });
+            });
+        script.
+            $(document).ready(function() {
+                var readURL = function(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('.profile-pic').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                $(".file-upload").on('change', function(){
+                    readURL(this);
+                });
+                $(".upload-button").on('click', function() {
+                   $(".file-upload").click();
                 });
             });
         block script

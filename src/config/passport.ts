@@ -13,8 +13,7 @@ passport.serializeUser<any, any>((user, done) => {
 });
 
 passport.deserializeUser((user: any, done) => {
-
-    User.findOne({ "email": user }, (err, user) => {
+    User.findOne({ "email": user.email }, (err, user) => {
         done(err, user);
     });
 });
@@ -25,16 +24,14 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {
-        // if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
-        //     return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
-        // }
         return done(undefined, {
             auth: {
                 googleId: profile.id,
                 picture: profile.photos[0].value,
                 displayName: profile.displayName
             },
-            email: profile.emails[0].value
+            email: profile.emails[0].value,
+            fullName: profile.displayName
         });
     }
     return done(new Error("Request to Google Auth error"));

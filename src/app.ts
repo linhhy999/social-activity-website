@@ -125,15 +125,20 @@ app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
 
 
 app.get("/intro", homeController.intro);
-app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
+app.get("/auth/google",
+    passport.authenticate("google",
+        { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }
+    )
+);
 app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
-app.get("/", Guard.isLogin, homeController.index);
+app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, homeController.admin);
-app.get("/profile", Guard.isLogin, UserController.profile);
+app.get("/profile", Guard.isLogin, Guard.isFill, UserController.profile);
 app.post("/profile/update", Guard.isLogin, UserController.updateProfile);
+app.post("/profile/avatar", Guard.isLogin, UserController.updateProfileAvatar);
 app.get("/info", Guard.isLogin, UserController.info);
-app.post("/info", Guard.isLogin, UserController.postInfo);
+// app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
 app.get("/admin/post/detail/:id", Guard.isLogin, activityController.getActivityDetail);
 app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
