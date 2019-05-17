@@ -29,7 +29,7 @@ html(lang='en')
                             | Bạn cần điền một số thông tin sau để tiếp tục
                     // Body
                     .modal-body
-                        form.needs-validation(action="/profile/update" method="POST" novalidate)
+                        form.needs-validation(action="/info" method="POST" novalidate)
                             // Material input name
                             .md-form.form-sm
                                 input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required, value = user.fullName autofocus)
@@ -38,22 +38,35 @@ html(lang='en')
                                     | Looks good!
                             // Material input email
                             .md-form.form-sm
-                                input#materialFormEmailModal.form-control.form-control-sm(type='text', name="phone", required)
+                                input#materialFormEmailModal.form-control.form-control-sm(type='text', name="phone", required, value = user.phone)
                                 label(for='materialFormEmailModal') Số điện thoại
                                 .valid-feedback
                                     | Looks good!
                             // Material input subject
                             .md-form.form-sm
-                                input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required)
+                                input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required value= user.code)
                                 label(for='materialFormMSSVModal' oninput="console.log('asdasd')") MSSV
                                 .valid-feedback
                                     | Looks good!
                             // Material input subject
-                            .md-form.form-sm
-                                input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required)
-                                label(for='materialFormFacultyModal') Khoa
-                                .valid-feedback
-                                    | Looks good!
+                            div
+                                //input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required value =user.faculty)
+                                label(style="font-size: .85rem") Khoa
+                                select.browser-default.custom-select(name="faculty", required value = user.faculty)
+                                    option(value='', disabled='') Choose your option
+                                    option(value='Khoa học và Kỹ thuật Máy tính' selected) Khoa học và Kỹ thuật Máy tính
+                                    option(value='Kỹ thuật Hóa học') Kỹ thuật Hóa học
+                                    option(value='Điện - Điện tử') Điện - Điện tử
+                                    option(value='Cơ Khí') Cơ Khí
+                                    option(value='Xây Dựng') Xây Dựng
+                                    option(value='Khoa học Ứng dụng') Khoa học Ứng dụng
+                                    option(value='Môi trường và tài nguyên') Môi trường và tài nguyên
+                                    option(value='Kỹ thuật giao thông') Kỹ thuật giao thông
+                                    option(value='Kỹ thuật và Địa chất Dầu khí') Kỹ thuật và Địa chất Dầu khí
+                                    option(value='Quản lý Công nghiệp') Quản lý Công nghiệp
+                                    option(value='VP. Đào tạo Quốc tế') VP. Đào tạo Quốc tế
+                                    option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
+                                    option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
                             // Material textarea message
                             .text-center.mt-4.mb-2
                                 button.btn.btn-primary

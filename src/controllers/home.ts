@@ -13,8 +13,6 @@ export let intro = async (req: Request, res: Response) => {
     });
 };
 export let index = async (req: Request, res: Response) => {
-    console.log("# home.ts index req.user:");
-    console.log(req.user);
     if (req.user) {
         try {
             const activityList = await Activity.find().limit(10);
@@ -62,25 +60,16 @@ export let login = async (req: Request, res: Response, next: NextFunction) => {
         if (!user) {
             user = new User(req.user);
             user = await user.save();
-            console.log("# home.ts login => res.redirect('/')");
             res.redirect("/");
         }
         req.logIn(user, (err) => {
             if (err) console.log(err.message);
-            if (user.code == undefined) {
-                console.log("# home.ts login => res.redirect('/info')");
+            if (user.code === undefined || user.faculty === undefined || user.fullName === undefined || user.phone === undefined || user.avatar === undefined || user.avatar.set === undefined)
                 return res.redirect("/info");
-            }
-            else {
-                console.log("# req.user:");
-                console.log(req.user);
-                console.log('# home.ts2 login => res.redirect("/")');
-                return res.redirect("/");
-            }
+            else return res.redirect("/");
         });
     }
     catch (err) { console.log(err.message); }
-
 };
 
 export let logout = async (req: Request, res: Response) => {

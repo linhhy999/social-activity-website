@@ -303,7 +303,7 @@ export let getMember = async (req: Request, res: Response) => {
         });
     }
     catch (err) {
-        console.log(err);
+        console.log(err.message);
         return res.redirect("back");
     }
 

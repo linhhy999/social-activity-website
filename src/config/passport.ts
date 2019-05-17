@@ -1,19 +1,15 @@
-import { NextFunction, Request, Response } from "express";
-import _ from "lodash";
 import passport from "passport";
 import passportGoogle from "passport-google-oauth";
 import User from "../models/User";
 
-
-
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
-    done(undefined, user.email);
+    done(undefined, user);
 });
 
 passport.deserializeUser((user: any, done) => {
-    User.findOne({ "email": user.email }, (err, user) => {
+    User.findOne({ googleId: user.auth.googleId }, (err, user) => {
         done(err, user);
     });
 });
@@ -24,7 +20,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {
-        console.log("# passport.ts done returning");
+        if (profile._json.hd != "hcmut.edu.vn") return done(null, false);
         return done(undefined, {
             auth: {
                 googleId: profile.id,
@@ -32,7 +28,10 @@ passport.use(new GoogleStrategy({
                 displayName: profile.displayName
             },
             email: profile.emails[0].value,
-            fullName: profile.displayName
+            fullName: profile.displayName,
+            avatar: {
+                set: false
+            }
         });
     }
     else
@@ -42,28 +41,28 @@ passport.use(new GoogleStrategy({
 
 
 export let isGoogleAuthenticated = passport.authenticate("google", { failureRedirect: "/auth/google" });
-
-/**
- * Login Required middleware.
- */
-export let isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/intro");
-};
-
-/**
- * Authorization Required middleware.
- */
-export let isAuthorized = (req: Request, res: Response, next: NextFunction) => {
-    const provider = req.path.split("/").slice(-1)[0];
-
-    if (_.find(req.user.tokens, { kind: provider })) {
-        next();
-    } else {
-        res.redirect(`/auth/${provider}`);
-    }
-};
-
 export default passport;
+
+// /**
+//  * Login Required middleware.
+//  */
+// export let isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+//     if (req.isAuthenticated()) {
+//         return next();
+//     }
+//     res.redirect("/intro");
+// };
+
+// /**
+//  * Authorization Required middleware.
+//  */
+// export let isAuthorized = (req: Request, res: Response, next: NextFunction) => {
+//     const provider = req.path.split("/").slice(-1)[0];
+
+//     if (_.find(req.user.tokens, { kind: provider })) {
+//         next();
+//     } else {
+//         res.redirect(`/auth/${provider}`);
+//     }
+// };
+

@@ -36,10 +36,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
 const MongoStore = mongo(session);
-
-
 
 // Create Express server
 const app = express();
@@ -48,9 +45,7 @@ const app = express();
 const mongoUrl = MONGODB_URI;
 (<any>mongoose).Promise = bluebird;
 // @ts-ignore
-mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true }).then(
-    () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
-).catch((err: any) => {
+mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true }).then(() => { }).catch((err: any) => {
     logger.error("MongoDB connection error. Please make sure MongoDB is running. " + err);
     process.exit();
 });
@@ -66,7 +61,7 @@ app.use(expressValidator());
 app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: "anything",
+    secret: SESSION_SECRET,
     store: new MongoStore({
         url: mongoUrl,
         autoReconnect: true
@@ -112,16 +107,16 @@ app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
 
 
 app.get("/intro", homeController.intro);
-app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
+app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"], failureFlash: "Please login with hcmut.edu.vn domain email" }));
 app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
-app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
+app.get("/", Guard.isLogin, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, homeController.admin);
 app.get("/profile", Guard.isLogin, Guard.isFill, UserController.profile);
 app.post("/profile/update", Guard.isLogin, UserController.updateProfile);
 app.post("/profile/avatar", Guard.isLogin, UserController.updateProfileAvatar);
 app.get("/info", Guard.isLogin, UserController.info);
-// app.post("/info", Guard.isLogin, UserController.postInfo);
+app.post("/info", Guard.isLogin, UserController.postInfo);
 app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
 app.get("/admin/post/detail/:id", Guard.isLogin, activityController.getActivityDetail);
 app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);

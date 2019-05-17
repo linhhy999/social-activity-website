@@ -45,9 +45,11 @@ html(lang='en')
                                 .col-sm-6
                                     p.grey-text.small CTXH
                                     p.text-primary(style="line-height: 0px;")
-                                        strong.small=user.numWorkDay
+                                        strong.small
+                                            iframe(src="http://gaia.cs.umass.edu/wireshark-labs/alice.txt", frameborder="0")
+                                    p Đang làm cái này, deploy sắp xong rồi 
                         // End of bỏ
-                br                
+                br
                 .col-lg-9.col-sm-12
                     // Card
                     .card
@@ -58,7 +60,7 @@ html(lang='en')
                                 a Thông tin người dùng
                             .errmessage(id="errorContainer")
                                 p Please correct the following errors and try again:
-                                <ul />
+                                <ul/>
                             form(id="infoform" action="/profile/update" method="POST")
                                 .md-form.form-sm
                                     label(for='inputSMEx') MSSV:
@@ -179,7 +181,18 @@ html(lang='en')
                     readURL(this);
                 });
                 $(".upload-button").on('click', function() {
-                   $(".file-upload").click();
+                    $(".file-upload").click();
                 });
             });
+            $('#infoform')
+                .ajaxForm({
+                    url : '/profile/update',
+                    dataType : 'json',
+                    success : function (response) {
+                        alert("The server says: " + response);
+                    }
+                })
+            ;
+
+
         block script
