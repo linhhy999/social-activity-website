@@ -103,33 +103,33 @@ app.use(
 /**
  * Primary app routes.
  */
-app.get("/activity-detail/:id", Guard.isLogin, activityController.activityDetail);
-app.get("/apply/:id", Guard.isLogin, activityController.apply);
-app.get("/un_apply/:id", Guard.isLogin, activityController.un_apply);
-app.post("/comment/:id", Guard.isLogin, activityController.postComment);
-app.get("/search/", Guard.isLogin, activityController.searchActivity);
-app.post("/search/", Guard.isLogin, activityController.searchAdvancedActivity);
+app.get("/activity-detail/:id", Guard.isLogin, Guard.isFill, activityController.activityDetail);
+app.get("/apply/:id", Guard.isLogin, Guard.isFill, activityController.apply);
+app.get("/un_apply/:id", Guard.isLogin, Guard.isFill, activityController.un_apply);
+app.post("/comment/:id", Guard.isLogin, Guard.isFill, activityController.postComment);
+app.get("/search/", Guard.isLogin, Guard.isFill, activityController.searchActivity);
+app.post("/search/", Guard.isLogin, Guard.isFill, activityController.searchAdvancedActivity);
 
 
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
 app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated,
 homeController.login);
-app.get("/", Guard.isLogin, homeController.index);
-app.get("/logout", Guard.isLogin, homeController.logout);
-app.get("/admin", Guard.isLogin, homeController.admin);
-app.get("/profile", Guard.isLogin, UserController.profile);
+app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
+app.get("/logout", Guard.isLogin, Guard.isFill, homeController.logout);
+app.get("/admin", Guard.isLogin, Guard.isFill, homeController.admin);
+app.get("/profile", Guard.isLogin, Guard.isFill, UserController.profile);
 app.get("/info", Guard.isLogin, UserController.info);
-app.post("/info", Guard.isLogin, UserController.postInfo);
-app.get("/admin/post/list", Guard.isLogin, activityController.listOwnActivity);
-app.get("/admin/post/detail/:id", Guard.isLogin, activityController.getActivityDetail);
-app.get("/admin/post/add", Guard.isLogin, activityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, upload.array("image"), activityController.postActivity);
-app.post("/admin/post/edit/:id", Guard.isLogin, upload.array("image"), activityController.postEditActivity);
-app.post("/admin/post/block/:id", Guard.isLogin, activityController.postActivity);
-app.get("/admin/post/member/:activity", Guard.isLogin, activityController.getMember);
-app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, activityController.getAcceptMember);
-app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, activityController.getRefuseMember);
+app.post("/info", Guard.isLogin, Guard.isFill, UserController.postInfo);
+app.get("/admin/post/list", Guard.isLogin, Guard.isFill, activityController.listOwnActivity);
+app.get("/admin/post/detail/:id", Guard.isLogin, Guard.isFill, activityController.getActivityDetail);
+app.get("/admin/post/add", Guard.isLogin, Guard.isFill, activityController.getAddActivity);
+app.post("/admin/post/add", Guard.isLogin, Guard.isFill, upload.array("image"), activityController.postActivity);
+app.post("/admin/post/edit/:id", Guard.isLogin, Guard.isFill, upload.array("image"), activityController.postEditActivity);
+app.post("/admin/post/block/:id", Guard.isLogin, Guard.isFill, activityController.postActivity);
+app.get("/admin/post/member/:activity", Guard.isLogin, Guard.isFill, activityController.getMember);
+app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, Guard.isFill, activityController.getAcceptMember);
+app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, Guard.isFill, activityController.getRefuseMember);
 
 app.post("/ajax/delete/image", activityController.postDeleteImage);
 
