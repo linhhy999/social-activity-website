@@ -111,7 +111,14 @@ export let postActivity = async (req: any, res: Response) => {
             targetPlace: req.body.target_place,
             content: req.body.content,
             orgUnit: req.body.orgUnit,
-            host: req.user,
+            host: {
+                fullName: req.user.fullName,
+                avatar: req.user.avatar,
+                faculty: req.user.faculty,
+                email: req.user.email,
+                code: req.user.code,
+                phone: req.user.phone
+            },
             image: images,
             video: [],
             maxMember: req.body.numMember,
