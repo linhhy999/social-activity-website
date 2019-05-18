@@ -40,8 +40,18 @@ export type Member = {
     faculty: string,
     phone: string,
     email: string,
-    status: Status
+    status: Status,
+    isJoined: Join,
+    point: number,
+    note: string,
 };
+
+export enum Join {
+    "JOINED" = 1,
+    "ABSENT" = 2,
+    "ABSENT_WITH_PERMISSION" = 3,
+    "WAITING" = 4
+}
 
 export enum Status {
     PENDING = 1,
@@ -69,7 +79,8 @@ const activitySchema = new mongoose.Schema({
     members: [],
     comment: [],
     superVisor: [],
-    status: Boolean
+    status: Boolean,
+    isJoined: Number
 }, { timestamps: true });
 
 

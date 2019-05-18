@@ -132,6 +132,8 @@ app.post("/admin/post/block/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(R
 app.get("/admin/post/member/:activity", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getMember);
 app.post("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getAcceptMember);
 app.post("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getRefuseMember);
+app.get("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getReport);
+app.post("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.postReport);
 app.get("/admin/account/list", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.getListAccounts);
 app.get("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.getAddAccounts);
 app.post("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.postAddAccounts);
