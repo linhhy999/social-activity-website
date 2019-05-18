@@ -13,42 +13,52 @@ block content
                             label.badge-pill.badge.badge-success Accepted
                         else if status == 3
                             label.badge-pill.badge.badge-danger Rejected
-                        p.card-text
+                        if activity.members.length == activity.maxMember
+                                .badge.badge-danger Đã đủ thành viên 
+                        p.card-text.mb-0
                             i.far.fa-clock.pr-2
-                                =  activity.timeStart + " " +activity.dateStart
-                        p.card-text
+                            strong
+                                | Thời gian: 
+                            = activity.timeStart
+                        p.card-text.mb-0
                             i.far.fa-map.pr-2
-                                = activity.targetPlace
+                            strong
+                                | Địa điểm: 
+                            = activity.targetPlace
+                        p.card-text.mb-0
+                            i.far.fa-map.pr-2
+                            strong
+                                | Đơn vị tổ chức: 
+                            = activity.orgUnit
+                        p.card-text.mb-0
+                            i.far.fa-map.pr-2
+                            strong
+                                | Số lượng tuyển: 
+                            = activity.maxMember
+                        p.card-text.mb-0
+                            i.far.fa-map.pr-2
+                            strong
+                                | Số ngày công tác xã hội: 
+                            = activity.benefit
                     .m-auto
-                    img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.auth[0].picture, alt="avatar.jpg")
+                    img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, alt="avatar.jpg")
                     //<button type="button" class="btn btn-primary btn-rounded">Primary</button>
                 .view.overlay
                     #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
                         ol.carousel-indicators
-                            - let i = 0
-                            //- each video in activity.video
-                            //-     li(data-target="#carousel-example-1z" data-slide-to=i)
-                            //-     - i++
                             each image in activity.image
-                                if i == 0
+                                if image == 0
                                     li(data-target="#carousel-example-1z" data-slide-to=i).active
                                 else
                                     li(data-target="#carousel-example-1z" data-slide-to=i)
-                                - i++
                         .carousel-inner(role="listbox")
-                            - i = 0
-                                //- each video in activity.video
-                                //-     .carousel-item
-                                //-         img.d-block.w-100(src=video alt="First slide")
-                                //-     - i++
-                            each image in activity.image
-                                if i == 0
+                            each image, index in activity.image
+                                if index == 0
                                     .carousel-item.active
-                                        img.d-block.w-100(src=image alt="First slide")
+                                        img.d-block.w-100(src=image.link alt="First slide")
                                 else
                                     .carousel-item
-                                        img.d-block.w-100(src=image alt="First slide")
-                                - i++
+                                        img.d-block.w-100(src=image.link alt="First slide")
                         a.carousel-control-prev(href="#carousel-example-1z" role="button" data-slide="prev")
                             span.carousel-control-prev-iconz(aria-hidden="true")
                             span.sr-only
@@ -94,7 +104,7 @@ block content
                     ul.comment
                         each comment in activity.comment
                             li.comment-item
-                                img.rounded-circle(height="50px", width="50px", src=user.auth[0].picture, alt="avatar.jpg")
+                                img.rounded-circle(height="50px", width="50px", src=comment.userAvatar, alt="avatar.jpg")
                                 span.name= user.auth[0].displayName
                                 i.far.fa-clock.pr-2= comment.timeComment
                                 p= comment.content

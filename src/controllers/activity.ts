@@ -348,6 +348,7 @@ export let postComment = async (req: any, res: Response) => {
         activity.comment.push({
             userId: req.user._id,
             timeComment: new Date,
+            userAvatar: req.user.avatar,
             content: req.body.comment,
             reply: []
         });
