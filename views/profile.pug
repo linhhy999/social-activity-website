@@ -16,101 +16,96 @@ html(lang='en')
 
     body
         include partials/header
-
-        .mt-100
-        .container 
-            .row
-                .col-lg-3.hidden-sm
-                    .card.testimonial-card.mb-2
-                        form()
+        form(id="infoform" action="/profile/update" method="POST")
+            .mt-100
+            .container 
+                .row
+                    .col-lg-3.hidden-sm
+                        .card.testimonial-card.mb-2
                             center
                                 .avatar-wrapper
-                                    if user.avatar.set == true
-                                        img.profile-pic(src=user.avatar.link)
-                                    else
-                                        img.profile-pic(src=user.auth[0].picture)
+                                    img.profile-pic(src=user.avatar)
                                     .upload-button
-                                        //i.fa.fa-arrow-circle-up(aria-hidden='true')
-                                    input.file-upload(type='file', accept='image/*')
-                                button.btn.btn-primary Đổi ảnh đại diện
-                        // Bỏ là vừa nè
-                        .card-body
-                            h4.card-title= user.fullName
-                            hr
-                            .row
-                                .col-sm-6
-                                    p.grey-text.small MSSV
-                                    p.text-primary(style="line-height: 0px;")
-                                        strong.small=user.code
-                                .col-sm-6
-                                    p.grey-text.small CTXH
-                                    p.text-primary(style="line-height: 0px;")
-                                        strong.small
-                                            iframe(src="http://gaia.cs.umass.edu/wireshark-labs/alice.txt", frameborder="0")
-                                    p Đang làm cái này, deploy sắp xong rồi 
-                        // End of bỏ
-                br
-                .col-lg-9.col-sm-12
-                    // Card
-                    .card
-                        // Card content
-                        .card-body
-                            // Title
-                            h4.card-title
-                                a Thông tin người dùng
-                            .errmessage(id="errorContainer")
-                                p Please correct the following errors and try again:
-                                <ul/>
-                            form(id="infoform" action="/profile/update" method="POST")
-                                .md-form.form-sm
-                                    label(for='inputSMEx') MSSV:
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.code name="mssv")
-                                .md-form.form-sm
-                                    label(for='inputSMEx') Họ và tên:
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName name="name")
-                                .md-form.form-sm
-                                    label(for='inputSMEx') Email:
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.email name="email" disabled)
-                                .md-form.form-sm
-                                    label(for='inputSMEx') Số điện thoại:
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone name="phone")
-                                .md-form.form-sm
-                                    label(for='inputSMEx') Khoa:
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString() name="faculty")
-                                .md-form.form-sm
-                                    label(for='inputSMEx')  Số ngày Công tác xã hội:
-                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay name="socialday")
-                                // Button
-                                button.btn.btn-primary Cập nhật
-                    // Card
+                                        i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                    input.file-upload(type='file', accept='image/*' name="avatar" style="position: absolute;")
+                                .card-body
+                                    h6.card-title= user.fullName
+                    br
+                    .col-lg-9.col-sm-12
+                        // Card
+                        .card
+                            // Card content
+                            .card-body
+                                // Title
+                                h4.card-title
+                                    a Thông tin người dùng
+                                .errmessage(id="errorContainer")
+                                    p Please correct the following errors and try again:
+                                    <ul/>
+                                div
+                                    .md-form.form-sm
+                                        label(for='inputName') Họ và tên:
+                                        input#inputName.form-control.form-control-sm(type='text' value=user.fullName name="name")
+                                    .md-form.form-sm
+                                        label(for='inputMSSV') MSSV:
+                                        input#inputMSSV.form-control.form-control-sm(type='text' value=user.code name="mssv")
+                                    .md-form.form-sm
+                                        label(for='inputEmail') Email:
+                                        input#inputEmail.form-control.form-control-sm(type='text' value=user.email name="email" disabled)
+                                    .md-form.form-sm
+                                        label(for='inputPhone') Số điện thoại:
+                                        input#inputPhone.form-control.form-control-sm(type='text' value=user.phone name="phone")
+                                    div
+                                        label(style="font-size: .75rem") Khoa
+                                        select.browser-default.custom-select(name="faculty", required value = user.faculty)
+                                            option(value='', disabled='') Choose your option
+                                            option(value='Khoa học và Kỹ thuật Máy tính' selected) Khoa học và Kỹ thuật Máy tính
+                                            option(value='Kỹ thuật Hóa học') Kỹ thuật Hóa học
+                                            option(value='Điện - Điện tử') Điện - Điện tử
+                                            option(value='Cơ Khí') Cơ Khí
+                                            option(value='Xây Dựng') Xây Dựng
+                                            option(value='Khoa học Ứng dụng') Khoa học Ứng dụng
+                                            option(value='Môi trường và tài nguyên') Môi trường và tài nguyên
+                                            option(value='Kỹ thuật giao thông') Kỹ thuật giao thông
+                                            option(value='Kỹ thuật và Địa chất Dầu khí') Kỹ thuật và Địa chất Dầu khí
+                                            option(value='Quản lý Công nghiệp') Quản lý Công nghiệp
+                                            option(value='VP. Đào tạo Quốc tế') VP. Đào tạo Quốc tế
+                                            option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
+                                            option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
+                                    .md-form.form-sm
+                                        label(for='inputSocialWork')  Số ngày Công tác xã hội:
+                                        input#inputSocialWork.form-control.form-control-sm(type='text' value=user.socialday name="socialday")
+                                    // Button
+                                    button.btn.btn-primary Cập nhật
+                        // Card
 
-                    // Card
-                    .card.mt-3
-                        // Card content
-                        .card-body
-                            // Title
-                            h4.card-title
-                                a Hoạt động cá nhân
-                            // Text
-                            .table-responsive
-                                table.table
-                                    thead
-                                        tr
-                                            th(scope='col') STT
-                                            th(scope='col') Mã Hoạt động
-                                            th(scope='col') Tên hoạt động
-                                            th(scope='col') Khoa tổ chức
-                                            th(scope='col') Ngày CTXH
-                                    tbody
-                                        - let i= 0
-                                        each act in activity
-                                            - i++
+                        // Card
+                        .card.mt-3
+                            // Card content
+                            .card-body
+                                // Title
+                                h4.card-title
+                                    a Hoạt động cá nhân
+                                // Text
+                                .table-responsive
+                                    table.table
+                                        thead
                                             tr
-                                                th(scope='row')= i
-                                                td= act.id
-                                                td= act.name
-                                                td= act.orgUnit
-                                                td= act.benefit
+                                                th(scope='col') STT
+                                                th(scope='col') Mã Hoạt động
+                                                th(scope='col') Tên hoạt động
+                                                th(scope='col') Khoa tổ chức
+                                                th(scope='col') Ngày CTXH
+                                        tbody
+                                            - let i= 0
+                                            each act in activity
+                                                - i++
+                                                tr
+                                                    th(scope='row')= i
+                                                    td= act.id
+                                                    td= act.name
+                                                    td= act.orgUnit
+                                                    td= act.benefit
 
                     // Card
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
@@ -169,7 +164,8 @@ html(lang='en')
         script.
             $(document).ready(function() {
                 var readURL = function(input) {
-                    if (input.files && input.files[0]) {
+                    console.log(input.files[0]);
+                    if (input.files && input.files[0] && input.files[0].type.includes("image")) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             $('.profile-pic').attr('src', e.target.result);
@@ -184,15 +180,4 @@ html(lang='en')
                     $(".file-upload").click();
                 });
             });
-            $('#infoform')
-                .ajaxForm({
-                    url : '/profile/update',
-                    dataType : 'json',
-                    success : function (response) {
-                        alert("The server says: " + response);
-                    }
-                })
-            ;
-
-
         block script

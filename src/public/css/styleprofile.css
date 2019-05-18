@@ -13,6 +13,10 @@
     padding-top: 0;
 }
 
+.file-upload {
+    position: 99999999999999px;
+}
+
 .avatar-wrapper {
     position: relative;
     height: 200px;
@@ -76,5 +80,5 @@
 }
 
 .upload-button:hover .fa-arrow-circle-up {
-    opacity: .9;
+    opacity: 1;
 }

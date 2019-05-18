@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ObjectId } from "bson";
 
 export type UserModel = mongoose.Document & {
     auth: any[],
@@ -8,10 +9,10 @@ export type UserModel = mongoose.Document & {
     code: string,
     role: Role,
     fullName: string,
-    numWorkDay: number,
+    socialday: number,
     faculty: string,
     isBlocked: boolean,
-    avatar: { data: any, contentType: string, link: string, set: boolean },
+    avatar: string
 };
 
 const userSchema = new mongoose.Schema({
@@ -22,10 +23,10 @@ const userSchema = new mongoose.Schema({
     code: String,
     role: Number,
     fullName: String,
-    numWorkDay: Number,
+    socialday: Number,
     faculty: String,
     isBlocked: Boolean,
-    avatar: { data: Buffer, contentType: String, link: String, set: Boolean },
+    avatar: String,
 }, { timestamps: true });
 
 export enum Role {

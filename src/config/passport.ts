@@ -9,7 +9,7 @@ passport.serializeUser<any, any>((user, done) => {
 });
 
 passport.deserializeUser((user: any, done) => {
-    User.findOne({ email: user, isBlock: {$not: {$eq: true}}}, (err, user) => {
+    User.findOne({ email: user, isBlock: { $not: { $eq: true } } }, (err, user) => {
         done(err, user);
     });
 });
@@ -29,9 +29,8 @@ passport.use(new GoogleStrategy({
             },
             email: profile.emails[0].value,
             fullName: profile.displayName,
-            avatar: {
-                set: false
-            }
+            avatar: profile.photos[0].value,
+            code: /^\d+$/.test(profile.emails[0].value.substr(0, 7)) ? profile.emails[0].value.substr(0, 7) : undefined,
         });
     }
     else

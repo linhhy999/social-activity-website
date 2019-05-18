@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Activity from "../models/Activity";
 import User from "../models/User";
+import Avatar from "../models/Avatar";
 import { NextFunction } from "connect";
 
 
@@ -50,6 +51,8 @@ export let postInfo = async (req: any, res: any) => {
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
+    req.checkBody("socialday", "Tên không được để trống").notEmpty();
+    // req.checkBody("avatar", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -57,14 +60,18 @@ export let postInfo = async (req: any, res: any) => {
         req.flash("errors", errors);
         return res.redirect("back");
     }
-
-    let avatar = {};
-    const user = await User.findOne({ "_id": req.user._id });
-    if (user.avatar === undefined || user.avatar.data === undefined || user.avatar.link === undefined || user.avatar.set === undefined) {
-        avatar = { "set": false };
+    let avatarlink = "";
+    if (req.body.avatar) {
+        const avatar = new Avatar({ "data": req.body.avatar });
+        avatar.save((err) => {
+            console.log(err);
+            return res.redirect("back");
+        });
+        avatarlink = "/" + avatar._id;
     }
-    else avatar = user.avatar;
+    else avatarlink = req.user.auth[0].picture;
 
+    const user = await User.findOne({ "_id": req.user._id });
     try {
         await User.updateOne({ "_id": req.user._id }, {
             $set: {
@@ -72,7 +79,8 @@ export let postInfo = async (req: any, res: any) => {
                 "phone": req.body.phone,
                 "faculty": req.body.faculty,
                 "fullName": req.body.name,
-                "avatar": avatar
+                "avatar": avatarlink,
+                "socialday": req.body.socialday
             }
         }, { upsert: false });
         return res.redirect("/");
@@ -89,6 +97,8 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
+    req.checkBody("socialday", "Tên không được để trống").notEmpty();
+    // req.checkBody("avatar", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -96,14 +106,18 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
         req.flash("errors", errors);
         return res.redirect("back");
     }
+    let avatarlink = "";
+    if (req.body.avatar) {
+        const avatar = new Avatar({ "data": req.body.avatar });
+        avatar.save((err) => {
+            console.log(err);
+            return res.redirect("back");
+        });
+        avatarlink = "/" + avatar._id;
+    }
+    else avatarlink = req.user.auth[0].picture;
 
-    let avatar = {};
     const user = await User.findOne({ "_id": req.user._id });
-    if (user.avatar === undefined || user.avatar.data === undefined || user.avatar.link === undefined || user.avatar.set === undefined) {
-        avatar = { "set": false };
-    }
-    else avatar = user.avatar;
-
     try {
         await User.updateOne({ "_id": req.user._id }, {
             $set: {
@@ -111,40 +125,11 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
                 "phone": req.body.phone,
                 "faculty": req.body.faculty,
                 "fullName": req.body.name,
-                "avatar": avatar
+                "avatar": avatarlink,
+                "socialday": req.body.socialday
             }
         }, { upsert: false });
-        // next();
-        console.log("# /profile/update: 204");
-        res.status(204).send("Update successful");
-    }
-    catch (err) {
-        console.log(err.message);
-        return res.redirect("back");
-    }
-};
-
-export let updateProfileAvatar = async (req: any, res: any) => {
-    req.checkBody("mssv", "").notEmpty();
-    const errors = req.validationErrors();
-
-    if (errors) {
-        req.flash("errors", errors);
-        return res.redirect("back");
-    }
-
-    try {
-        await User.updateOne({ "_id": req.user._id }, {
-            $set: {
-                "code": req.body.mssv,
-                "phone": req.body.phone,
-                "faculty": req.body.faculty,
-                "fullName": req.body.name,
-                "email": req.body.email,
-            }
-        }, { upsert: false });
-
-        return res.redirect("back");
+        res.redirect(req.get("referer"));
     }
     catch (err) {
         console.log(err.message);
