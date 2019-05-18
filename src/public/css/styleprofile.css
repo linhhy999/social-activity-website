@@ -13,10 +13,6 @@
     padding-top: 0;
 }
 
-.file-upload {
-    position: 99999999999999px;
-}
-
 .avatar-wrapper {
     position: relative;
     height: 200px;
@@ -25,7 +21,7 @@
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 1px 1px 15px -5px black;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
 }
 
 .avatar-wrapper:hover {
@@ -34,18 +30,17 @@
 }
 
 .avatar-wrapper:hover .profile-pic {
-    opacity: .5;
+    opacity: 0.5;
 }
 
-.profile-pic {
-    object-fit: cover;
+.avatar-wrapper .profile-pic {
     height: 100%;
     width: 100%;
-    transition: all .3s ease;
-
+    object-fit: cover;
+    transition: all 0.3s ease;
 }
 
-.profile-pic:after {
+.avatar-wrapper .profile-pic:after {
     font-family: FontAwesome;
     content: "\f007";
     top: 0;
@@ -59,8 +54,7 @@
     text-align: center;
 }
 
-
-.upload-button {
+.avatar-wrapper .upload-button {
     position: absolute;
     top: 0;
     left: 0;
@@ -68,17 +62,17 @@
     width: 100%;
 }
 
-.upload-button.fa-arrow-circle-up {
+.avatar-wrapper .upload-button .fa-arrow-circle-up {
     position: absolute;
     font-size: 234px;
     top: -17px;
-    left: 0;
+    left: -10px;
     text-align: center;
     opacity: 0;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     color: #34495e;
 }
 
-.upload-button:hover .fa-arrow-circle-up {
-    opacity: 1;
+.avatar-wrapper .upload-button:hover .fa-arrow-circle-up {
+    opacity: 0.9;
 }
