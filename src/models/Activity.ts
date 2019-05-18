@@ -24,6 +24,7 @@ export type ActivityModel = mongoose.Document & {
 
 export type Comment = {
     userId: mongoose.Types.ObjectId,
+    userAvatar: string
     timeComment: Date,
     content: string
     reply: Comment[]
