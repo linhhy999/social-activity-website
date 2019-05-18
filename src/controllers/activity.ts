@@ -22,7 +22,7 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activityList = await Activity.find({ "host.auth.0.googleId": req.user.auth[0].googleId });
+    const activityList = await Activity.find({ "host._id": req.user._id });
     const activities = [];
     for (const activity of activityList) {
         let numMember = 0;
@@ -110,8 +110,9 @@ export let postActivity = async (req: any, res: Response) => {
             gatheringPlace: req.body.gathering_place,
             targetPlace: req.body.target_place,
             content: req.body.content,
-            orgUnit: req.body.orgUnit,
+            orgUnit: req.user.faculty,
             host: {
+                _id: req.user._id,
                 fullName: req.user.fullName,
                 avatar: req.user.avatar,
                 faculty: req.user.faculty,
@@ -185,7 +186,15 @@ export let postEditActivity = async (req: any, res: Response) => {
             targetPlace: req.body.target_place,
             content: req.body.edit_content,
             orgUnit: req.body.orgUnit,
-            host: req.user,
+            host: {
+                _id: req.user._id,
+                fullName: req.user.fullName,
+                avatar: req.user.avatar,
+                faculty: req.user.faculty,
+                email: req.user.email,
+                code: req.user.code,
+                phone: req.user.phone
+            },
             video: [],
             maxMember: req.body.numMember,
             superVisor: superVisor,

@@ -1,85 +1,85 @@
 .header-top-area
-  .container
-    .row
-      .col-lg-4.col-md-4.col-sm-12.col-xs-12
-        .logo-area
-          a(href='#')
-            img(src='/img/hcmut.png', alt='', style="width: 50px; height: auto;")
-      .col-lg-8.col-md-8.col-sm-12.col-xs-12
-        .header-top-menu
-          ul.nav.navbar-nav.notika-top-nav
-            li.nav-item.dropdown
-              a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-expanded='false')
-                span
-                  i.fa.fa-bell-o
-                .ntd-ctn(style="right: -10px; left: unset;")
-                  span 3
-              .dropdown-menu.message-dd.notification-dd.animated.zoomIn(role='menu')
-                .hd-mg-tt
-                  h2 Notification
-                .hd-message-info
-                  each notification in user.notifications
-                    a(href=notification.link)
-                      .hd-message-sn
-                        .hd-message-img
-                          img(src=notification.image alt='')
-                        .hd-mg-ctn
-                          h3= notification.title
-                          p= notification.content
-                  
-                .hd-mg-va
-                  a(href='#') View All
-            li.nav-item
-              a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-expanded='false')
-                span
-                  i.fa.fa-comment-o
-              .dropdown-menu.message-dd.chat-dd.animated.zoomIn(role='menu')
-                .hd-mg-tt
-                  h2 Chat
-                .search-people
-                  i.notika-icon.notika-left-arrow
-                  input(type='text' placeholder='Search People')
-                .hd-message-info
-                  a(href='#')
-                    .hd-message-sn
-                      .hd-message-img.chat-img
-                        img(src='/assets/img/post/1.jpg' alt='')
-                        .chat-avaible
-                          i.notika-icon.notika-dot
-                      .hd-mg-ctn
-                        h3 David Belle
-                        p Available
-                  a(href='#')
-                    .hd-message-sn
-                      .hd-message-img.chat-img
-                        img(src='/assets/img/post/2.jpg' alt='')
-                      .hd-mg-ctn
-                        h3 Jonathan Morris
-                        p Last seen 3 hours ago
-                  a(href='#')
-                    .hd-message-sn
-                      .hd-message-img.chat-img
-                        img(src='/assets/img/post/4.jpg' alt='')
-                      .hd-mg-ctn
-                        h3 Fredric Mitchell
-                        p Last seen 2 minutes ago
-                  a(href='#')
-                    .hd-message-sn
-                      .hd-message-img.chat-img
-                        img(src='/assets/img/post/1.jpg' alt='')
-                        .chat-avaible
-                          i.notika-icon.notika-dot
-                      .hd-mg-ctn
-                        h3 David Belle
-                        p Available
-                  a(href='#')
-                    .hd-message-sn
-                      .hd-message-img.chat-img
-                        img(src='/assets/img/post/2.jpg' alt='')
-                        .chat-avaible
-                          i.notika-icon.notika-dot
-                      .hd-mg-ctn
-                        h3 Glenn Jecobs
-                        p Available
-                .hd-mg-va
-                  a(href='#') View All
+    .container
+        .row
+            .col-lg-4.col-md-4.col-sm-12.col-xs-12
+                .logo-area
+                    a(href='/')
+                        img(src='/img/hcmut.png', alt='', style="width: 50px; height: auto;")
+            .col-lg-8.col-md-8.col-sm-12.col-xs-12
+                .header-top-menu
+                    ul.nav.navbar-nav.notika-top-nav
+                        li.nav-item.dropdown
+                            a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-expanded='false')
+                                span
+                                    i.fa.fa-bell-o
+                                .ntd-ctn(style="right: -10px; left: unset;")
+                                    span 3
+                            .dropdown-menu.message-dd.notification-dd.animated.zoomIn(role='menu')
+                                .hd-mg-tt
+                                    h2 Notification
+                                .hd-message-info
+                                    each notification in user.notifications
+                                        a(href=notification.link)
+                                            .hd-message-sn
+                                                .hd-message-img
+                                                    img(src=notification.image alt='')
+                                                .hd-mg-ctn
+                                                    h3= notification.title
+                                                    p= notification.content
+
+                                .hd-mg-va
+                                    a(href='#') View All
+                        li.nav-item
+                            a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-expanded='false')
+                                span
+                                    i.fa.fa-comment-o
+                            .dropdown-menu.message-dd.chat-dd.animated.zoomIn(role='menu')
+                                .hd-mg-tt
+                                    h2 Chat
+                                .search-people
+                                    i.notika-icon.notika-left-arrow
+                                    input(type='text' placeholder='Search People')
+                                .hd-message-info
+                                    a(href='#')
+                                        .hd-message-sn
+                                            .hd-message-img.chat-img
+                                                img(src='/assets/img/post/1.jpg' alt='')
+                                                .chat-avaible
+                                                    i.notika-icon.notika-dot
+                                            .hd-mg-ctn
+                                                h3 David Belle
+                                                p Available
+                                    a(href='#')
+                                        .hd-message-sn
+                                            .hd-message-img.chat-img
+                                                img(src='/assets/img/post/2.jpg' alt='')
+                                            .hd-mg-ctn
+                                                h3 Jonathan Morris
+                                                p Last seen 3 hours ago
+                                    a(href='#')
+                                        .hd-message-sn
+                                            .hd-message-img.chat-img
+                                                img(src='/assets/img/post/4.jpg' alt='')
+                                            .hd-mg-ctn
+                                                h3 Fredric Mitchell
+                                                p Last seen 2 minutes ago
+                                    a(href='#')
+                                        .hd-message-sn
+                                            .hd-message-img.chat-img
+                                                img(src='/assets/img/post/1.jpg' alt='')
+                                                .chat-avaible
+                                                    i.notika-icon.notika-dot
+                                            .hd-mg-ctn
+                                                h3 David Belle
+                                                p Available
+                                    a(href='#')
+                                        .hd-message-sn
+                                            .hd-message-img.chat-img
+                                                img(src='/assets/img/post/2.jpg' alt='')
+                                                .chat-avaible
+                                                    i.notika-icon.notika-dot
+                                            .hd-mg-ctn
+                                                h3 Glenn Jecobs
+                                                p Available
+                                .hd-mg-va
+                                    a(href='#') View All
