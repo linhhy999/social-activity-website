@@ -24,7 +24,9 @@ import * as HomeController from "./controllers/home";
 import * as ActivityController from "./controllers/activity";
 import * as UserController from "./controllers/user";
 import * as AccountController from "./controllers/account";
+import * as GeneralController from "./controllers/general";
 import * as Guard from "./config/guard";
+import { Role } from "./models/User";
 
 // Create Express server
 const app = express();
@@ -100,15 +102,19 @@ app.get("/auth/google/callback", passport.authenticate("google", { failureRedire
 HomeController.login);
 app.get("/", Guard.isLogin, HomeController.index);
 app.get("/logout", Guard.isLogin, HomeController.logout);
-app.get("/admin", Guard.isLogin, HomeController.admin);
+app.get("/admin", Guard.isLogin, Guard.checkRole(Role.Admin), HomeController.admin);
 app.get("/profile", Guard.isLogin, UserController.profile);
 app.get("/info", Guard.isLogin, UserController.info);
 app.post("/info", Guard.isLogin, UserController.postInfo);
-app.get("/admin/post/list", Guard.isLogin, ActivityController.listOwnActivity);
-app.get("/admin/post/add", Guard.isLogin, ActivityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, ActivityController.postActivity);
-app.get("/admin/account/list", Guard.isLogin, AccountController.getListAccounts);
-app.get("/admin/account/block/:id", Guard.isLogin, AccountController.postBlockAccount)
-app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, AccountController.postChangeRole)
+app.get("/admin/post/list", Guard.isLogin, Guard.checkRole(Role.Admin), ActivityController.listOwnActivity);
+app.get("/admin/general", Guard.isLogin, Guard.checkRole(Role.Admin), GeneralController.getGeneralInfomation);
+app.get("/admin/post/add", Guard.isLogin, Guard.checkRole(Role.Admin), ActivityController.getAddActivity);
+app.post("/admin/post/add", Guard.isLogin, Guard.checkRole(Role.Admin), ActivityController.postActivity);
+app.get("/admin/account/list", Guard.isLogin, Guard.checkRole(Role.Admin), AccountController.getListAccounts);
+app.get("/admin/account/add", Guard.isLogin, Guard.checkRole(Role.Admin), AccountController.getAddAccounts);
+app.post("/admin/account/add", Guard.isLogin, Guard.checkRole(Role.Admin), AccountController.postAddAccounts);
+app.get("/admin/account/block/:id", Guard.isLogin, Guard.checkRole(Role.Admin), AccountController.postBlockAccount);
+app.get("/admin/account/unblock/:id", Guard.isLogin, Guard.checkRole(Role.Admin), AccountController.postUnBlockAccount);
+app.get("/admin/account/modifyRole/:id/:newRole", Guard.checkRole(Role.Admin), Guard.isLogin, AccountController.postChangeRole);
 
 export default app;

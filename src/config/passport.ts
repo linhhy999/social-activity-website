@@ -9,11 +9,11 @@ import User from "../models/User";
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
-    done(undefined, user);
+    done(undefined, user.email);
 });
 
 passport.deserializeUser((user: any, done) => {
-    User.findOne({ googleId: user.auth.googleId }, (err, user) => {
+    User.findOne({ email: user, isBlock: {$not: {$eq: true}}}, (err, user) => {
         done(err, user);
     });
 });
@@ -24,9 +24,9 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
         if (profile) {
-            if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
-                return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
-            }
+            // if (profile.emails[0].value.split("@")[1] !== "hcmut.edu.vn") {
+            //     return done(new Error("Bạn phải là sinh viên Bách khoa mới được truy cập trang này"));
+            // }
             return done(undefined, {
                 auth: {
                     googleId: profile.id,
