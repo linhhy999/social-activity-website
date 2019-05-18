@@ -65,7 +65,8 @@ export let login = async (req: Request, res: Response, next: NextFunction) => {
             res.redirect("/");
         }
         req.logIn(user, (err) => {
-            if (err) console.log(err.message);
+            if (err)
+                console.log(err.message);
             if (user.fullName == undefined) return res.redirect("/info");
             else if (user.role == Role.Admin || user.role == Role.Host) return res.redirect("/admin");
             else return res.redirect("/");

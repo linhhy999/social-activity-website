@@ -33,12 +33,12 @@ html(lang='en')
                         .errmessage(id="errorContainer")
                             p Please correct the following errors and try again:
                             <ul/>
-                        form.needs-validation(id="infoform" action="/info" method="POST" novalidate)
+                        form.needs-validation(id="infoform" action="/info" method="POST" novalidate enctype="multipart/form-data")
                             .avatar-wrapper
                                 img.profile-pic(src=user.avatar)
                                 .upload-button
-                                    //i.fa.fa-arrow-circle-up(aria-hidden='true')
-                                input.file-upload(type='file', accept='image/*' name="avatar", id="avatar", style="position: absolute;")
+                                    i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                input.file-upload(type='file'  name="avatar", id="avatar", style="visibility: hidden")
                             .md-form.form-sm
                                 input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required, value = user.fullName autofocus)
                                 label(for='materialFormNameModal') Tên của bạn
@@ -72,7 +72,7 @@ html(lang='en')
                                     option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
                                     option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
                             .md-form.form-sm
-                                input#materialFormSocialModal.form-control.form-control-sm(type='text', name="socialday", required)
+                                input#materialFormSocialModal.form-control.form-control-sm(type='text', name="socialday", required value = user.socialday)
                                 label(for='materialFormSocialModal') Số ngày công tác xã hội
                                 .valid-feedback
                                     | Looks good!
@@ -160,7 +160,7 @@ html(lang='en')
         script.
             $(document).ready(function() {
                 var readURL = function(input) {
-                    if (input.files && input.files[0]) {
+                    if (input.files && input.files[0] && input.files[0].type.includes("image")) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             $('.profile-pic').attr('src', e.target.result);

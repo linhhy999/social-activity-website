@@ -16,20 +16,19 @@ html(lang='en')
 
     body
         include partials/header
-        form(id="infoform" action="/profile/update" method="POST")
+        form(id="infoform" action="/profile" method="POST" enctype="multipart/form-data")
             .mt-100
             .container 
                 .row
                     .col-lg-3.hidden-sm
                         .card.testimonial-card.mb-2
-                            center
-                                .avatar-wrapper
-                                    img.profile-pic(src=user.avatar)
-                                    .upload-button
-                                        i.fa.fa-arrow-circle-up(aria-hidden='true')
-                                    input.file-upload(type='file', accept='image/*' name="avatar" style="position: absolute;")
-                                .card-body
-                                    h6.card-title= user.fullName
+                            .avatar-wrapper
+                                img.profile-pic(src=user.avatar)
+                                .upload-button
+                                    i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                input.file-upload(type='file', name="avatar" id="avatar" style="visibility: hidden")
+                            .card-body
+                                h6.card-title= user.fullName
                     br
                     .col-lg-9.col-sm-12
                         // Card
@@ -164,7 +163,6 @@ html(lang='en')
         script.
             $(document).ready(function() {
                 var readURL = function(input) {
-                    console.log(input.files[0]);
                     if (input.files && input.files[0] && input.files[0].type.includes("image")) {
                         var reader = new FileReader();
                         reader.onload = function (e) {

@@ -111,16 +111,16 @@ app.post("/search/", Guard.isLogin, Guard.isFill, activityController.searchAdvan
 
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
-app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated,
-    homeController.login);
+app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
 app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), homeController.admin);
+
 app.get("/profile", Guard.isLogin, Guard.isFill, userController.profile);
-app.post("/profile/update", Guard.isLogin, userController.updateProfile);
-// app.post("/profile/avatar", Guard.isLogin, userController.updateProfileAvatar);
+app.post("/profile", Guard.isLogin, upload.single("avatar"), userController.updateProfile);
 app.get("/info", Guard.isLogin, userController.info);
-app.post("/info", Guard.isLogin, userController.postInfo);
+app.post("/info", Guard.isLogin, upload.single("avatar"), userController.postInfo);
+
 app.get("/admin/post/list", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.listOwnActivity);
 app.get("/admin/general", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), generalController.getGeneralInfomation);
 

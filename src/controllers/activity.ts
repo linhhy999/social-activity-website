@@ -320,8 +320,8 @@ export let getAcceptMember = async (req: Request, res: Response, next: NextFunct
     });
     res.locals.mssv = req.params.mssv;
     res.locals.activity = req.params.activity;
-    next();
-    // return res.redirect("back");
+    // next();
+    return res.redirect("back");
 };
 
 export let getRefuseMember = async (req: Request, res: Response) => {
