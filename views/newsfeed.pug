@@ -36,8 +36,9 @@ block content
                                     | Số ngày công tác xã hội: 
                                 = activity.benefit
                         .m-auto
-                        img.float-right.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=activity.host.avatar, alt="avatar.jpg")
+                        img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, alt="avatar.jpg")
                     .view.overlay
+                        //- img.card-img-top.rounded-0(src="https://mdbootstrap.com/img/Photos/Horizontal/Food/full page/2.jpg" alt="Card image cap")
                         #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
                             ol.carousel-indicators
                                 each image in activity.image
@@ -72,27 +73,27 @@ block content
                             i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
                                 | 200
         .col-lg-4.hidden-sm
-            a(href="/profile")
-                .card.testimonial-card.mb-2
-                    .card-up.aqua-gradient(style="height:100px")
-                    .avatar.mx-auto.white
-                            img.rounded-circle.img-responsive(width="110px" height="110px" style="object-fit: cover;" src=user.avatar alt="avatar")
-                    .card-body.text-center
-                        h4.card-title= user.fullName
-                        hr
-                        .row
-                            .col-sm-4(style="padding-left:8px; padding-right: 0px;")
-                                p.grey-text.small MSSV
-                                p.text-primary(style="line-height: 0px;")
-                                    strong.small=user.code
-                            .col-sm-4
-                                p.grey-text.small CTXH
-                                p.text-primary(style="line-height: 0px;")
-                                    strong.small=user.socialday
-                            .col-sm-4
-                                p.grey-text.small Level
-                                p.text-primary(style="line-height: 0px;")
-                                    strong.small=user.role
+            .card.testimonial-card.mb-2
+                .card-up.aqua-gradient(style="height:100px")
+                .avatar.mx-auto.white
+                    a(href="/profile")
+                        img.rounded-circle.img-responsive(width="110px" height="110px" style="object-fit: cover;" src=user.avatar alt="avatar")
+                .card-body
+                    h4.card-title= user.fullName
+                    hr
+                    .row
+                        .col-sm-4
+                            p.grey-text.small MSSV
+                            p.text-primary(style="line-height: 0px;")
+                                strong.small=user.code
+                        .col-sm-4
+                            p.grey-text.small CTXH
+                            p.text-primary(style="line-height: 0px;")
+                                strong.small=user.socialday
+                        .col-sm-4
+                            p.grey-text.small Level
+                            p.text-primary(style="line-height: 0px;")
+                                strong.small 20
             .card.promoting-card
                 .card-body.d-flex.flex-row
                     div

@@ -27,13 +27,13 @@ html(lang='en')
                                 .upload-button
                                     i.fa.fa-arrow-circle-up(aria-hidden='true')
                                 input.file-upload(type='file', name="avatar" id="avatar" style="visibility: hidden")
-                            .card-body.text-center
+                            .card-body
                                 h4.card-title= user.fullName
                                 hr
                                 .row
-                                    .col-sm-4(style="padding-left:8px; padding-right: 0px;")
+                                    .col-sm-4
                                         p.grey-text.small MSSV
-                                        p.text-primary(style="line-height: 0px;font")
+                                        p.text-primary(style="line-height: 0px;")
                                             strong.small=user.code
                                     .col-sm-4
                                         p.grey-text.small CTXH
@@ -42,7 +42,7 @@ html(lang='en')
                                     .col-sm-4
                                         p.grey-text.small Level
                                         p.text-primary(style="line-height: 0px;")
-                                            strong.small=user.role
+                                            strong.small 20
 
                     br
                     .col-lg-9.col-sm-12
