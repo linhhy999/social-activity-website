@@ -1,7 +1,4 @@
-import bcrypt from "bcrypt-nodejs";
-import crypto from "crypto";
 import mongoose from "mongoose";
-import { type } from "os";
 
 export type ActivityModel = mongoose.Document & {
     name: string,
@@ -15,13 +12,14 @@ export type ActivityModel = mongoose.Document & {
     content: string,
     orgUnit: string,
     host: {},
-    image: string[],
-    video: string[],
+    image: Media[],
+    video: Media[],
     maxMember: number,
-    members: any[],
+    members: Member[],
     comment: Comment[],
     superVisor: [],
-    benefit: number
+    benefit: number,
+    status: boolean
 };
 
 export type Comment = {
@@ -31,6 +29,24 @@ export type Comment = {
     reply: Comment[]
 };
 
+export type Media = {
+    id: string,
+    link: string
+};
+export type Member = {
+    mssv: string,
+    name: string,
+    faculty: string,
+    phone: string,
+    email: string,
+    status: Status
+};
+
+export enum Status {
+    PENDING = 1,
+    ACCEPT = 2,
+    REFUSE = 3
+}
 
 
 const activitySchema = new mongoose.Schema({
@@ -51,7 +67,8 @@ const activitySchema = new mongoose.Schema({
     maxMember: Number,
     members: [],
     comment: [],
-    superVisor: []
+    superVisor: [],
+    status: Boolean
 }, { timestamps: true });
 
 

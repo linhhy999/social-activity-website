@@ -1,0 +1,23 @@
+.container
+    if messages.errors
+        .alert.alert-danger.alert-dismissible(role='alert')
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true')
+                    i.notika-icon.notika-close
+            for error in messages.errors
+                div= error.msg
+
+    if messages.info
+        .alert.alert-info.alert-dismissible(role='alert')
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true')
+                    i.notika-icon.notika-close
+            for info in messages.info
+                div= info.msg
+    if messages.success
+        .alert.alert-success.alert-dismissible(role='alert')
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true')
+                    i.notika-icon.notika-close
+            for success in messages.success
+                div= success.msg

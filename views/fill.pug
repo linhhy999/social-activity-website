@@ -12,6 +12,7 @@ html(lang='en')
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
+        link(href="/css/styleprofile.css" rel="stylesheet")
     body
         include partials/header
         include partials/flash
@@ -20,76 +21,164 @@ html(lang='en')
             #modalContactForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
             // Modal: Contact form
             .modal-dialog.cascading-modal(role='document')
-              // Content
-              .modal-content
-                // Header
-                .modal-header.primary-color.white-text
-                  h4.title
-                    i.fa.fa-pencil-alt
-                    |  Bạn cần điền một số thông tin sau để tiếp tục
-                // Body
-                .modal-body
-                  form.needs-validation(action="#" method="POST" novalidate)
-                    // Material input name
-                    .md-form.form-sm
-                      input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required)
-                      label(for='materialFormNameModal') Tên của bạn
-                      .valid-feedback
-                        | Looks good!
-                    // Material input email
-                    .md-form.form-sm
-                      input#materialFormEmailModal.form-control.form-control-sm(type='text', name="phone", required)
-                      label(for='materialFormEmailModal') Số điện thoại
-                      .valid-feedback
-                        | Looks good!
-                    // Material input subject
-                    .md-form.form-sm
-                      input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required)
-                      label(for='materialFormMSSVModal') MSSV
-                      .valid-feedback
-                        | Looks good!
-                    // Material input subject
-                    .md-form.form-sm
-                      input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required)
-                      label(for='materialFormFacultyModal') Khoa
-                      .valid-feedback
-                        | Looks good!
-                                            
-                    // Material input subject
-                    .md-form.form-sm
-                      input#materialFormSubjectModal.form-control.form-control-sm(type='number', name="ctxh", required)
-                      label(for='materialFormSubjectModal') Số ngày CTXH hiện tại
-                      .valid-feedback
-                        | Looks good!
-                    // Material textarea message
-                    .text-center.mt-4.mb-2
-                      button.btn.btn-primary
-                        | Xác nhận
-                        i.fa.fa-send.ml-2
-              // /.Content
-            // /Modal: Contact form
+                // Content
+                .modal-content
+                    // Header
+                    .modal-header.primary-color.white-text
+                        h4.title
+                            i.fa.fa-pencil-alt
+                            | Bạn cần điền một số thông tin sau để tiếp tục
+                    // Body
+                    .modal-body
+                        .errmessage(id="errorContainer")
+                            p Please correct the following errors and try again:
+                            <ul/>
+                        form.needs-validation(id="infoform" action="/info" method="POST" novalidate enctype="multipart/form-data")
+                            .avatar-wrapper
+                                img.profile-pic(src=user.avatar)
+                                .upload-button
+                                    i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                input.file-upload(type='file'  name="avatar", id="avatar", style="visibility: hidden")
+                            .md-form.form-sm
+                                input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required, value = user.fullName autofocus)
+                                label(for='materialFormNameModal') Tên của bạn
+                                .valid-feedback
+                                    | Looks good!
+                            .md-form.form-sm
+                                input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required value= user.code)
+                                label(for='materialFormMSSVModal' oninput="console.log('asdasd')") Mã số sinh viên
+                                .valid-feedback
+                                    | Looks good!
+                            .md-form.form-sm
+                                input#materialFormPhoneModal.form-control.form-control-sm(type='text', name="phone", required, value = user.phone)
+                                label(for='materialFormPhoneModal') Số điện thoại
+                                .valid-feedback
+                                    | Looks good!
+                            div
+                                label(style="font-size: .85rem") Khoa
+                                select.browser-default.custom-select(name="faculty", required)
+                                    option(value='', disabled='') Choose your option
+                                    each faculty in faculties
+                                        if faculty == user.faculty
+                                            option(value=faculty selected) #{faculty}
+                                        else
+                                            option(value=faculty) #{faculty}
+                                    //- option(value='Khoa học và Kỹ thuật Máy tính' selected) Khoa học và Kỹ thuật Máy tính
+                                    //- option(value='Kỹ thuật Hóa học') Kỹ thuật Hóa học
+                                    //- option(value='Điện - Điện tử') Điện - Điện tử
+                                    //- option(value='Cơ Khí') Cơ Khí
+                                    //- option(value='Xây Dựng') Xây Dựng
+                                    //- option(value='Khoa học Ứng dụng') Khoa học Ứng dụng
+                                    //- option(value='Môi trường và tài nguyên') Môi trường và tài nguyên
+                                    //- option(value='Kỹ thuật giao thông') Kỹ thuật giao thông
+                                    //- option(value='Kỹ thuật và Địa chất Dầu khí') Kỹ thuật và Địa chất Dầu khí
+                                    //- option(value='Quản lý Công nghiệp') Quản lý Công nghiệp
+                                    //- option(value='VP. Đào tạo Quốc tế') VP. Đào tạo Quốc tế
+                                    //- option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
+                                    //- option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
+                            .md-form.form-sm
+                                input#materialFormSocialModal.form-control.form-control-sm(type='text', name="socialday", required value = user.socialday)
+                                label(for='materialFormSocialModal') Số ngày công tác xã hội
+                                .valid-feedback
+                                    | Looks good!
+                            .text-center.mt-4.mb-2
+                                button.btn.btn-primary
+                                    | Xác nhận
+                                    i.fa.fa-send.ml-2
+                // /.Content
+                // /Modal: Contact form
 
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")
         script(type="text/javascript" src="/js/mdb.min.js")
+        <script src="http://malsup.github.com/jquery.form.js"></script> 
+        script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js")
         script.
             (function() {
-              'use strict';
-              window.addEventListener('load', function() {
-              // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              var forms = document.getElementsByClassName('needs-validation');
-              // Loop over them and prevent submission
-              var validation = Array.prototype.filter.call(forms, function(form) {
-              form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-              }, false);
-              });
-              }, false);
-              })();
-        block script
+                'use strict';
+                window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+                });
+                }, false);
+                })();
+        script.
+            var errorSpan = $('#errorContainer span.error');
+            errorSpan.text(errorSpan.text().match(/^[^.]*\.?/g));
+            $(document).ready(function() {
+                $("#infoform").validate({
+                    rules: {
+                        mssv: {
+                            required: true,
+                            rangelength: [7,7],
+                            range: [1400000, 1899999]
+                        },
+                        name: "required",
+                        phone: {
+                            required: true,
+                            number: true,
+                            rangelength: [10,10],
+                            range: [0, 999999999]
+                        },
+                        socialday: {
+                            required: true,
+                            number: true,
+                            range: [0,200]
+                        },
+                    },
+                    messages: {
+                        mssv: {
+                            required: "Vui lòng nhập mã số sinh viên",
+                            rangelength: "Vui lòng nhập mã số sinh viên hợp lệ",
+                            range: "Vui lòng nhập mã số sinh viên hợp lệ"
+                        },
+                        name: {
+                            required: "Vui lòng nhập họ và tên"
+                            },
+                        phone: {
+                            required: "Vui lòng nhập số điện thoại",
+                            number: "Vui lòng nhập số điện thoại hợp lệ",
+                            rangelength: "Vui lòng nhập số điện thoại hợp lệ",
+                            range: "Vui lòng nhập số điện thoại hợp lệ"
+                        },
+                        socialday: {
+                            required: "Vui lòng nhập số ngày công tác xã hội",
+                            number: "Vui lòng nhập số ngày công tác xã hội hợp lệ",
+                            range: "Vui lòng nhập số ngày công tác xã hội hợp lệ"
+                        }
+                    },
+                    errorContainer: $('#errorContainer'),
+                    errorLabelContainer: $('#errorContainer ul'),
+                    wrapper: 'li'
+                });
+            });
+        script.
+            $(document).ready(function() {
+                var readURL = function(input) {
+                    if (input.files && input.files[0] && input.files[0].type.includes("image")) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('.profile-pic').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                $(".file-upload").on('change', function(){
+                    readURL(this);
+                });
+                $(".upload-button").on('click', function() {
+                    $(".file-upload").click();
+                });
+            });
 
+        block script

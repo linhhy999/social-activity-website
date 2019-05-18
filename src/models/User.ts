@@ -1,18 +1,33 @@
-import bcrypt from "bcrypt-nodejs";
-import crypto from "crypto";
 import mongoose from "mongoose";
+import { ObjectId } from "bson";
 
 export type UserModel = mongoose.Document & {
     auth: any[],
+    notifications: Notification[],
     email: string,
     phone: string,
     code: string,
     role: Role,
     fullName: string,
-    numWorkDay: number,
+    socialday: number,
     faculty: string,
-    isBlock: boolean
+    isBlocked: boolean,
+    avatar: string
 };
+
+const userSchema = new mongoose.Schema({
+    auth: [],
+    notifications: [],
+    email: String,
+    phone: String,
+    code: String,
+    role: Number,
+    fullName: String,
+    socialday: Number,
+    faculty: String,
+    isBlocked: Boolean,
+    avatar: String,
+}, { timestamps: true });
 
 export enum Role {
     Admin = 1,
@@ -20,19 +35,13 @@ export enum Role {
     Host = 10
 }
 
-
-
-const userSchema = new mongoose.Schema({
-    auth: [],
-    email: String,
-    phone: String,
-    code: String,
-    role: Number,
-    fullName: String,
-    numWorkDay: Number,
-    faculty: String,
-    isBlock: Boolean
-}, { timestamps: true });
+export type Notification = {
+    image: string,
+    title: string,
+    time: Date,
+    content: string,
+    link: string;
+};
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);

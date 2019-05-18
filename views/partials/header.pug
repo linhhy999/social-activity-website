@@ -1,25 +1,71 @@
 nav.navbar.navbar-expand-sm.navbar-dark.fixed-top
     .container
-        a.navbar-brand(href="#") 
+        a.navbar-brand(href="/") 
             img(src="/img/hcmut.png", alt="hcmut.png")
         button.navbar-toggler.d-lg-none(type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation")
-        div.collapse.navbar-collapse#collapsibleNavId
+        .collapse.navbar-collapse#collapsibleNavId
             ul.navbar-nav.mr-auto.mt-2.mt-lg-0
                 li.nav-item.active
-                    form.form-inline.form-round
-                        input(type="text" placeholder="Search" aria-label="Search")
+                    form.form-inline.form-round(action="/search" method="GET")
+                        input(type="text" placeholder="Search" aria-label="Search" name="keyword")
                         button(type="button").btn.btn-rounded.btn-primary.btn-sm.btn-search
                             i.fas.fa-search.pr-2(aria-hidden="true") 
-
-                
             ul.navbar-nav
-                li.nav-item
-                        a.nav-link(href="#")
-                            i.fas.fa-bell
+                li.nav-item.dropdown
+                    a.nav-link.dropdown-toggle#notification(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true ") 
+                        i.fas.fa-bell
+                    div.dropdown-menu.dropdown-menu-right.scrollbar.scrollbar-primary(aria-labelledby="notification" style="overflow-y: auto; height:500px;")
+                        each notification in user.notifications
+                            a.dropdown-item(href=notification.link)
+                                .custom-card
+                                    // Card content
+                                    .card-body.d-flex.flex-row
+                                        // Avatar
+                                        img.rounded-circle.mr-3(src=notification.image height='50px' width='50px' alt='avatar')
+                                        // Content
+                                        div
+                                            // Title
+                                            span.card-title.font-weight-bold.mb-2= notification.title
+                                            br
+                                            // Subtitle
+                                            span.card-text.sub-title
+                                                i.far.fa-clock.pr-2
+                                                = moment(notification.time).format("DD/MM/YYYY HH:mm")
+                                            br
+                                            span.card-text
+                                                = notification.content
+                        
                 li.nav-item.dropdown
                     a.nav-link.dropdown-toggle#dropdownId(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") 
                         i.fas.fa-user
-                    div.dropdown-menu(aria-labelledby="dropdownId")
+                    .dropdown-menu(aria-labelledby="dropdownId")
                         a.dropdown-item(href="/profile") Profile
                         a.dropdown-item(href="/logout") Logout
+//- <div id="popover-content" style="display: none;">
+//-     <ul class="list-group custom-popover">
+//-         <li class="list-group-item">
+//-             .card.promoting-card
+//-               // Card content
+//-               .card-body.d-flex.flex-row
+//-                 // Avatar
+//-                 img.rounded-circle.mr-3(src='https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg' height='50px' width='50px' alt='avatar')
+//-                 // Content
+//-                 div
+//-                   // Title
+//-                   p.card-title.font-weight-bold.mb-2 Có 152 người đăng ký hoạt động
+//-                   // Subtitle
+//-                   p.card-text.sub-title
+//-                     i.far.fa-clock.pr-2
+//-                     | 07/24/2018
+//-               // Card content
+//-               .card-body
+//-                 .collapse-content
+//-                   p#collapseContent.card-text.collapse
+//-                     | Recently, we added several exotic new dishes to the menu of our restaurant. They come from countries such as Mexico, Argentina, and Spain. Come to us, have a delicious wine and enjoy the juicy meals from around the world.
+
+//-         </li>
+//-         <li class="list-group-item">Food and Beverage</li>
+//-         <li class="list-group-item">Yoga Class</li>
+//-     </ul>
+//- </div>

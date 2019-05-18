@@ -41,3 +41,6 @@ dist/**/*
 /bin
 /obj
 *.njsproj
+
+/src/public/uploads/*
+
