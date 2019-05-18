@@ -347,8 +347,8 @@ export let postComment = async (req: any, res: Response) => {
     const activityId = req.params.id;
     try {
         const activity = await Activity.findOne({ "_id": activityId });
-        activity.comment.push({
-            userId: req.user._id,
+        activity.comment.unshift({
+            fullName: req.user.fullName,
             timeComment: new Date,
             userAvatar: req.user.avatar,
             content: req.body.comment,
@@ -398,12 +398,14 @@ export let activityDetail = async (req: Request, res: Response) => {
         });
         let status = 0;
         userActivity ? status = userActivity.status : status = 0;
+        const uA = await Activity.find({ "members.mssv": req.user.code });
         return res.render("activityDetail", {
             user: req.user,
             activity: activity,
             registered: registered,
             orgUnit: a,
-            status: status
+            status: status,
+            userActivities: uA
         });
     }
     catch (err) {
