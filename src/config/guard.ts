@@ -18,6 +18,7 @@ export let checkRole = (...role: number[]) => {
         if (role.indexOf(req.user.role) != -1) {
             return next();
         }
-        else return res.render("errors/403");
+        else return res.redirect("/");
+        // else return res.render("errors/403");
     };
 };
