@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import Activity, { Status } from "../models/Activity";
+import Activity, { Status, Join } from "../models/Activity";
 import GeneralInfomation from "../models/General";
 import User from "../models/User";
 import { createNotificationByCode } from "./notification";
+import { buildReport, ExportFile } from "./export";
 
 
 export let getAddActivity = async (req: Request, res: Response) => {
@@ -466,7 +467,10 @@ export let apply = async (req: Request, res: Response) => {
             faculty: req.user.faculty,
             phone: req.user.phone,
             email: req.user.email,
-            status: Status.PENDING
+            status: Status.PENDING,
+            isJoined: Join.WAITING,
+            point: 0,
+            note: ""
         });
         await activity.save();
         res.locals.activity = activity;
@@ -487,6 +491,63 @@ export let postDeleteImage = async (req: Request, res: Response) => {
         });
         await Activity.updateOne({ "_id": req.body.activity }, { image: image }, { upset: false });
         return res.status(200).json("ok");
+    }
+    catch (err) {
+        console.log(err.message);
+        return res.status(404).json("fail");
+    }
+};
+
+export let getReport = async (req: Request, res: Response) => {
+    try {
+        const activity = await Activity.findOne({ "_id": req.params.activity });
+        return res.render("admin/report/report", {
+            activity: activity
+        });
+    }
+    catch (err) {
+        console.log(err.message);
+        return res.status(404).json("fail");
+    }
+};
+
+export let postReport = async (req: Request, res: Response) => {
+    try {
+        const activity = await Activity.findOne({ "_id": req.params.activity });
+        const members = activity.members;
+        if (members.length != req.body.member.length) {
+            return res.redirect("back");
+        }
+        members.map(function (member, index) {
+            member.isJoined = parseInt(req.body.member[index]);
+            member.point = parseInt(req.body.point[index]);
+            member.note = req.body.note[index];
+            members[index] = member;
+        });
+        await Activity.updateOne({_id: req.params.activity}, {
+            members: members
+        });
+        const dataset: ExportFile[] = [];
+        for (const [index, member] of members.entries()) {
+            console.log(member.isJoined == Join.ABSENT,  member);
+            dataset.push({
+                id: index + 1,
+                fullName: member.name,
+                code: member.mssv,
+                faculty: member.faculty,
+                email: member.email,
+                phone: member.phone,
+                socialDay: member.point,
+                note: (member.note == "") ? ((member.isJoined == Join.ABSENT) ? "Vắng không phép" :  ((member.isJoined == Join.ABSENT_WITH_PERMISSION) ? "Vắng có phép" : member.note)) : member.note
+            });
+        }
+        const report = buildReport(dataset);
+        await Activity.updateOne({_id: req.params.activity}, {
+            status: false
+        });
+
+        res.attachment("report.xlsx"); // This is sails.js specific (in general you need to set headers)
+        return res.send(report);
     }
     catch (err) {
         console.log(err.message);
