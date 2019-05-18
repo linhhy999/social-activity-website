@@ -98,6 +98,8 @@ app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
+app.use(Guard.notblocked);
+
 /**
  * Primary app routes.
  */
@@ -114,32 +116,33 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.g
 app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
 app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
-app.get("/admin", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), homeController.admin);
+app.get("/admin", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), homeController.admin);
 
 app.get("/profile", Guard.isLogin, Guard.isFill, userController.profile);
 app.post("/profile", Guard.isLogin, upload.single("avatar"), userController.updateProfile);
 app.get("/info", Guard.isLogin, userController.info);
 app.post("/info", Guard.isLogin, upload.single("avatar"), userController.postInfo);
 
-app.get("/admin/post/list", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.listOwnActivity);
-app.get("/admin/general", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), generalController.getGeneralInfomation);
+app.get("/admin/post/list", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.listOwnActivity);
+app.get("/admin/post/manage", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), activityController.listManageActivity);
+app.get("/admin/general", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), generalController.getGeneralInfomation);
 
 app.get("/admin/post/detail/:id", Guard.isLogin, Guard.isFill, activityController.getActivityDetail);
-app.get("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), upload.array("image"), activityController.postActivity);
-app.post("/admin/post/edit/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), upload.array("image"), activityController.postEditActivity);
-app.post("/admin/post/block/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.postActivity);
-app.get("/admin/post/member/:activity", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getMember);
-app.post("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getAcceptMember);
-app.post("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getRefuseMember);
-app.get("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.getReport);
-app.post("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), activityController.postReport);
-app.get("/admin/account/list", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.getListAccounts);
-app.get("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.getAddAccounts);
-app.post("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.postAddAccounts);
-app.get("/admin/account/block/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.postBlockAccount);
-app.get("/admin/account/unblock/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.postUnBlockAccount);
-app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), accountController.postChangeRole);
+app.get("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getAddActivity);
+app.post("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), upload.array("image"), Guard.legitActivityInfo, activityController.postActivity);
+app.post("/admin/post/edit/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), upload.array("image"), Guard.legitActivityInfo, activityController.postEditActivity);
+app.post("/admin/post/block/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.postActivity);
+app.get("/admin/post/member/:activity", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getMember);
+app.post("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getAcceptMember);
+app.post("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getRefuseMember);
+app.get("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getReport);
+app.post("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.postReport);
+app.get("/admin/account/list", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.getListAccounts);
+app.get("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.getAddAccounts);
+app.post("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.postAddAccounts);
+app.get("/admin/account/block/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.postBlockAccount);
+app.get("/admin/account/unblock/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.postUnBlockAccount);
+app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), accountController.postChangeRole);
 
 app.post("/ajax/delete/image", activityController.postDeleteImage);
 app.get("*", (req, res) => { res.render("404"); });

@@ -1,157 +1,157 @@
 ﻿extends ../layout
 block content
-  .breadcomb-area
-      .container
-        .row
-          .col-lg-12.col-md-12.col-sm-12.col-xs-12
-            .breadcomb-list
-              .row
-                .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                  .breadcomb-wp
-                    .breadcomb-icon
-                      i.notika-icon.notika-windows
-                    .breadcomb-ctn
-                      h2 Danh sách tài khoản
-                      p
-                        | Quản lý tài khoản > Danh sách tài khoản
-  .tabs-info-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .widget-tabs-int
-            .tab-hd
-              h2 Danh sách tài khoản
-            .widget-tabs-list
-              ul.nav.nav-tabs
-                li.active
-                  a(data-toggle='tab' href='#home') Sinh viên
-                li
-                  a(data-toggle='tab' href='#menu1') Tổ chức hoạt động
-                li
-                  a(data-toggle='tab' href='#menu2') Admin
-              .tab-content.tab-custom-st
-                #home.tab-pane.fade.in.active
-                  .tab-ctn
-                    .table-responsive
-                      table#data-sv.table.table-striped
-                        thead
-                          tr
-                            th #
-                            th MSSV/MSCB
-                            th Họ và tên
-                            th Email
-                            th Đơn vị trực thuộc
-                            th Trạng thái tài khoản
-                            th Action
-                        tbody
-                          each user, index in students
-                            tr
-                              td= index+1
-                              td= user.code
-                              td= user.fullName
-                              td= user.email
-                              td= user.faculty
-                              td
-                                if user.isBlock == true
-                                  | Bị khóa
-                                else
-                                  | Hoạt động
-                              td
-                                if user.isBlock == true
-                                  a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
-                                    i.fa.fa-unlock
-                                else 
-                                  a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
-                                    i.fa.fa-lock
-                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Nâng quyền tổ chức hoạt động', href="/admin/account/modifyRole/"+user.id+"/"+10, style="margin-right: 10px" )
-                                  i.fa.fa-level-up
+    .breadcomb-area
+        .container
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .breadcomb-list
+                        .row
+                            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                                .breadcomb-wp
+                                    .breadcomb-icon
+                                        i.notika-icon.notika-windows
+                                    .breadcomb-ctn
+                                        h2 Danh sách tài khoản
+                                        p
+                                            | Quản lý tài khoản > Danh sách tài khoản
+    .tabs-info-area
+        .container
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .widget-tabs-int
+                        .tab-hd
+                            h2 Danh sách tài khoản
+                        .widget-tabs-list
+                            ul.nav.nav-tabs
+                                li.active
+                                    a(data-toggle='tab' href='#home') Sinh viên
+                                li
+                                    a(data-toggle='tab' href='#menu1') Tổ chức hoạt động
+                                li
+                                    a(data-toggle='tab' href='#menu2') Admin
+                            .tab-content.tab-custom-st
+                                #home.tab-pane.fade.in.active
+                                    .tab-ctn
+                                        .table-responsive
+                                            table#data-sv.table.table-striped
+                                                thead
+                                                    tr
+                                                        th #
+                                                        th MSSV/MSCB
+                                                        th Họ và tên
+                                                        th Email
+                                                        th Đơn vị trực thuộc
+                                                        th Trạng thái tài khoản
+                                                        th Action
+                                                tbody
+                                                    each user, index in students
+                                                        tr
+                                                            td= index+1
+                                                            td= user.code
+                                                            td= user.fullName
+                                                            td= user.email
+                                                            td= user.faculty
+                                                            td
+                                                                if user.isBlocked == true
+                                                                    | Bị khóa
+                                                                else
+                                                                    | Hoạt động
+                                                            td
+                                                                if user.isBlocked == true
+                                                                    a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
+                                                                        i.fa.fa-unlock
+                                                                else 
+                                                                    a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
+                                                                        i.fa.fa-lock
+                                                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Nâng quyền tổ chức hoạt động', href="/admin/account/modifyRole/"+user.id+"/"+10, style="margin-right: 10px" )
+                                                                    i.fa.fa-level-up
 
-                #menu1.tab-pane.fade
-                  .tab-ctn
-                    .table-responsive
-                      table#data-host.table.table-striped
-                        thead
-                          tr
-                            th #
-                            th MSSV/MSCB
-                            th Họ và tên
-                            th Email
-                            th Đơn vị trực thuộc
-                            th Trạng thái tài khoản
-                            th Action
-                        tbody
-                          each user, index in hosts
-                            tr
-                              td= i
-                              td= user.code
-                              td= user.fullName
-                              td= user.email
-                              td= user.faculty
-                              td
-                                if user.isBlock == true
-                                  | Bị khóa
-                                else
-                                  | Hoạt động
-                              td 
-                                if user.isBlock == true
-                                  a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
-                                    i.fa.fa-unlock
-                                else 
-                                  a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
-                                    i.fa.fa-lock
-                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Nâng quyền admin', href="/admin/account/modifyRole/"+user.id+"/"+1, style="margin-right: 10px" )
-                                  i.fa.fa-level-up
-                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ quyền tổ chức hoạt động', href="/admin/account/modifyRole/"+user.id+"/"+5, style="margin-right: 10px" )
-                                  i.fa.fa-level-down
-  
-                  
-                #menu2.tab-pane.fade
-                  .tab-ctn
-                    .table-responsive
-                      table#data-admin.table.table-striped
-                        thead
-                          tr
-                            th #
-                            th MSSV/MSCB
-                            th Họ và tên
-                            th Email
-                            th Đơn vị trực thuộc
-                            th Trạng thái tài khoản
-                            th Action
-                        tbody
-                          each user, index in admins
-                            tr
-                              td= i
-                              td= user.code
-                              td= user.fullName
-                              td= user.email
-                              td= user.faculty
-                              td
-                                if user.isBlock == true
-                                  | Bị khóa
-                                else
-                                  | Hoạt động
-                              td 
-                                if user.isBlock == true
-                                  a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
-                                    i.fa.fa-unlock
-                                else 
-                                  a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
-                                    i.fa.fa-lock
-                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ quyền admin', href="/admin/account/modifyRole/"+user.id+"/"+10, style="margin-right: 10px" )
-                                  i.fa.fa-level-down
-                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ toàn bộ quyền', href="/admin/account/modifyRole/"+user.id+"/"+5, style="margin-right: 10px" )
-                                  i.fa.fa-level-down
-                                  i.fa.fa-level-down
+                                #menu1.tab-pane.fade
+                                    .tab-ctn
+                                        .table-responsive
+                                            table#data-host.table.table-striped
+                                                thead
+                                                    tr
+                                                        th #
+                                                        th MSSV/MSCB
+                                                        th Họ và tên
+                                                        th Email
+                                                        th Đơn vị trực thuộc
+                                                        th Trạng thái tài khoản
+                                                        th Action
+                                                tbody
+                                                    each user, index in hosts
+                                                        tr
+                                                            td= i
+                                                            td= user.code
+                                                            td= user.fullName
+                                                            td= user.email
+                                                            td= user.faculty
+                                                            td
+                                                                if user.isBlocked == true
+                                                                    | Bị khóa
+                                                                else
+                                                                    | Hoạt động
+                                                            td
+                                                                if user.isBlocked == true
+                                                                    a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
+                                                                        i.fa.fa-unlock
+                                                                else
+                                                                    a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
+                                                                        i.fa.fa-lock
+                                                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Nâng quyền admin', href="/admin/account/modifyRole/"+user.id+"/"+1, style="margin-right: 10px" )
+                                                                    i.fa.fa-level-up
+                                                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ quyền tổ chức hoạt động', href="/admin/account/modifyRole/"+user.id+"/"+5, style="margin-right: 10px" )
+                                                                    i.fa.fa-level-down
+
+
+                                #menu2.tab-pane.fade
+                                    .tab-ctn
+                                        .table-responsive
+                                            table#data-admin.table.table-striped
+                                                thead
+                                                    tr
+                                                        th #
+                                                        th MSSV/MSCB
+                                                        th Họ và tên
+                                                        th Email
+                                                        th Đơn vị trực thuộc
+                                                        th Trạng thái tài khoản
+                                                        th Action
+                                                tbody
+                                                    each user, index in admins
+                                                        tr
+                                                            td= i
+                                                            td= user.code
+                                                            td= user.fullName
+                                                            td= user.email
+                                                            td= user.faculty
+                                                            td
+                                                                if user.isBlocked == true
+                                                                    | Bị khóa
+                                                                else
+                                                                    | Hoạt động
+                                                            td
+                                                                if user.isBlocked == true
+                                                                    a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
+                                                                        i.fa.fa-unlock
+                                                                else 
+                                                                    a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
+                                                                        i.fa.fa-lock
+                                                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ quyền admin', href="/admin/account/modifyRole/"+user.id+"/"+10, style="margin-right: 10px" )
+                                                                    i.fa.fa-level-down
+                                                                a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ toàn bộ quyền', href="/admin/account/modifyRole/"+user.id+"/"+5, style="margin-right: 10px" )
+                                                                    i.fa.fa-level-down
+                                                                    i.fa.fa-level-down
 block script
-  script(src='/assets/js/data-table/jquery.dataTables.min.js')
-  script(src="/assets/js/data-table/data-table-act.js")
-  script(src="/assets/js/wave/waves.min.js")
-  script(src="/assets/js/wave/wave-active.js")
-  script(src='/assets/js/bootstrap-select/bootstrap-select.js')
-  script.
-    $('.selectpicker').selectpicker();
-    $("select.selectpicker").css('backgroundColor', '#4267b2');
-    $('#data-sv').DataTable();
-    $('#data-host').DataTable();
-    $('#data-admin').DataTable();
+    script(src='/assets/js/data-table/jquery.dataTables.min.js')
+    script(src="/assets/js/data-table/data-table-act.js")
+    script(src="/assets/js/wave/waves.min.js")
+    script(src="/assets/js/wave/wave-active.js")
+    script(src='/assets/js/bootstrap-select/bootstrap-select.js')
+    script.
+        $('.selectpicker').selectpicker();
+        $("select.selectpicker").css('backgroundColor', '#4267b2');
+        $('#data-sv').DataTable();
+        $('#data-host').DataTable();
+        $('#data-admin').DataTable();

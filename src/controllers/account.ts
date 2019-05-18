@@ -17,7 +17,8 @@ export let getListAccounts = async (req: Request, res: Response) => {
         return res.render("admin/accounts/list", {
             students: students,
             hosts: hosts,
-            admins: admins
+            admins: admins,
+            title: "Danh sách tài khoản"
         });
     }
     catch (err) {
@@ -33,7 +34,7 @@ export let getAddAccounts = async (req: Request, res: Response) => {
     });
 };
 
-export let postAddAccounts = async (req: Request, res: Response) => {
+export let postAddAccounts = async (req: any, res: Response) => {
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("code", "MSSV/MSCB không được để trống").notEmpty();
@@ -57,7 +58,7 @@ export let postAddAccounts = async (req: Request, res: Response) => {
             "role": req.body.role,
             "numWorkDay": req.body.numWorkDay
         })).save();
-        req.flash("info", {msg: "OK!"});
+        req.flash("info", { msg: "OK!" });
         return res.redirect("back");
     }
     catch (err) {
@@ -70,9 +71,9 @@ export let postBlockAccount = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         await User.updateOne({ _id: id }, {
-            isBlock: true
+            isBlocked: true
         });
-        return res.redirect("/admin/account/list");
+        return res.redirect("back");
     }
     catch (err) {
         console.log(err.message);
@@ -84,9 +85,9 @@ export let postUnBlockAccount = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         await User.updateOne({ _id: id }, {
-            isBlock: false
+            isBlocked: false
         });
-        return res.redirect("/admin/account/list");
+        return res.redirect("back");
     }
     catch (err) {
         console.log(err.message);

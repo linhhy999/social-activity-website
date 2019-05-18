@@ -7,7 +7,6 @@ import { buildReport, ExportFile } from "./export";
 
 
 export let getAddActivity = async (req: Request, res: Response) => {
-
     try {
         const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1 });
         const faculties = (await GeneralInfomation.find({}))[0].facultyList;
@@ -23,7 +22,7 @@ export let getAddActivity = async (req: Request, res: Response) => {
 };
 
 export let listOwnActivity = async (req: Request, res: Response) => {
-    const activityList = await Activity.find({ "host._id": req.user._id });
+    const activityList = await Activity.find({ "host": req.user._id });
     const activities = [];
     for (const activity of activityList) {
         let numMember = 0;
@@ -42,6 +41,30 @@ export let listOwnActivity = async (req: Request, res: Response) => {
         });
     }
     return res.render("admin/posts/list", {
+        activities: activities
+    });
+};
+
+export let listManageActivity = async (req: Request, res: Response) => {
+    const activityList = await Activity.find({ "superVisor": req.user.  id });
+    const activities = [];
+    for (const activity of activityList) {
+        let numMember = 0;
+        let numPendingMember = 0;
+        for (const member of activity.members) {
+            if (member.status == 1) numPendingMember++;
+            if (member.status == 2) numMember++;
+        }
+        activities.push({
+            id: activity.id,
+            name: activity.name,
+            start: activity.dateStart + " " + activity.timeStart,
+            numMember: numMember,
+            numPendingMember: numPendingMember,
+            status: activity.status ? "Đang diễn ra" : "Đã xong"
+        });
+    }
+    return res.render("admin/posts/manage", {
         activities: activities
     });
 };
@@ -68,24 +91,6 @@ export let getActivity = (req: Request, res: Response) => {
 };
 
 export let postActivity = async (req: any, res: Response) => {
-    req.checkBody("activityName", "Tên hoạt động không được để trống").notEmpty();
-    req.checkBody("register_deadline", "Hạn đăng ký không được để trống").notEmpty();
-    req.checkBody("startDate", "Ngày bắt đầu không được để trống").notEmpty();
-    req.checkBody("endDate", "Ngày kết thúc không được để trống").notEmpty();
-    req.checkBody("startTime", "Giờ bắt đầu không được để trống").notEmpty();
-    req.checkBody("endTime", "Giờ kết thúc không được để trống").notEmpty();
-    req.checkBody("gathering_place", "Địa điểm tập trung không được để trống").notEmpty();
-    req.checkBody("benefit", "Số ngày công tác xã hội không được để trống").notEmpty();
-    req.checkBody("numMember", "Số thành viên tối đa không được để trống").notEmpty();
-    req.checkBody("content", "Nội dung hoạt động không được để trống").notEmpty();
-    req.checkBody("superVisor", "Người giám sát không được để trống").notEmpty();
-
-    const errors = req.validationErrors();
-
-    if (errors) {
-        req.flash("errors", errors);
-        return res.redirect("back");
-    }
     try {
         let superVisor = [];
         if (Array.isArray(req.body.superVisor)) {
@@ -112,15 +117,7 @@ export let postActivity = async (req: any, res: Response) => {
             targetPlace: req.body.target_place,
             content: req.body.content,
             orgUnit: req.user.faculty,
-            host: {
-                _id: req.user._id,
-                fullName: req.user.fullName,
-                avatar: req.user.avatar,
-                faculty: req.user.faculty,
-                email: req.user.email,
-                code: req.user.code,
-                phone: req.user.phone
-            },
+            host: req.user._id,
             image: images,
             video: [],
             maxMember: req.body.numMember,
@@ -141,26 +138,7 @@ export let postActivity = async (req: any, res: Response) => {
 
 };
 
-
-
 export let postEditActivity = async (req: any, res: Response) => {
-    req.checkBody("activityName", "Tên hoạt động không được để trống").notEmpty();
-    req.checkBody("register_deadline", "Hạn đăng ký không được để trống").notEmpty();
-    req.checkBody("startDate", "Ngày bắt đầu không được để trống").notEmpty();
-    req.checkBody("endDate", "Ngày kết thúc không được để trống").notEmpty();
-    req.checkBody("startTime", "Giờ bắt đầu không được để trống").notEmpty();
-    req.checkBody("endTime", "Giờ kết thúc không được để trống").notEmpty();
-    req.checkBody("gathering_place", "Địa điểm tập trung không được để trống").notEmpty();
-    req.checkBody("numMember", "Số thành viên tối đa không được để trống").notEmpty();
-    req.checkBody("edit_content", "Nội dung hoạt động không được để trống").notEmpty();
-    req.checkBody("superVisor", "Người giám sát không được để trống").notEmpty();
-
-    const errors = req.validationErrors();
-
-    if (errors) {
-        req.flash("errors", errors);
-        return res.redirect("back");
-    }
     try {
         let superVisor = [];
         if (Array.isArray(req.body.superVisor)) {
@@ -187,15 +165,7 @@ export let postEditActivity = async (req: any, res: Response) => {
             targetPlace: req.body.target_place,
             content: req.body.edit_content,
             orgUnit: req.body.orgUnit,
-            host: {
-                _id: req.user._id,
-                fullName: req.user.fullName,
-                avatar: req.user.avatar,
-                faculty: req.user.faculty,
-                email: req.user.email,
-                code: req.user.code,
-                phone: req.user.phone
-            },
+            host: req.user._id,
             video: [],
             maxMember: req.body.numMember,
             superVisor: superVisor,
@@ -231,7 +201,7 @@ export let searchActivity = async (req: Request, res: Response) => {
                     { gatheringPlace: { $regex: req.query.keyword, $options: "$i" } },
                     { dateStart: { $regex: req.query.keyword, $options: "$i" } },
                     { orgUnit: { $regex: req.query.keyword, $options: "$i" } },
-                    { "host.fullName": { $regex: req.query.keyword, $options: "$i" } },
+                    // { "host.fullName": { $regex: req.query.keyword, $options: "$i" } },
                 ]
         });
     }
@@ -258,10 +228,10 @@ export let searchAdvancedActivity = async (req: Request, res: Response) => {
             query.push({ targetPlace: { $regex: req.query.keyword, $options: "$i" } });
             break;
         }
-        case "4": {
-            query.push({ "host.fullName": { $regex: req.query.keyword, $options: "$i" } });
-            break;
-        }
+        // case "4": {
+        //    query.push({ "host.fullName": { $regex: req.query.keyword, $options: "$i" } });
+        //    break;
+        // }
     }
     switch (req.body.status) {
         case "1": {

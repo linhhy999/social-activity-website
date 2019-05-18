@@ -1,57 +1,57 @@
 extends ../layout
 
 block content
-  .breadcomb-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .breadcomb-list
+    .breadcomb-area
+        .container
             .row
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                .breadcomb-wp
-                  .breadcomb-icon
-                    i.notika-icon.notika-form
-                  .breadcomb-ctn
-                    h2 Thông tin chung
-                    p
-                      | Thông tin chung
-  .tabs-info-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .widget-tabs-int
-            .tab-hd
-              h2 Danh sách khoa
-            .widget-tabs-list
-              ul.nav.nav-tabs
-                li.active
-                  a(data-toggle='tab' href='#all') Tất cả
-              .tab-content.tab-custom-st
-                #all.tab-pane.fade.in.active
-                  .tab-ctn.contact-dt
-                    .form-example-wrap.mg-t-30
-                      .cmp-tb-hd.cmp-int-hd
-                        h2 Thêm khoa
-                      .row
-                        form(action="", method="post")
-                          .col-lg-8.col-md-8.col-sm-9.col-xs-12
-                            .form-example-int.form-example-st
-                              .form-group
-                                .nk-int-st
-                                  input.form-control.input-sm(type='text' placeholder='Tên khoa')
-                          .col-lg-4.col-md-4.col-sm-3.col-xs-12
-                            .form-example-int
-                              button.btn.btn-success.notika-btn-success Thêm
-                    ul.contact-list.widget-contact-list
-                      each faculty in general.facultyList
-                        li
-                          | - 
-                          = faculty
-                    
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .breadcomb-list
+                        .row
+                            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                                .breadcomb-wp
+                                    .breadcomb-icon
+                                        i.notika-icon.notika-form
+                                    .breadcomb-ctn
+                                        h2 Thông tin chung
+                                        p
+                                            | Thông tin chung
+    .tabs-info-area
+        .container
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .widget-tabs-int
+                        .tab-hd
+                            h2 Danh sách khoa
+                        .widget-tabs-list
+                            ul.nav.nav-tabs
+                                li.active
+                                    a(data-toggle='tab' href='#all') Tất cả
+                            .tab-content.tab-custom-st
+                                #all.tab-pane.fade.in.active
+                                    .tab-ctn.contact-dt
+                                        .form-example-wrap.mg-t-30
+                                            .cmp-tb-hd.cmp-int-hd
+                                                h2 Thêm khoa
+                                            .row
+                                                form(action="", method="post")
+                                                    .col-lg-8.col-md-8.col-sm-9.col-xs-12
+                                                        .form-example-int.form-example-st
+                                                            .form-group
+                                                                .nk-int-st
+                                                                    input.form-control.input-sm(type='text' placeholder='Tên khoa')
+                                                    .col-lg-4.col-md-4.col-sm-3.col-xs-12
+                                                        .form-example-int
+                                                            button.btn.btn-success.notika-btn-success Thêm
+                                        ul.contact-list.widget-contact-list
+                                            each faculty in general.facultyList
+                                                li
+                                                    | - 
+                                                    = faculty
 
-  
+
+
 block script
-  script(src='/assets/js/bootstrap-select/bootstrap-select.js')
-  script.
-    $('.selectpicker').selectpicker();
-    $("select.selectpicker").css('backgroundColor', '#4267b2');
+    script(src='/assets/js/bootstrap-select/bootstrap-select.js')
+    script.
+        $('.selectpicker').selectpicker();
+        $("select.selectpicker").css('backgroundColor', '#4267b2');

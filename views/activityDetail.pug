@@ -41,7 +41,7 @@ block content
                                 | Số ngày công tác xã hội: 
                             = activity.benefit
                     .m-auto
-                    img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, alt="avatar.jpg")
+                    img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, style="object-fit:cover" alt="avatar.jpg")
                     //<button type="button" class="btn btn-primary btn-rounded">Primary</button>
                 .view.overlay
                     #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
@@ -98,13 +98,13 @@ block content
                             | 200
                 .card-body
                     form(action="/comment/"+activity._id, method="POST")
-                        img.rounded-circle(height="50px", width="50px", src=user.avatar, alt="avatar.jpg")
+                        img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=user.avatar, alt="avatar.jpg")
                         input#comment.input-rounded(type="text", name="comment", placeholder="comment...")
                 .card-body
                     ul.comment
                         each comment in activity.comment
                             li.comment-item
-                                img.rounded-circle(height="50px", width="50px", src=comment.userAvatar, alt="avatar.jpg")
+                                img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=comment.userAvatar, alt="avatar.jpg")
                                 span.name= comment.fullName
                                 i.far.fa-clock.pr-2= comment.timeComment
                                 p= comment.content

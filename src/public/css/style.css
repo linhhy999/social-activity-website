@@ -363,3 +363,19 @@ ul.comment li.comment-item p {
     width: 100%;
     object-fit: cover;
 }
+
+.ellipsis {
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (min-width: 576px) {
+    .col-sm-2-2 {
+        -ms-flex: 0 0 16.666667%;
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%
+    }
+}
