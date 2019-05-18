@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Activity from "../models/Activity";
 import User from "../models/User";
 import GeneralInfomation from "../models/General";
-import { NextFunction } from "connect";
+import { NextFunction } from "express";
 
 
 // /**

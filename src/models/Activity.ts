@@ -23,7 +23,7 @@ export type ActivityModel = mongoose.Document & {
 };
 
 export type Comment = {
-    userId: mongoose.Types.ObjectId,
+    fullName: string
     userAvatar: string
     timeComment: Date,
     content: string

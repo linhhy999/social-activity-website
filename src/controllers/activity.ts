@@ -111,7 +111,14 @@ export let postActivity = async (req: any, res: Response) => {
             targetPlace: req.body.target_place,
             content: req.body.content,
             orgUnit: req.body.orgUnit,
-            host: req.user,
+            host: {
+                fullName: req.user.fullName,
+                avatar: req.user.avatar,
+                faculty: req.user.faculty,
+                email: req.user.email,
+                code: req.user.code,
+                phone: req.user.phone
+            },
             image: images,
             video: [],
             maxMember: req.body.numMember,
@@ -353,8 +360,8 @@ export let postComment = async (req: any, res: Response) => {
     const activityId = req.params.id;
     try {
         const activity = await Activity.findOne({ "_id": activityId });
-        activity.comment.push({
-            userId: req.user._id,
+        activity.comment.unshift({
+            fullName: req.user.fullName,
             timeComment: new Date,
             userAvatar: req.user.avatar,
             content: req.body.comment,
@@ -404,12 +411,14 @@ export let activityDetail = async (req: Request, res: Response) => {
         });
         let status = 0;
         userActivity ? status = userActivity.status : status = 0;
+        const uA = await Activity.find({ "members.mssv": req.user.code });
         return res.render("activityDetail", {
             user: req.user,
             activity: activity,
             registered: registered,
             orgUnit: a,
-            status: status
+            status: status,
+            userActivities: uA
         });
     }
     catch (err) {
