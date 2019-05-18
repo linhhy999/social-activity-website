@@ -13,3 +13,11 @@ export let isFill = (req: Request, res: Response, next: NextFunction) => {
     }
     next();
 };
+export let checkRole = (role: number) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (req.user.role == role) {
+            return next();
+        }
+        else return res.render("errors/403");
+    };
+};

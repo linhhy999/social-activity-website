@@ -36,9 +36,12 @@ const MongoStore = mongo(session);
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
 import * as activityController from "./controllers/activity";
-import * as UserController from "./controllers/user";
+import * as userController from "./controllers/user";
+import * as accountController from "./controllers/account";
+import * as generalController from "./controllers/general";
 import * as Guard from "./config/guard";
 import * as passportConfig from "./config/passport";
+import { Role } from "./models/User";
 
 // Create Express server
 const app = express();
@@ -117,21 +120,27 @@ app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated,
 homeController.login);
 app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
 app.get("/logout", Guard.isLogin, Guard.isFill, homeController.logout);
-app.get("/admin", Guard.isLogin, Guard.isFill, homeController.admin);
-app.get("/profile", Guard.isLogin, Guard.isFill, UserController.profile);
-app.get("/info", Guard.isLogin, UserController.info);
-app.post("/info", Guard.isLogin, UserController.postInfo);
-app.get("/admin/post/list", Guard.isLogin, Guard.isFill, activityController.listOwnActivity);
+app.get("/admin", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), homeController.admin);
+app.get("/profile", Guard.isLogin, Guard.isFill, userController.profile);
+app.get("/info", Guard.isLogin, userController.info);
+app.post("/info", Guard.isLogin, userController.postInfo);
+app.get("/admin/post/list", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), activityController.listOwnActivity);
+app.get("/admin/general", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), generalController.getGeneralInfomation);
+
 app.get("/admin/post/detail/:id", Guard.isLogin, Guard.isFill, activityController.getActivityDetail);
-app.get("/admin/post/add", Guard.isLogin, Guard.isFill, activityController.getAddActivity);
-app.post("/admin/post/add", Guard.isLogin, Guard.isFill, upload.array("image"), activityController.postActivity);
+app.get("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), activityController.getAddActivity);
+app.post("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), upload.array("image"), activityController.postActivity);
 app.post("/admin/post/edit/:id", Guard.isLogin, Guard.isFill, upload.array("image"), activityController.postEditActivity);
 app.post("/admin/post/block/:id", Guard.isLogin, Guard.isFill, activityController.postActivity);
 app.get("/admin/post/member/:activity", Guard.isLogin, Guard.isFill, activityController.getMember);
 app.get("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, Guard.isFill, activityController.getAcceptMember);
 app.get("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, Guard.isFill, activityController.getRefuseMember);
+app.get("/admin/account/list", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), accountController.getListAccounts);
+app.get("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), accountController.getAddAccounts);
+app.post("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), accountController.postAddAccounts);
+app.get("/admin/account/block/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), accountController.postBlockAccount);
+app.get("/admin/account/unblock/:id", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), accountController.postUnBlockAccount);
+app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin), accountController.postChangeRole);
 
 app.post("/ajax/delete/image", activityController.postDeleteImage);
-
-
 export default app;

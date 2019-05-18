@@ -13,7 +13,7 @@ passport.serializeUser<any, any>((user, done) => {
 });
 
 passport.deserializeUser((user: any, done) => {
-    User.findOne({ "email": user }, (err, user) => {
+    User.findOne({ email: user, isBlock: {$not: {$eq: true}}}, (err, user) => {
         done(err, user);
     });
 });

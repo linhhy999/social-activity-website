@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as passportConfig from "../config/passport";
 import { NextFunction } from "express";
-import User from "../models/User";
+import User, { Role } from "../models/User";
 import Activity from "../models/Activity";
 
 /**
@@ -67,8 +67,11 @@ export let login = async (req: Request, res: Response, next: NextFunction) => {
             if (err) {
                 console.log(err.message);
             }
+            console.log(user.role);
             if (user.fullName == undefined)
                 return res.redirect("/info");
+            else if (user.role == Role.Admin || user.role == Role.Host)
+                return res.redirect("/admin");
             else
                 return res.redirect("/");
         });
