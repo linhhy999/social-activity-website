@@ -28,7 +28,22 @@ html(lang='en')
                                     i.fa.fa-arrow-circle-up(aria-hidden='true')
                                 input.file-upload(type='file', name="avatar" id="avatar" style="visibility: hidden")
                             .card-body
-                                h6.card-title= user.fullName
+                                h4.card-title= user.fullName
+                                hr
+                                .row
+                                    .col-sm-4
+                                        p.grey-text.small MSSV
+                                        p.text-primary(style="line-height: 0px;")
+                                            strong.small=user.code
+                                    .col-sm-4
+                                        p.grey-text.small CTXH
+                                        p.text-primary(style="line-height: 0px;")
+                                            strong.small=user.socialday
+                                    .col-sm-4
+                                        p.grey-text.small Level
+                                        p.text-primary(style="line-height: 0px;")
+                                            strong.small 20
+
                     br
                     .col-lg-9.col-sm-12
                         // Card
