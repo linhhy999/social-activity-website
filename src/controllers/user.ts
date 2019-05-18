@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Activity from "../models/Activity";
 import User from "../models/User";
-import Avatar from "../models/Avatar";
+import GeneralInfomation from "../models/General";
 import { NextFunction } from "connect";
 
 
@@ -35,14 +35,18 @@ import { NextFunction } from "connect";
 
 export let profile = async (req: Request, res: Response) => {
     const activity = await Activity.find({ "members.mssv": req.user.code });
+    const faculties = (await GeneralInfomation.find({}))[0].facultyList;
     return res.render("profile", {
         user: req.user,
+        faculties: faculties,
         activity: activity
     });
 };
-export let info = (req: Request, res: Response) => {
+export let info = async (req: Request, res: Response) => {
+    const faculties = (await GeneralInfomation.find({}))[0].facultyList;
     return res.render("fill", {
-        user: req.user
+        user: req.user,
+        faculties: faculties
     });
 };
 
