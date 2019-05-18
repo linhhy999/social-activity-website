@@ -131,13 +131,13 @@ block content
                                                                     | Bị khóa
                                                                 else
                                                                     | Hoạt động
-                                                            td 
+                                                            td
                                                                 if user.isBlocked == true
                                                                     a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Mở khóa tài khoản', href="/admin/account/unblock/"+user.id, style="margin-right: 10px" )
                                                                         i.fa.fa-unlock
                                                                 else 
                                                                     a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Khóa tài khoản', href="/admin/account/block/"+user.id, style="margin-right: 10px" )
-                                                                        i.fa.fa-lock    
+                                                                        i.fa.fa-lock
                                                                 a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ quyền admin', href="/admin/account/modifyRole/"+user.id+"/"+10, style="margin-right: 10px" )
                                                                     i.fa.fa-level-down
                                                                 a( data-trigger='hover' data-toggle='popover' data-placement='top' data-content='Bỏ toàn bộ quyền', href="/admin/account/modifyRole/"+user.id+"/"+5, style="margin-right: 10px" )
