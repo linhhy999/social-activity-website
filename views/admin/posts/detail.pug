@@ -139,7 +139,7 @@ block content
                                 i.notika-icon.notika-star
                             .nk-int-st.nk-toggled
                                 h4 Nội dung hoạt động
-                                textarea(name="content" disabled)
+                                textarea(name="content_view" disabled)
                                     = activity.content
 
                         .form-group.ic-cmp-int.float-lb.floating-lb
@@ -277,7 +277,7 @@ block content
                                     i.notika-icon.notika-star
                                 .nk-int-st.nk-toggled
                                     h4 Nội dung hoạt động
-                                    textarea(name="edit_content")
+                                    textarea(name="content")
                                         = activity.content
 
                             .form-group.ic-cmp-int.float-lb.floating-lb
@@ -315,8 +315,8 @@ block script
     script(src="https://cdn.ckeditor.com/4.11.4/full-all/ckeditor.js")
     script(src="/assets/js/bootstrap-select/bootstrap-select.js")
     script.
+        CKEDITOR.replace( "content_view" )
         CKEDITOR.replace( "content" )
-        CKEDITOR.replace( "edit_content" )
     script.
         $('select').selectpicker();
         $('#btnEdit').click(function() {

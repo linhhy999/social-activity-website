@@ -1,6 +1,7 @@
 import passport from "passport";
 import passportGoogle from "passport-google-oauth";
 import User from "../models/User";
+import { Role } from "../models/User";
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
@@ -31,6 +32,7 @@ passport.use(new GoogleStrategy({
             fullName: profile.displayName,
             avatar: profile.photos[0].value,
             code: /^\d+$/.test(profile.emails[0].value.substr(0, 7)) ? profile.emails[0].value.substr(0, 7) : undefined,
+            role: profile.emails[0].value[6] == "@" ? Role.Host : Role.Student
         });
     }
     else

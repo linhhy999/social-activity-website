@@ -1,71 +1,70 @@
 extends ../layout
 
 block content
-  .breadcomb-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .breadcomb-list
+    .breadcomb-area
+        .container
             .row
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                .breadcomb-wp
-                  .breadcomb-icon
-                    i.notika-icon.notika-form
-                  .breadcomb-ctn
-                    h2 Thêm tài khoản
-                    p
-                      | Quản lý tài khoản > Thêm tài khoản
-  .form-example-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .form-example-wrap
-            .cmp-tb-hd
-              h2 Thêm tài khoản
-            form(action="", method="post")
-              .form-example-int
-                .form-group
-                  label Họ và tên
-                  .nk-int-st
-                    input.form-control.input-sm(type='text' placeholder='Họ và tên' name="fullName" required)
-              .form-example-int.mg-t-15
-                .form-group
-                  label Email* (trùng với email google)
-                  .nk-int-st
-                    input.form-control.input-sm(type='text' placeholder='Email' name="email" required)
-                .form-group
-                  label MSSV/MSCB
-                  .nk-int-st
-                    input.form-control.input-sm(type='text' placeholder='Mã số sinh viên / Mã số cán bộ' name="code" required)
-                .form-group
-                  label Khoa
-                  .nk-int-st
-                    select.selectpicker(name="faculty", required)
-                      each faculty in faculties
-                        option(value=faculty)= faculty
-                .form-group
-                  label Số điện thoại
-                  .nk-int-st
-                    input.form-control.input-sm(type='text' placeholder='Số điện thoại' name="phone" required)
-                
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .breadcomb-list
+                        .row
+                            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                                .breadcomb-wp
+                                    .breadcomb-icon
+                                        i.notika-icon.notika-form
+                                    .breadcomb-ctn
+                                        h2 Thêm tài khoản
+                                        p
+                                            | Quản lý tài khoản > Thêm tài khoản
+    .form-example-area
+        .container
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .form-example-wrap
+                        .cmp-tb-hd
+                            h2 Thêm tài khoản
+                        form(action="", method="post")
+                            .form-example-int
+                                .form-group
+                                    label Họ và tên
+                                    .nk-int-st
+                                        input.form-control.input-sm(type='text' placeholder='Họ và tên' name="fullName" required)
+                            .form-example-int.mg-t-15
+                                .form-group
+                                    label Email* (trùng với email google)
+                                    .nk-int-st
+                                        input.form-control.input-sm(type='text' placeholder='Email' name="email" required)
+                                .form-group
+                                    label MSSV/MSCB
+                                    .nk-int-st
+                                        input.form-control.input-sm(type='text' placeholder='Mã số sinh viên / Mã số cán bộ' name="code" required)
+                                .form-group
+                                    label Khoa
+                                    .nk-int-st
+                                        select.selectpicker(name="faculty", required)
+                                            option(value='', disabled='') Choose your option
+                                            each faculty in faculties
+                                                option(value=faculty) #{faculty}
+                                .form-group
+                                    label Số điện thoại
+                                    .nk-int-st
+                                        input.form-control.input-sm(type='text' placeholder='Số điện thoại' name="phone" required)
+                                .form-group
+                                    label Quyền
+                                    .nk-int-st
+                                        select.selectpicker(name="role", required)
+                                            option(value=5) Sinh viên
+                                            option(value=10) Tổ chức hoạt động
+                                            option(value=1) Admin
+                                .form-group
+                                    label Số ngày công tác xã hội
+                                    .nk-int-st
+                                        input.form-control.input-sm(type='number' placeholder='0' name="numWorkDay" value=0)
 
-                .form-group
-                  label Quyền
-                  .nk-int-st
-                    select.selectpicker(name="role", required)
-                      option(value=5) Sinh viên
-                      option(value=10) Tổ chức hoạt động
-                      option(value=1) Admin
-                .form-group
-                  label Số ngày công tác xã hội
-                  .nk-int-st
-                    input.form-control.input-sm(type='number' placeholder='0' name="numWorkDay" value=0)
-                
-              .form-example-int.mg-t-15
-                button.btn.btn-success.notika-btn-success Thêm
-  
+                            .form-example-int.mg-t-15
+                                button.btn.btn-success.notika-btn-success Thêm
+
 block script
-  script(src='/assets/js/bootstrap-select/bootstrap-select.js')
-  script.
-    $('.selectpicker').selectpicker();
-    $("select.selectpicker").css('bac kgroundColor', '#4267b2');
+    script(src='/assets/js/bootstrap-select/bootstrap-select.js')
+    script.
+        $('.selectpicker').selectpicker();
+        $("select.selectpicker").css('bac kgroundColor', '#4267b2');

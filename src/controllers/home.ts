@@ -37,7 +37,7 @@ export let index = async (req: Request, res: Response) => {
             const activity = await Activity.find({ "members.mssv": req.user.code });
             return res.render("newsfeed", {
                 user: req.user,
-                activities: activityList.reverse(),
+                activities: activityList.reverse(), 
                 orgUnit: a,
                 userActivities: activity
             });
