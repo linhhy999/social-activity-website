@@ -56,21 +56,26 @@ html(lang='en')
                                     | Looks good!
                             div
                                 label(style="font-size: .85rem") Khoa
-                                select.browser-default.custom-select(name="faculty", required value = user.faculty)
+                                select.browser-default.custom-select(name="faculty", required)
                                     option(value='', disabled='') Choose your option
-                                    option(value='Khoa học và Kỹ thuật Máy tính' selected) Khoa học và Kỹ thuật Máy tính
-                                    option(value='Kỹ thuật Hóa học') Kỹ thuật Hóa học
-                                    option(value='Điện - Điện tử') Điện - Điện tử
-                                    option(value='Cơ Khí') Cơ Khí
-                                    option(value='Xây Dựng') Xây Dựng
-                                    option(value='Khoa học Ứng dụng') Khoa học Ứng dụng
-                                    option(value='Môi trường và tài nguyên') Môi trường và tài nguyên
-                                    option(value='Kỹ thuật giao thông') Kỹ thuật giao thông
-                                    option(value='Kỹ thuật và Địa chất Dầu khí') Kỹ thuật và Địa chất Dầu khí
-                                    option(value='Quản lý Công nghiệp') Quản lý Công nghiệp
-                                    option(value='VP. Đào tạo Quốc tế') VP. Đào tạo Quốc tế
-                                    option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
-                                    option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
+                                    each faculty in faculties
+                                        if faculty == user.faculty
+                                            option(value=faculty selected) #{faculty}
+                                        else
+                                            option(value=faculty) #{faculty}
+                                    //- option(value='Khoa học và Kỹ thuật Máy tính' selected) Khoa học và Kỹ thuật Máy tính
+                                    //- option(value='Kỹ thuật Hóa học') Kỹ thuật Hóa học
+                                    //- option(value='Điện - Điện tử') Điện - Điện tử
+                                    //- option(value='Cơ Khí') Cơ Khí
+                                    //- option(value='Xây Dựng') Xây Dựng
+                                    //- option(value='Khoa học Ứng dụng') Khoa học Ứng dụng
+                                    //- option(value='Môi trường và tài nguyên') Môi trường và tài nguyên
+                                    //- option(value='Kỹ thuật giao thông') Kỹ thuật giao thông
+                                    //- option(value='Kỹ thuật và Địa chất Dầu khí') Kỹ thuật và Địa chất Dầu khí
+                                    //- option(value='Quản lý Công nghiệp') Quản lý Công nghiệp
+                                    //- option(value='VP. Đào tạo Quốc tế') VP. Đào tạo Quốc tế
+                                    //- option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
+                                    //- option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
                             .md-form.form-sm
                                 input#materialFormSocialModal.form-control.form-control-sm(type='text', name="socialday", required value = user.socialday)
                                 label(for='materialFormSocialModal') Số ngày công tác xã hội

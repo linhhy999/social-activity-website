@@ -160,7 +160,7 @@ block content
                                     .bootstrap-select
                                         select.selectpicker(name="superVisor" multiple disabled)
                                             each sp in superVisor
-                                                option(value=sp._id selected)= sp.fullName                    
+                                                option(value=sp._id selected)= sp.fullName
 
                         .form-group.ic-cmp-int.float-lb.floating-lb
                             .form-ic-cmp
@@ -168,13 +168,6 @@ block content
                             h4 Hình ảnh
                             each image in activity.image
                                 img(src=image.link, alt=image.link, style="width: 200px; height: auto;").mr-3
-                        .form-group.ic-cmp-int.float-lb.floating-lb
-                            .form-ic-cmp
-                                i.notika-icon.notika-start
-                            h4 Video
-                            each video in activity.video
-                                img(src=video.link, alt=video.link, style="width: 200px; height: auto;").mr-3
-
                         .btn-demo-notika
                         .btn-list
                             button.btn.btn-warning.notika-btn-warning.btn-lg#btnEdit(type="submit")
@@ -184,11 +177,9 @@ block content
         .container
             .row
                 .col-lg-12.col-md-12.col-sm-12.col-xs-12
+
                     .form-element-list
-
                         form(action="/admin/post/edit/"+activity.id method="POST", enctype="multipart/form-data")
-
-                            <!-- Activity name -->
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-support
@@ -198,7 +189,6 @@ block content
                                         .input-group.date.nk-int-st
                                             span.input-group-addon
                                             input.form-control(type='text' value=activity.name name='activityName')
-                            <!-- Processing Time -->
                             .row
                                 .col-sm-4
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -318,7 +308,7 @@ block content
                                         .bootstrap-select
                                             select.selectpicker(name="superVisor" multiple)
                                                 each sp in superVisor
-                                                    option(value=sp._id selected)= sp.fullName                    
+                                                    option(value=sp._id selected)= sp.fullName
 
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
@@ -334,7 +324,6 @@ block content
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-start
-                                h4 Video
                                 each video in activity.video
                                     img(src=video.link, alt=video.link, style="width: 200px; height: auto;").mr-3
                             button.btn.btn-success.notika-btn-success.btn-lg(type="submit") Lưu
