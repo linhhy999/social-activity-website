@@ -7,9 +7,6 @@ export type GeneralModel = mongoose.Document & {
     facultyList: string[]
 };
 
-
-
-
 const generalSchema = new mongoose.Schema({
     facultyList: []
 }, { timestamps: true });

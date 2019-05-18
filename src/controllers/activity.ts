@@ -1,16 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import Activity, { Status } from "../models/Activity";
+import GeneralInfomation from "../models/General";
 import User from "../models/User";
 import { createNotificationByCode } from "./notification";
-import moment = require("moment");
 
 
 export let getAddActivity = async (req: Request, res: Response) => {
 
     try {
         const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1 });
+        const faculties = (await GeneralInfomation.find({}))[0].facultyList;
         return res.render("admin/posts/add", {
-            superVisors: sp
+            superVisors: sp,
+            faculties: faculties
         });
     }
     catch (err) {
