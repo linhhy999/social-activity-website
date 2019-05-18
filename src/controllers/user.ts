@@ -52,7 +52,6 @@ export let postInfo = async (req: any, res: any) => {
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
     req.checkBody("socialday", "Tên không được để trống").notEmpty();
-    // req.checkBody("avatar", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -61,14 +60,7 @@ export let postInfo = async (req: any, res: any) => {
         return res.redirect("back");
     }
     let avatarlink = "";
-    if (req.body.avatar) {
-        const avatar = new Avatar({ "data": req.body.avatar });
-        avatar.save((err) => {
-            console.log(err);
-            return res.redirect("back");
-        });
-        avatarlink = "/" + avatar._id;
-    }
+    if (req.file) avatarlink = "/uploads/" + req.file.filename;
     else avatarlink = req.user.avatar;
 
     const user = await User.findOne({ "_id": req.user._id });
