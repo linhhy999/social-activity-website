@@ -200,18 +200,24 @@ export let updateActivity = (req: Request, res: Response) => {
 };
 
 export let searchActivity = async (req: Request, res: Response) => {
-    const activities = await Activity.find({
-        $or:
-            [
-                { name: { $regex: req.query.keyword, $options: "$i" } },
-                { content: { $regex: req.query.keyword, $options: "$i" } },
-                { targetPlace: { $regex: req.query.keyword, $options: "$i" } },
-                { gatheringPlace: { $regex: req.query.keyword, $options: "$i" } },
-                { dateStart: { $regex: req.query.keyword, $options: "$i" } },
-                { orgUnit: { $regex: req.query.keyword, $options: "$i" } },
-                { "host.fullName": { $regex: req.query.keyword, $options: "$i" } },
-            ]
-    });
+    let activities: any[];
+    if (!req.query.keyword) {
+        activities = [];
+    }
+    else {
+        activities = await Activity.find({
+            $or:
+                [
+                    { name: { $regex: req.query.keyword, $options: "$i" } },
+                    { content: { $regex: req.query.keyword, $options: "$i" } },
+                    { targetPlace: { $regex: req.query.keyword, $options: "$i" } },
+                    { gatheringPlace: { $regex: req.query.keyword, $options: "$i" } },
+                    { dateStart: { $regex: req.query.keyword, $options: "$i" } },
+                    { orgUnit: { $regex: req.query.keyword, $options: "$i" } },
+                    { "host.fullName": { $regex: req.query.keyword, $options: "$i" } },
+                ]
+        });
+    }
     return res.render("search", {
         title: "Search",
         activities: activities,

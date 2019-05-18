@@ -20,18 +20,16 @@ block content
         .container
             .row
                 .col-lg-12.col-md-12.col-sm-12.col-xs-12
-                    .form-element-list              
-                        <!-- Activity name -->
+                    .form-element-list
+
                         .form-group.ic-cmp-int.float-lb.floating-lb
                             .form-ic-cmp
                                 i.notika-icon.notika-support
                             .nk-int-st
                                 #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                     label Tên Hoạt động
-                                    .input-group.date.nk-int-st
-                                        span.input-group-addon
+                                    .input-group.nk-int-st
                                         input.form-control(type='text' value=activity.name name='activityName' disabled)
-                        <!-- Processing Time -->
                         .row
                             .col-sm-4
                                 .form-group.ic-cmp-int.float-lb.floating-lb
@@ -72,8 +70,7 @@ block content
                                     .nk-int-st
                                         #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                             label Thời gian bắt đầu
-                                            .input-group.date.nk-int-st
-                                                span.input-group-addon
+                                            .input-group.nk-int-st
                                                 input.form-control(type='text' data-mask='99:99' name="startTime" value=activity.timeStart disabled)
                             .col-sm-6
                                 .form-group.ic-cmp-int.float-lb.floating-lb
@@ -82,8 +79,7 @@ block content
                                     .nk-int-st
                                         #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                             label Thời gian kết thúc
-                                            .input-group.date.nk-int-st
-                                                span.input-group-addon
+                                            .input-group.nk-int-st
                                                 input.form-control(type='text' data-mask='99:99' value=activity.timeEnd name="endTime" disabled)
 
                         <!-- Start Location -->
@@ -95,8 +91,7 @@ block content
                                     .nk-int-st
                                         #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                             label Địa điểm nhận tập chung
-                                            .input-group.date.nk-int-st
-                                                span.input-group-addon
+                                            .input-group.nk-int-st
                                                 input.form-control(type='text' name="gathering_place" value=activity.gatheringPlace disabled)
 
 
@@ -108,8 +103,7 @@ block content
                                     .nk-int-st
                                         #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                             label Địa điểm di chuyển đến (nếu có)
-                                            .input-group.date.nk-int-st
-                                                span.input-group-addon
+                                            .input-group.nk-int-st
                                                 input.form-control(type='text' name='target_place' value=activity.targetPlace disabled)
 
                         <!-- Benefit -->
@@ -119,8 +113,7 @@ block content
                             .nk-int-st
                                 #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                     label Quyền lợi sẽ được hưởng
-                                    .input-group.date.nk-int-st
-                                        span.input-group-addon
+                                    .input-group.nk-int-st
                                         input.form-control(type='number' step=any name="benefit"  value=activity.benefit disabled)
                         .form-group.ic-cmp-int.float-lb.floating-lb
                             .form-ic-cmp
@@ -128,8 +121,7 @@ block content
                             .nk-int-st
                                 #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                     label Số lượng tình nguyện viên cần tuyển
-                                    .input-group.date.nk-int-st
-                                        span.input-group-addon
+                                    .input-group.nk-int-st
                                         input.form-control(type='number' name="numMember"  value=activity.maxMember disabled)
                         .form-group.ic-cmp-int.float-lb.floating-lb
                             .form-ic-cmp
@@ -137,8 +129,7 @@ block content
                             .nk-int-st
                                 #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                     label Đơn vị tổ chức
-                                    .input-group.date.nk-int-st
-                                        span.input-group-addon
+                                    .input-group.nk-int-st
                                         input.form-control(type='text' name="orgUnit" value=activity.orgUnit disabled)
 
 
@@ -186,8 +177,7 @@ block content
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                         label Tên Hoạt động
-                                        .input-group.date.nk-int-st
-                                            span.input-group-addon
+                                        .input-group.nk-int-st
                                             input.form-control(type='text' value=activity.name name='activityName')
                             .row
                                 .col-sm-4
@@ -220,7 +210,6 @@ block content
                                                 .input-group.date.nk-int-st
                                                     span.input-group-addon
                                                     input.form-control(type='text' value=activity.dateEnd name='endDate')
-
                             .row
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -229,8 +218,7 @@ block content
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                                 label Thời gian bắt đầu
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
+                                                .input-group.nk-int-st
                                                     input.form-control(type='text' data-mask='99:99' name="startTime" value=activity.timeStart)
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -239,8 +227,7 @@ block content
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                                 label Thời gian kết thúc
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
+                                                .input-group.nk-int-st
                                                     input.form-control(type='text' data-mask='99:99' value=activity.timeEnd name="endTime")
 
                             <!-- Start Location -->
@@ -252,11 +239,8 @@ block content
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                                 label Địa điểm nhận tập chung
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
+                                                .input-group.nk-int-st
                                                     input.form-control(type='text' name="gathering_place" value=activity.gatheringPlace)
-
-
 
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -265,8 +249,7 @@ block content
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                                 label Địa điểm di chuyển đến (nếu có)
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
+                                                .input-group.nk-int-st
                                                     input.form-control(type='text' name='target_place' value=activity.targetPlace)
 
 
@@ -276,8 +259,7 @@ block content
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                         label Số lượng tình nguyện viên cần tuyển
-                                        .input-group.date.nk-int-st
-                                            span.input-group-addon
+                                        .input-group.nk-int-st
                                             input.form-control(type='number' name="numMember"  value=activity.maxMember)
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
@@ -285,8 +267,7 @@ block content
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                         label Đơn vị tổ chức
-                                        .input-group.date.nk-int-st
-                                            span.input-group-addon
+                                        .input-group.nk-int-st
                                             input.form-control(type='text' name="orgUnit" value=activity.orgUnit)
 
 
