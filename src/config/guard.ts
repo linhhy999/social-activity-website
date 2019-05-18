@@ -11,4 +11,5 @@ export let isFill = (req: Request, res: Response, next: NextFunction) => {
     if (req.user.code === undefined || req.user.faculty === undefined || req.user.fullName === undefined || req.user.phone === undefined || req.user.numWorkDay === undefined) {
         return res.redirect("/info");
     }
+    next();
 };
