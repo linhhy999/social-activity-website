@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import User from "./User";
 export type ActivityModel = mongoose.Document & {
     name: string,
     registerEnd: string,
@@ -11,7 +11,7 @@ export type ActivityModel = mongoose.Document & {
     targetPlace: number,
     content: string,
     orgUnit: string,
-    host: {},
+    host: any,
     image: Media[],
     video: Media[],
     maxMember: number,
@@ -62,7 +62,11 @@ const activitySchema = new mongoose.Schema({
     content: String,
     orgUnit: String,
     benefit: Number,
-    host: {},
+    host: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        autopopulate: true
+    },
     image: [],
     video: [],
     maxMember: Number,
@@ -71,6 +75,8 @@ const activitySchema = new mongoose.Schema({
     superVisor: [],
     status: Boolean
 }, { timestamps: true });
+
+activitySchema.plugin(require("mongoose-autopopulate"));
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);
