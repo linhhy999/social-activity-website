@@ -25,12 +25,25 @@
                     #Post.tab-pane.notika-tab-menu-bg.animated.flipInX
                         ul.notika-main-menu-dropdown
                             li
-                                a(href='/admin/post/list') Hoạt động của tôi
+                                a(href='/admin/post/list') 
+                                    i.fa.fa-user(aria-hidden='true')
+                                    |   Hoạt động của tôi
+                            if user.role == 1
+                                li
+                                    a(href='/admin/post/manage')
+                                        i.fa.fa-users(aria-hidden='true')
+                                        |   Hoạt động tôi quản lý
                             li
-                                a(href='/admin/post/add') Thêm hoạt động
+                                a(href='/admin/post/add')
+                                    i.fa.fa-plus(aria-hidden='true')
+                                    |   Thêm hoạt động
                     #Account.tab-pane.notika-tab-menu-bg.animated.flipInX
                         ul.notika-main-menu-dropdown
                             li
-                                a(href='/admin/account/list') Danh sách tài khoản
+                                a(href='/admin/account/list')
+                                    i.fa.fa-users(aria-hidden='true')
+                                    |   Danh sách tài khoản
                             li
-                                a(href='/admin/account/add') Thêm tài khoản
+                                a(href='/admin/account/add')
+                                    i.fa.fa-plus(aria-hidden='true')
+                                    |   Thêm tài khoản

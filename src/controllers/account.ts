@@ -17,7 +17,8 @@ export let getListAccounts = async (req: Request, res: Response) => {
         return res.render("admin/accounts/list", {
             students: students,
             hosts: hosts,
-            admins: admins
+            admins: admins,
+            title: "Danh sách tài khoản"
         });
     }
     catch (err) {

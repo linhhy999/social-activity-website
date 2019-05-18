@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/User";
+import User, { Role } from "../models/User";
 
 export let isLogin = (req: Request, res: Response, next: NextFunction) => {
     if (req.user) {
@@ -19,8 +19,11 @@ export let hasPermission = (...role: number[]) => {
         if (role.indexOf(req.user.role) != -1) {
             return next();
         }
-        else return res.redirect("/");
-        // else return res.render("errors/403");
+        else
+            if (req.user.role == Role.Host)
+                return res.redirect("/admin");
+            else
+                return res.redirect("/");
     };
 };
 
@@ -41,7 +44,6 @@ export let legitActivityInfo = (req: Request, res: Response, next: NextFunction)
         return res.redirect("back");
     }
 
-    console.log(req.body.register_deadline);
 
     next();
 };

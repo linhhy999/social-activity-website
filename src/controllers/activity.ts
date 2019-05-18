@@ -44,6 +44,30 @@ export let listOwnActivity = async (req: Request, res: Response) => {
     });
 };
 
+export let listManageActivity = async (req: Request, res: Response) => {
+    const activityList = await Activity.find({ "superVisor": req.user.  id });
+    const activities = [];
+    for (const activity of activityList) {
+        let numMember = 0;
+        let numPendingMember = 0;
+        for (const member of activity.members) {
+            if (member.status == 1) numPendingMember++;
+            if (member.status == 2) numMember++;
+        }
+        activities.push({
+            id: activity.id,
+            name: activity.name,
+            start: activity.dateStart + " " + activity.timeStart,
+            numMember: numMember,
+            numPendingMember: numPendingMember,
+            status: activity.status ? "Đang diễn ra" : "Đã xong"
+        });
+    }
+    return res.render("admin/posts/manage", {
+        activities: activities
+    });
+};
+
 export let getActivityDetail = async (req: Request, res: Response) => {
     try {
         const activity = await Activity.findById(req.params.id);

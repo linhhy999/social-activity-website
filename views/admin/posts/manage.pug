@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+    .breadcomb-area
+        .container
+            .row
+                .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                    .breadcomb-wp
+                        .breadcomb-icon
+                            i.notika-icon.notika-form
+                        .breadcomb-ctn
+                            h2 Danh sách Hoạt động
+                            p
+                                | Hoạt động > Danh sách Hoạt động
+    .normal-table-area
+        .container
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .normal-table-list
+                        .basic-tb-hd
+                            h2 Danh sách hoạt động
+                        .bsc-tbl
+                            table.table.table-sc-ex
+                                thead
+                                    tr
+                                        th #
+                                        th Tên hoạt động
+                                        th Thời gian tổ chức
+                                        th Số thành viên
+                                        th Đang chờ duyệt
+                                        th Trạng thái
+                                        th Hành động
+                                tbody
+                                    each activity, index in activities
+                                        tr
+                                            td= index + 1
+                                            td= activity.name
+                                            td= activity.start
+                                            td= activity.numMember
+                                            td= activity.numPendingMember
+                                            td= activity.status
+                                            th
+                                                a(href="/admin/post/detail/"+activity.id  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Chi tiết hoạt động").mr-3
+                                                    i.fa.fa-info
+                                                a(href="/admin/post/member/"+activity.id data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Danh sách thành viên").mr-3
+                                                    i.fa.fa-users
+                                                a(href="#" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Khóa hoạt động").mr-3
+                                                    i.fa.fa-lock
+
+block script
+    script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
+    script(src='/assets/js/wizard/wizard-active.js')

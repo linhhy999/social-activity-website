@@ -328,7 +328,6 @@ block script
             $("#edit").addClass("hidden");
         })
         deleteImage = (activity, id) => {
-            console.log(activity, id)
             $.ajax({
                 type: "POST",
                 url: "/ajax/delete/image",
