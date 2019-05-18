@@ -111,8 +111,7 @@ app.post("/search/", Guard.isLogin, Guard.isFill, activityController.searchAdvan
 
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
-app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated,
-    homeController.login);
+app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
 app.get("/", Guard.isLogin, Guard.isFill, homeController.index);
 app.get("/logout", Guard.isLogin, homeController.logout);
 app.get("/admin", Guard.isLogin, Guard.isFill, Guard.checkRole(Role.Admin, Role.Host), homeController.admin);
