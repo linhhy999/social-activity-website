@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/User";
 
 export let isLogin = (req: Request, res: Response, next: NextFunction) => {
     if (req.user) {
         next();
     }
-    else return res.redirect("/auth/google");
+    else return res.redirect("/intro"); // làm ơn đừng sửa cái này nữa :( cái này m đè của t 3-4 lần rồi
 };
 
 export let isFill = (req: Request, res: Response, next: NextFunction) => {
