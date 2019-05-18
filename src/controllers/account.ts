@@ -57,7 +57,7 @@ export let postAddAccounts = async (req: Request, res: Response) => {
             "role": req.body.role,
             "numWorkDay": req.body.numWorkDay
         })).save();
-        req.flash("info", {msg: "OK!"});
+        req.flash("info", { msg: "OK!" });
         return res.redirect("back");
     }
     catch (err) {
@@ -70,9 +70,9 @@ export let postBlockAccount = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         await User.updateOne({ _id: id }, {
-            isBlock: true
+            isBlocked: true
         });
-        return res.redirect("/admin/account/list");
+        return res.redirect("back");
     }
     catch (err) {
         console.log(err.message);
@@ -84,9 +84,9 @@ export let postUnBlockAccount = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         await User.updateOne({ _id: id }, {
-            isBlock: false
+            isBlocked: false
         });
-        return res.redirect("/admin/account/list");
+        return res.redirect("back");
     }
     catch (err) {
         console.log(err.message);
