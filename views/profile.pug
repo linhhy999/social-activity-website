@@ -12,17 +12,28 @@ html(lang='en')
         link(href="/css/bootstrap.min.css" rel="stylesheet")
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
+        link(href="/css/styleprofile.css" rel="stylesheet")
+
     body
         include partials/header
-        
+
         .mt-100
-        .container
+        .container 
             .row
                 .col-lg-3.hidden-sm
                     .card.testimonial-card.mb-2
-                        .card-up.aqua-gradient(style="height:100px")
-                        .avatar.mx-auto.white
-                            img.rounded-circle.img-responsive(width="110px" height="110px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" alt="woman avatar")
+                        form()
+                            center
+                                .avatar-wrapper
+                                    if user.avatar.set == true
+                                        img.profile-pic(src=user.avatar.link)
+                                    else
+                                        img.profile-pic(src=user.auth[0].picture)
+                                    .upload-button
+                                        //i.fa.fa-arrow-circle-up(aria-hidden='true')
+                                    input.file-upload(type='file', accept='image/*')
+                                button.btn.btn-primary Đổi ảnh đại diện
+                        // Bỏ là vừa nè
                         .card-body
                             h4.card-title= user.fullName
                             hr
@@ -34,96 +45,154 @@ html(lang='en')
                                 .col-sm-6
                                     p.grey-text.small CTXH
                                     p.text-primary(style="line-height: 0px;")
-                                        strong.small=user.numWorkDay
-                br                
+                                        strong.small
+                                            iframe(src="http://gaia.cs.umass.edu/wireshark-labs/alice.txt", frameborder="0")
+                                    p Đang làm cái này, deploy sắp xong rồi 
+                        // End of bỏ
+                br
                 .col-lg-9.col-sm-12
-                  // Card
-                  .card
-                    // Card content
-                    .card-body
-                      // Title
-                      h4.card-title
-                        a Thông tin người dùng
-                      // Text
-                      form(action="/profile/update" method="POST")
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.code)
-                          label(for='inputSMEx') MSSV:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName, name="name")
-                          label(for='inputSMEx') Họ và tên:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.email, name="email")
-                          label(for='inputSMEx') Email:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone, name="phone")
-                          label(for='inputSMEx') Số điện thoại:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString(), name="faculty")
-                          label(for='inputSMEx') Khoa:
-                        .md-form.form-sm
-                          input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay)
-                          label(for='inputSMEx')  Số ngày Công tác xã hội:
-                        
-                        // Button
-                        button.btn.btn-primary Cập nhật
-                  // Card
-                  
-                  // Card
-                  .card.mt-3
-                    // Card content
-                    .card-body
-                      // Title
-                      h4.card-title
-                        a Hoạt động cá nhân
-                      // Text
-                      .table-responsive
-                        table.table
-                          thead
-                            tr
-                              th(scope='col') STT
-                              th(scope='col') Mã Hoạt động
-                              th(scope='col') Tên hoạt động
-                              th(scope='col') Ngày thực hiện
-                              th(scope='col') Ngày CTXH
-                              th(scope='col') Minh chứng
-                              th(scope='col') Khoa xác nhận
-                              th(scope='col') Tình trạng
-                          tbody
-                            tr
-                              th(scope='row') 1
-                              td 
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                            tr
-                              th(scope='row') 2
-                              td 
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                              td Cell
-                            
-                  // Card
+                    // Card
+                    .card
+                        // Card content
+                        .card-body
+                            // Title
+                            h4.card-title
+                                a Thông tin người dùng
+                            .errmessage(id="errorContainer")
+                                p Please correct the following errors and try again:
+                                <ul/>
+                            form(id="infoform" action="/profile/update" method="POST")
+                                .md-form.form-sm
+                                    label(for='inputSMEx') MSSV:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.code name="mssv")
+                                .md-form.form-sm
+                                    label(for='inputSMEx') Họ và tên:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.fullName name="name")
+                                .md-form.form-sm
+                                    label(for='inputSMEx') Email:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.email name="email" disabled)
+                                .md-form.form-sm
+                                    label(for='inputSMEx') Số điện thoại:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.phone name="phone")
+                                .md-form.form-sm
+                                    label(for='inputSMEx') Khoa:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.faculty.toString() name="faculty")
+                                .md-form.form-sm
+                                    label(for='inputSMEx')  Số ngày Công tác xã hội:
+                                    input#inputSMEx.form-control.form-control-sm(type='text' value=user.numWorkDay name="socialday")
+                                // Button
+                                button.btn.btn-primary Cập nhật
+                    // Card
 
+                    // Card
+                    .card.mt-3
+                        // Card content
+                        .card-body
+                            // Title
+                            h4.card-title
+                                a Hoạt động cá nhân
+                            // Text
+                            .table-responsive
+                                table.table
+                                    thead
+                                        tr
+                                            th(scope='col') STT
+                                            th(scope='col') Mã Hoạt động
+                                            th(scope='col') Tên hoạt động
+                                            th(scope='col') Khoa tổ chức
+                                            th(scope='col') Ngày CTXH
+                                    tbody
+                                        - let i= 0
+                                        each act in activity
+                                            - i++
+                                            tr
+                                                th(scope='row')= i
+                                                td= act.id
+                                                td= act.name
+                                                td= act.orgUnit
+                                                td= act.benefit
 
-                  
-
-                    
-
-                    
-                    
-                     
-
+                    // Card
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")
         script(type="text/javascript" src="/js/mdb.min.js")
+        script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js")
         script.
             $('.toast').toast()
+        script.
+            $(document).ready(function() {
+                $("#infoform").validate({
+                    rules: {
+                        mssv: {
+                            required: true,
+                            rangelength: [7,7],
+                            range: [1400000, 1899999]
+                        },
+                        name: "required",
+                        phone: {
+                            required: true,
+                            number: true,
+                            rangelength: [10,10],
+                            range: [0, 999999999]
+                        },
+                        socialday: {
+                            required: true,
+                            number: true,
+                            range: [0,200]
+                        },
+                    },
+                    messages: {
+                        mssv: {
+                            required: "Vui lòng nhập mã số sinh viên",
+                            rangelength: "Vui lòng nhập mã số sinh viên hợp lệ",
+                            range: "Vui lòng nhập mã số sinh viên hợp lệ"
+                        },
+                        name: "Vui lòng nhập họ và tên",
+                        phone: {
+                            required: "Vui lòng nhập số điện thoại",
+                            number: "Vui lòng nhập số điện thoại hợp lệ",
+                            rangelength: "Vui lòng nhập số điện thoại hợp lệ",
+                            range: "Vui lòng nhập số điện thoại hợp lệ"
+                        },
+                        socialday: {
+                            required: "Vui lòng nhập ngày ctxh",
+                            number: "Vui lòng nhập ngày ctxh hợp lệ",
+                            range: "Vui lòng nhập ngày ctxh hợp lệ"
+                        }
+                    },
+                    errorContainer: $('#errorContainer'),
+                    errorLabelContainer: $('#errorContainer ul'),
+                    wrapper: 'li'
+                });
+            });
+        script.
+            $(document).ready(function() {
+                var readURL = function(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('.profile-pic').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                $(".file-upload").on('change', function(){
+                    readURL(this);
+                });
+                $(".upload-button").on('click', function() {
+                    $(".file-upload").click();
+                });
+            });
+            $('#infoform')
+                .ajaxForm({
+                    url : '/profile/update',
+                    dataType : 'json',
+                    success : function (response) {
+                        alert("The server says: " + response);
+                    }
+                })
+            ;
+
+
         block script

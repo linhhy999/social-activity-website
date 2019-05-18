@@ -20,54 +20,60 @@ html(lang='en')
             #modalContactForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
             // Modal: Contact form
             .modal-dialog.cascading-modal(role='document')
-              // Content
-              .modal-content
-                // Header
-                .modal-header.primary-color.white-text
-                  h4.title
-                    i.fa.fa-pencil-alt
-                    |  Bạn cần điền một số thông tin sau để tiếp tục
-                // Body
-                .modal-body
-                  form.needs-validation(action="#" method="POST" novalidate)
-                    // Material input name
-                    .md-form.form-sm
-                      input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required)
-                      label(for='materialFormNameModal') Tên của bạn
-                      .valid-feedback
-                        | Looks good!
-                    // Material input email
-                    .md-form.form-sm
-                      input#materialFormEmailModal.form-control.form-control-sm(type='text', name="phone", required)
-                      label(for='materialFormEmailModal') Số điện thoại
-                      .valid-feedback
-                        | Looks good!
-                    // Material input subject
-                    .md-form.form-sm
-                      input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required)
-                      label(for='materialFormMSSVModal') MSSV
-                      .valid-feedback
-                        | Looks good!
-                    // Material input subject
-                    .md-form.form-sm
-                      input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required)
-                      label(for='materialFormFacultyModal') Khoa
-                      .valid-feedback
-                        | Looks good!
-                                            
-                    // Material input subject
-                    .md-form.form-sm
-                      input#materialFormSubjectModal.form-control.form-control-sm(type='number', name="ctxh", required)
-                      label(for='materialFormSubjectModal') Số ngày CTXH hiện tại
-                      .valid-feedback
-                        | Looks good!
-                    // Material textarea message
-                    .text-center.mt-4.mb-2
-                      button.btn.btn-primary
-                        | Xác nhận
-                        i.fa.fa-send.ml-2
-              // /.Content
-            // /Modal: Contact form
+                // Content
+                .modal-content
+                    // Header
+                    .modal-header.primary-color.white-text
+                        h4.title
+                            i.fa.fa-pencil-alt
+                            | Bạn cần điền một số thông tin sau để tiếp tục
+                    // Body
+                    .modal-body
+                        form.needs-validation(action="/info" method="POST" novalidate)
+                            // Material input name
+                            .md-form.form-sm
+                                input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required, value = user.fullName autofocus)
+                                label(for='materialFormNameModal') Tên của bạn
+                                .valid-feedback
+                                    | Looks good!
+                            // Material input email
+                            .md-form.form-sm
+                                input#materialFormEmailModal.form-control.form-control-sm(type='text', name="phone", required, value = user.phone)
+                                label(for='materialFormEmailModal') Số điện thoại
+                                .valid-feedback
+                                    | Looks good!
+                            // Material input subject
+                            .md-form.form-sm
+                                input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required value= user.code)
+                                label(for='materialFormMSSVModal' oninput="console.log('asdasd')") MSSV
+                                .valid-feedback
+                                    | Looks good!
+                            // Material input subject
+                            div
+                                //input#materialFormFacultyModal.form-control.form-control-sm(type='text', name="faculty", required value =user.faculty)
+                                label(style="font-size: .85rem") Khoa
+                                select.browser-default.custom-select(name="faculty", required value = user.faculty)
+                                    option(value='', disabled='') Choose your option
+                                    option(value='Khoa học và Kỹ thuật Máy tính' selected) Khoa học và Kỹ thuật Máy tính
+                                    option(value='Kỹ thuật Hóa học') Kỹ thuật Hóa học
+                                    option(value='Điện - Điện tử') Điện - Điện tử
+                                    option(value='Cơ Khí') Cơ Khí
+                                    option(value='Xây Dựng') Xây Dựng
+                                    option(value='Khoa học Ứng dụng') Khoa học Ứng dụng
+                                    option(value='Môi trường và tài nguyên') Môi trường và tài nguyên
+                                    option(value='Kỹ thuật giao thông') Kỹ thuật giao thông
+                                    option(value='Kỹ thuật và Địa chất Dầu khí') Kỹ thuật và Địa chất Dầu khí
+                                    option(value='Quản lý Công nghiệp') Quản lý Công nghiệp
+                                    option(value='VP. Đào tạo Quốc tế') VP. Đào tạo Quốc tế
+                                    option(value='Bảo dưỡng công nghiệp') Bảo dưỡng công nghiệp
+                                    option(value='Công nghệ Vật liệu') Công nghệ Vật liệu
+                            // Material textarea message
+                            .text-center.mt-4.mb-2
+                                button.btn.btn-primary
+                                    | Xác nhận
+                                    i.fa.fa-send.ml-2
+                // /.Content
+                // /Modal: Contact form
 
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
@@ -75,21 +81,21 @@ html(lang='en')
         script(type="text/javascript" src="/js/mdb.min.js")
         script.
             (function() {
-              'use strict';
-              window.addEventListener('load', function() {
-              // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              var forms = document.getElementsByClassName('needs-validation');
-              // Loop over them and prevent submission
-              var validation = Array.prototype.filter.call(forms, function(form) {
-              form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-              }, false);
-              });
-              }, false);
-              })();
+                'use strict';
+                window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+                });
+                }, false);
+                })();
         block script
 

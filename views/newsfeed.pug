@@ -7,7 +7,7 @@ block content
                     .card-body.d-flex.flex-row
                         div
                             h4.card-title.font-weight-bold.mb-2= activity.name
-                            
+
                                 if activity.members.length == activity.maxMember
                                     .badge.badge-danger Đã đu thành viên 
                             p.card-text
@@ -48,21 +48,21 @@ block content
                             a.carousel-control-prev(href="#carousel-example-1z" role="button" data-slide="prev")
                                 span.carousel-control-prev-icon(aria-hidden="true")
                                 span.sr-only
-                                    |   Previous
+                                    | Previous
                             a.carousel-control-next(href="#carousel-example-1z" role="button" data-slide="next")
                                 span.carousel-control-next-icon(aria-hidden="true")
                                 span.sr-only
-                                    |   Next
+                                    | Next
                         a(href="#!")
                             .mask.rgba-white-slight
                     .card-body
-                        |   Recently, we added several exotic new dishes to the menu of our restaurant. They come from countries such as Mexico, Argentina, and Spain. Come to us, have a delicious wine and enjoy the juicy meals from around the world.
+                        | Recently, we added several exotic new dishes to the menu of our restaurant. They come from countries such as Mexico, Argentina, and Spain. Come to us, have a delicious wine and enjoy the juicy meals from around the world.
                         div
                             a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="activity-detail/"+activity._id )
-                                |   See more
+                                | See more
                             i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
                             i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
-                                |  200
+                                | 200
         .col-lg-4.hidden-sm
             .card.testimonial-card.mb-2
                 .card-up.aqua-gradient(style="height:100px")
@@ -88,7 +88,7 @@ block content
                 .card-body.d-flex.flex-row
                     div
                         h6.card-title.font-weight-bold.mb-2
-                            |   Thông Báo
+                            | Thông Báo
                 .list-group
                     each notification in user.notifications
                         a.list-group-item.list-group-item-action.flex-column.align-items-start(href=notification.link)

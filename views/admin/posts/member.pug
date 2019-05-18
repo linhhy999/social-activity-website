@@ -1,112 +1,113 @@
 extends ../layout
 
 block content
-  .breadcomb-area
-    .container
-      .row
-        .col-lg-12.col-md-12.col-sm-12.col-xs-12
-          .breadcomb-list
+    .breadcomb-area
+        .container
             .row
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                .breadcomb-wp
-                  .breadcomb-icon
-                    i.notika-icon.notika-form
-                  .breadcomb-ctn
-                    h2 Danh sách Hoạt động
-                    p
-                      | Hoạt động > Danh sách thành viên
-  .tabs-info-area
-  .container
-    .row
-      .col-lg-12.col-md-12.col-sm-12.col-xs-12
-        .widget-tabs-int
-          .tab-hd
-            h2 Danh sách thành viên
-          .widget-tabs-list
-            ul.nav.nav-tabs
-              li.active
-                a(data-toggle='tab' href='#registered') Đã đăng ký (#{accept})
-              li
-                a(data-toggle='tab' href='#pending') Chờ duyệt (#{pending})
-              li
-                a(data-toggle='tab' href='#reject') Hủy đăng ký (#{refuse})
-            .tab-content.tab-custom-st
-              #registered.tab-pane.fade.in.active
-                .tab-ctn
-                  table.table.table-sc-ex
-                    thead
-                      tr
-                        th #
-                        th Họ và tên
-                        th MSSV
-                        th Khoa
-                        th Số điện thoại
-                        th email
-                        th Hành động
-                    tbody
-                      each member, index in members
-                        if (member.status == 2)
-                          tr
-                            td= index + 1
-                            td= member.name
-                            td= member.mssv
-                            td= member.faculty
-                            td= member.phone
-                            td= member.email
-                            th
-                              a(href="/admin/post/member/"+activity+"/refuse/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Hủy đăng ký").mr-3
-                                i.fa.fa-times-circle
-                                | Hủy đăng ký
-                    
-              #pending.tab-pane.fade
-                .tab-ctn
-                  table.table.table-sc-ex
-                    thead
-                      tr
-                        th #
-                        th Họ và tên
-                        th MSSV
-                        th Khoa
-                        th Số điện thoại
-                        th email
-                        th Hành động
-                    tbody
-                      each member, index in members
-                        if (member.status == 1)
-                          tr
-                            td= index + 1
-                            td= member.name
-                            td= member.mssv
-                            td= member.faculty
-                            td= member.phone
-                            td= member.email
-                            th
-                              a(href="/admin/post/member/"+activity+"/accept/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Chấp nhận").mr-3
-                                i.fa.fa-check-circle
-                                | Chấp nhận
-              #reject.tab-pane.fade
-                .tab-ctn
-                  table.table.table-sc-ex
-                    thead
-                      tr
-                        th #
-                        th Họ và tên
-                        th MSSV
-                        th Khoa
-                        th Số điện thoại
-                        th email
-                    tbody
-                      each member, index in members
-                        if (member.status == 3)
-                          tr
-                            td= index + 1
-                            td= member.name
-                            td= member.mssv
-                            td= member.faculty
-                            td= member.phone
-                            td= member.email
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .breadcomb-list
+                        .row
+                            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                                .breadcomb-wp
+                                    .breadcomb-icon
+                                        i.notika-icon.notika-form
+                                    .breadcomb-ctn
+                                        h2 Danh sách Hoạt động
+                                        p
+                                            | Hoạt động > Danh sách thành viên
+    .tabs-info-area
+    .container
+        .row
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .widget-tabs-int
+                    .tab-hd
+                        h2 Danh sách thành viên
+                    .widget-tabs-list
+                        ul.nav.nav-tabs
+                            li.active
+                                a(data-toggle='tab' href='#registered') Đã đăng ký (#{accept})
+                            li
+                                a(data-toggle='tab' href='#pending') Chờ duyệt (#{pending})
+                            li
+                                a(data-toggle='tab' href='#reject') Hủy đăng ký (#{refuse})
+                        .tab-content.tab-custom-st
+                            #registered.tab-pane.fade.in.active
+                                .tab-ctn
+                                    table.table.table-sc-ex
+                                        thead
+                                            tr
+                                                th #
+                                                th Họ và tên
+                                                th MSSV
+                                                th Khoa
+                                                th Số điện thoại
+                                                th email
+                                                th Hành động
+                                        tbody
+                                            each member, index in members
+                                                if (member.status == 2)
+                                                    tr
+                                                        td= index + 1
+                                                        td= member.name
+                                                        td= member.mssv
+                                                        td= member.faculty
+                                                        td= member.phone
+                                                        td= member.email
+                                                        th
+                                                            form(action="/admin/post/member/"+activity+"/refuse/"+member.mssv method='post')
+                                                                button.btn.btn-primary.btn-rounded.btn-sm.waves-light
+                                                                    | Hủy đăng ký
+                                                            //a(href="/admin/post/member/"+activity+"/refuse/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Hủy đăng ký").mr-3
+
+                            #pending.tab-pane.fade
+                                .tab-ctn
+                                    table.table.table-sc-ex
+                                        thead
+                                            tr
+                                                th #
+                                                th Họ và tên
+                                                th MSSV
+                                                th Khoa
+                                                th Số điện thoại
+                                                th email
+                                                th Hành động
+                                        tbody
+                                            each member, index in members
+                                                if (member.status == 1)
+                                                    tr
+                                                        td= index + 1
+                                                        td= member.name
+                                                        td= member.mssv
+                                                        td= member.faculty
+                                                        td= member.phone
+                                                        td= member.email
+                                                        th
+                                                            form(action="/admin/post/member/"+activity+"/accept/"+member.mssv method='post')
+                                                                button.btn.btn-primary.btn-rounded.btn-sm.waves-light
+                                                                    | Chấp nhận
+                            #reject.tab-pane.fade
+                                .tab-ctn
+                                    table.table.table-sc-ex
+                                        thead
+                                            tr
+                                                th #
+                                                th Họ và tên
+                                                th MSSV
+                                                th Khoa
+                                                th Số điện thoại
+                                                th email
+                                        tbody
+                                            each member, index in members
+                                                if (member.status == 3)
+                                                    tr
+                                                        td= index + 1
+                                                        td= member.name
+                                                        td= member.mssv
+                                                        td= member.faculty
+                                                        td= member.phone
+                                                        td= member.email
 
 
 block script
-  script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
-  script(src='/assets/js/wizard/wizard-active.js')
+    script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
+    script(src='/assets/js/wizard/wizard-active.js')

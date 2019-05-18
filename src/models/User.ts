@@ -1,5 +1,3 @@
-import bcrypt from "bcrypt-nodejs";
-import crypto from "crypto";
 import mongoose from "mongoose";
 
 export type UserModel = mongoose.Document & {
@@ -12,8 +10,23 @@ export type UserModel = mongoose.Document & {
     fullName: string,
     numWorkDay: number,
     faculty: string,
-    isBlock: boolean
+    isBlocked: boolean,
+    avatar: { data: any, contentType: string, link: string, set: boolean },
 };
+
+const userSchema = new mongoose.Schema({
+    auth: [],
+    notifications: [],
+    email: String,
+    phone: String,
+    code: String,
+    role: Number,
+    fullName: String,
+    numWorkDay: Number,
+    faculty: String,
+    isBlocked: Boolean,
+    avatar: { data: Buffer, contentType: String, link: String, set: Boolean },
+}, { timestamps: true });
 
 export enum Role {
     Admin = 1,
@@ -28,19 +41,6 @@ export type Notification = {
     content: string,
     link: string;
 };
-
-const userSchema = new mongoose.Schema({
-    auth: [],
-    notifications: [],
-    email: String,
-    phone: String,
-    code: String,
-    role: Number,
-    fullName: String,
-    numWorkDay: Number,
-    faculty: String,
-    isBlock: Boolean
-}, { timestamps: true });
 
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);

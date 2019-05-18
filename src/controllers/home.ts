@@ -56,12 +56,14 @@ export let admin = async (req: Request, res: Response) => {
 };
 
 export let login = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("a");
     try {
         let user = await User.findOne({ "auth.googleId": req.user.auth.googleId });
 
         if (!user) {
             user = new User(req.user);
             user = await user.save();
+            res.redirect("/");
         }
         req.logIn(user, (err) => {
             if (err) {
@@ -76,10 +78,7 @@ export let login = async (req: Request, res: Response, next: NextFunction) => {
                 return res.redirect("/");
         });
     }
-    catch (err) {
-        console.log(err.message);
-    }
-
+    catch (err) { console.log(err.message); }
 };
 
 export let logout = async (req: Request, res: Response) => {

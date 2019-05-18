@@ -13,21 +13,20 @@ html(lang='en')
         link(href="/css/mdb.min.css" rel="stylesheet")
         link(href="/css/style.css" rel="stylesheet")
     body
-        nav.navbar.navbar-expand-sm.navbar-dark.fixed-top.bg-transparent
-            .container
-                a.navbar-brand(href="#") 
-                    img(src="/img/hcmut.png", alt="hcmut.png")
-                                      
+        .banner
+            .caption-left
+                a.navbar-brand2(href="/")
+                    img(src="/img/hcmut.png", alt="hcmut.png", heigh = "200", width = "200")
+                br(style="line-height:10")
+                h1 Theo dõi hoạt động công tác xã hội của các khoa một cách nhanh chóng
+            .caption-right
                 ul.navbar-nav
                     li.nav-item
                         if (!user)
-                            a.btn.btn-primary(href="auth/google") Đăng Nhập
+                            a.btn.btn-primary(href="/auth/google") Đăng Nhập
                         else
                             a.btn.btn-primary(href="/") Thông tin hoạt động
-        .banner
-            .caption-left
-                h1
-                    |   Theo dõi hoạt động công tác xã hội của các khoa một cách nhanh chóng
+
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")
         script(type="text/javascript" src="/js/bootstrap.min.js")
