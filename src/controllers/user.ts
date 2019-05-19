@@ -43,11 +43,35 @@ export let profile = async (req: Request, res: Response) => {
     });
 };
 export let info = async (req: Request, res: Response) => {
-    const faculties = (await GeneralInfomation.find({}))[0].facultyList;
-    return res.render("fill", {
-        user: req.user,
-        faculties: faculties
-    });
+    try {
+        const faculties = (await GeneralInfomation.find({}))[0].facultyList;
+        return res.render("fill", {
+            user: req.user,
+            faculties: faculties
+        });
+    }
+    catch (err) {
+        const facultiesList = [
+            "Khoa Bảo dưỡng Công nghiệp",
+            "Khoa Cơ khí",
+            "Khoa Kỹ thuật Địa chất và Dầu khí",
+            "Khoa Điện - Điện tử",
+            "Khoa Kỹ thuật Giao thông",
+            "Khoa Kỹ thuật Hóa học",
+            "Khoa Môi trường và Tài nguyên",
+            "Khoa Khoa học và Kỹ thuật Máy tính",
+            "Khoa Quản lý Công nghiệp",
+            "Khoa Khoa học Ứng dụng",
+            "Khoa Công nghệ Vật liệu",
+            "Khoa Kỹ thuật Xây dựng"
+        ];
+        await (new GeneralInfomation({ facultyList: facultiesList })).save();
+        return res.render("fill", {
+            user: req.user,
+            faculties: facultiesList
+        });
+        console.log(err);
+    }
 };
 
 export let postInfo = async (req: any, res: any) => {
