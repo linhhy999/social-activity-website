@@ -2,6 +2,7 @@ import passport from "passport";
 import passportGoogle from "passport-google-oauth";
 import User from "../models/User";
 import { Role } from "../models/User";
+import { CLIENT_ID, CLIENT_SECRET } from "../util/secrets";
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy;
 
@@ -16,8 +17,8 @@ passport.deserializeUser((user: any, done) => {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: "790914908087-ei1im9l1nhcbf2qd1gcdqfde3ub9d1c9.apps.googleusercontent.com",
-    clientSecret: "8QEKd0jy5coEI_uNsSwCvRQd",
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {

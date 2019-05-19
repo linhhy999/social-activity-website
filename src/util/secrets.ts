@@ -26,19 +26,5 @@ if (!MONGODB_URI) {
 }
 
 export const APP_PORT = process.env.APP_PORT || 3000;
-
-export const COOKIE = process.env.COOKIE;
-
-export const TIKI_API_URL = process.env.TIKI_API_URL;
-
-export const MAX_QUEUE: number = parseInt(process.env.MAX_QUEUE);
-
-export const PRIORITY_UNIT: number = parseInt(process.env.PRIORITY_UNIT);
-
-export const LAZADA_APP_SECRET = process.env.LAZADA_APP_SECRET;
-
-export const LAZADA_APP_KEY = process.env.LAZADA_APP_KEY;
-
-export const LAZADA_URL = process.env.LAZADA_URL;
-
-export const LAZADA_CALLBACK = process.env.LAZADA_CALLBACK;
+export const CLIENT_SECRET = process.env.CLIENT_SECRET;
+export const CLIENT_ID = process.env.CLIENT_ID;

@@ -41,12 +41,13 @@ export let listOwnActivity = async (req: Request, res: Response) => {
         });
     }
     return res.render("admin/posts/list", {
-        activities: activities
+        activities: activities,
+        title: "Hoạt động của tôi"
     });
 };
 
 export let listManageActivity = async (req: Request, res: Response) => {
-    const activityList = await Activity.find({ "superVisor": req.user.  id });
+    const activityList = await Activity.find({ "superVisor": req.user.id });
     const activities = [];
     for (const activity of activityList) {
         let numMember = 0;
@@ -65,7 +66,9 @@ export let listManageActivity = async (req: Request, res: Response) => {
         });
     }
     return res.render("admin/posts/manage", {
-        activities: activities
+        activities: activities,
+        title: "Hoạt động quản lý"
+
     });
 };
 
@@ -79,6 +82,7 @@ export let getActivityDetail = async (req: Request, res: Response) => {
         return res.render("admin/posts/detail", {
             activity: activity,
             superVisor: superVisor,
+            title: activity.name,
         });
     }
     catch (er) {
@@ -129,7 +133,7 @@ export let postActivity = async (req: any, res: Response) => {
         });
         await activity.save();
         req.flash("info", { message: "OK!" });
-        return res.redirect("/admin/post/list");
+        return res.redirect("back");
     }
     catch (err) {
         console.log(err.message);
@@ -494,12 +498,12 @@ export let postReport = async (req: Request, res: Response) => {
             member.note = req.body.note[index];
             members[index] = member;
         });
-        await Activity.updateOne({_id: req.params.activity}, {
+        await Activity.updateOne({ _id: req.params.activity }, {
             members: members
         });
         const dataset: ExportFile[] = [];
         for (const [index, member] of members.entries()) {
-            console.log(member.isJoined == Join.ABSENT,  member);
+            console.log(member.isJoined == Join.ABSENT, member);
             dataset.push({
                 id: index + 1,
                 fullName: member.name,
@@ -508,11 +512,11 @@ export let postReport = async (req: Request, res: Response) => {
                 email: member.email,
                 phone: member.phone,
                 socialDay: member.point,
-                note: (member.note == "") ? ((member.isJoined == Join.ABSENT) ? "Vắng không phép" :  ((member.isJoined == Join.ABSENT_WITH_PERMISSION) ? "Vắng có phép" : member.note)) : member.note
+                note: (member.note == "") ? ((member.isJoined == Join.ABSENT) ? "Vắng không phép" : ((member.isJoined == Join.ABSENT_WITH_PERMISSION) ? "Vắng có phép" : member.note)) : member.note
             });
         }
         const report = buildReport(dataset);
-        await Activity.updateOne({_id: req.params.activity}, {
+        await Activity.updateOne({ _id: req.params.activity }, {
             status: false
         });
 
