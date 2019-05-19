@@ -12,7 +12,8 @@ export let getAddActivity = async (req: Request, res: Response) => {
         const faculties = (await GeneralInfomation.find({}))[0].facultyList;
         return res.render("admin/posts/add", {
             superVisors: sp,
-            faculties: faculties
+            faculties: faculties,
+            title: "Thêm hoạt động"
         });
     }
     catch (err) {
@@ -210,7 +211,7 @@ export let searchActivity = async (req: Request, res: Response) => {
         });
     }
     return res.render("search", {
-        title: "Search",
+        title: req.query.keyword + "- Sociofy",
         activities: activities,
         action: {}
     });
@@ -276,7 +277,7 @@ export let searchAdvancedActivity = async (req: Request, res: Response) => {
     }
     const activities = await Activity.find({ $and: query });
     return res.render("search", {
-        title: "Search",
+        title: req.query.keyword + "- Sociofy",
         activities: activities,
         action: {
             type: req.body.type,

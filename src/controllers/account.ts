@@ -30,7 +30,8 @@ export let getListAccounts = async (req: Request, res: Response) => {
 export let getAddAccounts = async (req: Request, res: Response) => {
     const faculties = (await GeneralInfomation.find({}))[0].facultyList;
     return res.render("admin/accounts/add", {
-        faculties: faculties
+        faculties: faculties,
+        title: "Thêm tài khoản",
     });
 };
 

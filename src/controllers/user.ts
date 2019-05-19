@@ -70,7 +70,6 @@ export let info = async (req: Request, res: Response) => {
             user: req.user,
             faculties: facultiesList
         });
-        console.log(err);
     }
 };
 

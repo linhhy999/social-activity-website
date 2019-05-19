@@ -88,7 +88,8 @@ block content
                             .col-sm-4
                                 p.grey-text.small CTXH
                                 p.text-primary(style="line-height: 0px;")
-                                    strong.small=user.socialday
+                                    strong.small
+                                        iframe(src="https://socialdays.herokuapp.com/"+user.code)
                             .col-sm-4
                                 p.grey-text.small Level
                                 p.text-primary(style="line-height: 0px;")
