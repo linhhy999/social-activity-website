@@ -40,7 +40,7 @@ block content
                     .view.overlay
                         #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
                             ol.carousel-indicators
-                                each image in activity.image
+                                each image in activity.images
                                     if image == 0
                                         li(data-target="#carousel-example-1z" data-slide-to=i).active
                                     else

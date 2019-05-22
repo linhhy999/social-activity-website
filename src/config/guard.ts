@@ -43,8 +43,6 @@ export let legitActivityInfo = (req: any, res: Response, next: NextFunction) => 
         req.flash("errors", errors);
         return res.redirect("back");
     }
-
-
     next();
 };
 

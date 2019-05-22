@@ -129,7 +129,6 @@ block content
                                     i.notika-icon.notika-star
                                 .nk-int-st.nk-toggled
                                     h4 Nội dung hoạt động
-                                    p #{activity.content}
                                     textarea(name="content")
                                         = activity.content
                             .form-group.ic-cmp-int.float-lb.floating-lb
@@ -146,12 +145,12 @@ block content
                                 .form-ic-cmp
                                     i.notika-icon.notika-start
                                 h4 Hình ảnh
-                                each image in activity.images
-                                    .image.mr-3(id = "image_"+image.substr(9,image.length-13))
-                                        img(src=image, alt=image, style="width: 200px; height: auto;")
-                                        .btn-delete(onclick='deleteImage("' + activity.id + '","'+ image.substr(9,image.length-13) +'")')
+                                each image in activity.image
+                                    .image.mr-3(id = "image_"+image.id)
+                                        img(src=image.link, alt=image.link, style="width: 200px; height: auto;")
+                                        .btn-delete(onclick='deleteImage("' + activity.id + '","'+ image.id +'")')
                                             i.fa.fa-times
-                                input(type='hidden' id= 'delimg' name='delimg' value='[]')
+                                input(type='hidden' id= 'delimg' name='delimg' value='')
                                 input(type="file", name="image" multiple)
                             .btn-demo-notika
                             .btn-list
@@ -195,11 +194,8 @@ block script
             $('#submit').hide();
             $('#btnCancel').hide();
         }
-        deleteImage = (activity, link) => {
-            delimg.push({'activity':activity, 'link':'/uploads/'+link});
-            $('#image_'+link).hide();
-            $('#delimg')[0].value = JSON.stringify(delimg);
-        }
+        deleteImage = (activity, id) => {
+            $('delimg').push({'activity', id]);
             //- $.ajax({
             //-     type: "POST",
             //-     url: "/ajax/delete/image",
@@ -214,4 +210,5 @@ block script
             //-     },
             //-     dataType: "json"
             //- });
+        }
         Lock();

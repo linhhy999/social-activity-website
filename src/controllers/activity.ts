@@ -5,7 +5,6 @@ import User from "../models/User";
 import { createNotificationByCode } from "./notification";
 import { buildReport, ExportFile } from "./export";
 
-
 export let getAddActivity = async (req: Request, res: Response) => {
     try {
         const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1 });
@@ -91,6 +90,7 @@ export let getActivityDetail = async (req: Request, res: Response) => {
     }
     const activity = await Activity.findById(req.params.id);
 };
+
 export let getActivity = (req: Request, res: Response) => {
     // todo
 };
@@ -106,10 +106,7 @@ export let postActivity = async (req: any, res: Response) => {
         }
         const images = [];
         for (const file of req.files) {
-            images.push({
-                id: Date.now(),
-                link: "/uploads/" + file.filename
-            });
+            images.push("/uploads/" + file.filename);
         }
         const activity = await new Activity({
             name: req.body.activityName,
@@ -123,8 +120,7 @@ export let postActivity = async (req: any, res: Response) => {
             content: req.body.content,
             orgUnit: req.user.faculty,
             host: req.user._id,
-            image: images,
-            video: [],
+            images: images,
             maxMember: req.body.numMember,
             members: [],
             comment: [],
@@ -134,7 +130,7 @@ export let postActivity = async (req: any, res: Response) => {
         });
         await activity.save();
         req.flash("info", { message: "OK!" });
-        return res.redirect("back");
+        res.redirect(req.get("referer"));
     }
     catch (err) {
         console.log(err.message);
@@ -146,19 +142,18 @@ export let postActivity = async (req: any, res: Response) => {
 export let postEditActivity = async (req: any, res: Response) => {
     try {
         let superVisor = [];
-        if (Array.isArray(req.body.superVisor)) {
-            superVisor = req.body.superVisor;
-        }
-        else {
-            superVisor.push(req.body.superVisor);
-        }
-        const images = [];
-        for (const file of req.files) {
-            images.push({
-                id: (file.filename + Date.now()).replace(".", ""),
-                link: "/uploads/" + file.filename
-            });
-        }
+        if (Array.isArray(req.body.superVisor)) { superVisor = req.body.superVisor; }
+        else { superVisor.push(req.body.superVisor); }
+        const activity = await Activity.findOne({ "_id": req.params.id });
+        req.body.delimg = JSON.parse(req.body.delimg);
+        const delimg: String[] = [];
+        for (const i in req.body.delimg)
+            delimg.push(req.body.delimg[i].link);
+        const images = activity.images.filter(function (el) {
+            return (delimg.lastIndexOf(el.substr(0, el.length - 4)) == -1);
+        });
+        for (const file of req.files)
+            images.push("/uploads/" + file.filename);
         await Activity.updateOne({ _id: req.params.id }, {
             name: req.body.activityName,
             registerEnd: req.body.register_deadline,
@@ -168,18 +163,17 @@ export let postEditActivity = async (req: any, res: Response) => {
             timeEnd: req.body.endTime,
             gatheringPlace: req.body.gathering_place,
             targetPlace: req.body.target_place,
-            content: req.body.edit_content,
+            content: req.body.content,
             orgUnit: req.body.orgUnit,
             host: req.user._id,
-            video: [],
             maxMember: req.body.numMember,
             superVisor: superVisor,
         }, { upset: false });
         await Activity.updateOne({ _id: req.params.id }, {
-            $push: { image: images }
+            images: images
         }, { upset: false });
         req.flash("info", { message: "Updated!" });
-        return res.redirect("/admin/post/list");
+        res.redirect(req.get("referer"));
     }
     catch (err) {
         console.log(err.message);
@@ -187,6 +181,7 @@ export let postEditActivity = async (req: any, res: Response) => {
     }
 
 };
+
 export let updateActivity = (req: Request, res: Response) => {
     // todo
 };
@@ -411,6 +406,7 @@ export let activityDetail = async (req: Request, res: Response) => {
         return res.redirect("/");
     }
 };
+
 export let un_apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
@@ -428,7 +424,6 @@ export let un_apply = async (req: Request, res: Response) => {
         return res.redirect("/");
     }
 };
-
 
 export let apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
@@ -461,8 +456,8 @@ export let apply = async (req: Request, res: Response) => {
 export let postDeleteImage = async (req: Request, res: Response) => {
     try {
         const activity = await Activity.findOne({ "_id": req.body.activity });
-        const image = activity.image.filter(function (el) {
-            return el.id != req.body.id;
+        const image = activity.images.filter(function (el) {
+            return el != req.body.id;
         });
         await Activity.updateOne({ "_id": req.body.activity }, { image: image }, { upset: false });
         return res.status(200).json("ok");
