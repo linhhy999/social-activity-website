@@ -34,7 +34,7 @@ module.exports = {
     remind: async (username, email, activityName, time, link) => {
         const htmlData =
             '<p>Dear ' + username + ',</p>\
-            <p>Sociofy is pleased to announce that you has <font color="red">canceled</font> to join in ' + activityName + '.</p>\
+            <p>Sociofy is pleased to announce that you activity <font color="red"> '+ activityName +' </font> will be held on tomorrow ( '+ time + ')</p>\
             <p>Best regards,<br/>\
             Sociofy team<br/>\
             Website: http://localhost:3000</p>'
@@ -43,7 +43,7 @@ module.exports = {
             from: '"Sociofy" noreply.sociofy@gmail.com',
             to: email,
             //cc: 'madddogite01@gmail.com',
-            subject: 'Sociofy: Canceled',
+            subject: 'Sociofy: Remind',
             //text: 'Plaintext version of the message',
             html: htmlData
         };

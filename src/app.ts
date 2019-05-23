@@ -39,7 +39,16 @@ import * as generalController from "./controllers/general";
 import * as Guard from "./config/guard";
 import passport, * as passportConfig from "./config/passport";
 import { Role } from "./models/User";
+import { reminder } from "./controllers/email";
+const CronJob = require("cron").CronJob;
 
+const job = new CronJob("00 43 1 * * 0-6", function() {
+    reminder();
+    }, function () {
+        console.log("ok");
+    },
+);
+job.start();
 // Create Express server
 const app = express();
 
@@ -132,8 +141,8 @@ app.post("/admin/post/add", Guard.isLogin, Guard.isFill, Guard.hasPermission(Rol
 app.post("/admin/post/edit/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), upload.array("image"), Guard.legitActivityInfo, activityController.postEditActivity);
 app.post("/admin/post/block/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.postActivity);
 app.get("/admin/post/member/:activity", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getMember);
-app.post("/admin/post/member/:activity/accept/:mssv", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getAcceptMember);
-app.post("/admin/post/member/:activity/refuse/:mssv", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getRefuseMember);
+app.post("/admin/post/member/:activity/accept/:memberId/:mssv", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getAcceptMember);
+app.post("/admin/post/member/:activity/refuse/:memberId/:mssv", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getRefuseMember);
 app.get("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.getReport);
 app.post("/admin/post/report/:activity", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), activityController.postReport);
 app.get("/admin/account/list", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.getListAccounts);

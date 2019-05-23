@@ -27,7 +27,7 @@ export type CTXH = {
 
 export type Comment = {
     info: any,
-    timeComment: string,
+    timeComment: Date,
     content: string
 };
 
@@ -86,7 +86,7 @@ const activitySchema = new mongoose.Schema({
             ref: "User",
             autopopulate: true
         },
-        timeComment: String,
+        timeComment: Date,
         content: String
     }],
     superVisor: [{

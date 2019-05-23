@@ -82,7 +82,7 @@ block content
                                                         td= member.info.phone
                                                         td= member.info.email
                                                         th
-                                                            form(action="/admin/post/member/"+activity+"/accept/"+member.mssv method='post')
+                                                            form(action="/admin/post/member/"+activity+"/accept/"+member.id+"/"+member.info.code method='post')
                                                                 button.btn.btn-primary.btn-rounded.btn-sm.waves-light
                                                                     | Chấp nhận
                             #reject.tab-pane.fade
