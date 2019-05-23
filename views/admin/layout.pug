@@ -6,7 +6,7 @@ head
     <link rel="shortcut icon" type="image/png" href="/img/hcmut.png"/>
     meta(name='description' content='')
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    link(href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900' rel='stylesheet')
+    link(rel='stylesheet' href='/assets/css/font.css')
     link(rel='stylesheet' href='/assets/css/bootstrap.min.css')
     link(rel='stylesheet' href='/assets/css/font-awesome.min.css')
     link(rel='stylesheet' href='/assets/css/owl.carousel.css')
@@ -23,7 +23,7 @@ head
     link(rel="stylesheet" href="/assets/css/wave/button.css")
     link(rel="stylesheet" href="/assets/css/bootstrap-select/bootstrap-select.css")
     link(rel='stylesheet' href='/assets/css/main.css')
-    link(rel='stylesheet' href='/assets/css/style.css')
+    link(rel='stylesheet' href='/assets/css/style.css' id="stylecss")
     link(rel='stylesheet' href='/assets/css/responsive.css')
     
     script(src='/assets/js/vendor/modernizr-2.8.3.min.js')
@@ -37,9 +37,6 @@ body
     include ./partials/flash
     block content
     // End Status area
-    // Start Footer area
-    include ./partials/footer
-    // End Footer area
     //
         jquery
         ============================================
@@ -54,25 +51,25 @@ body
     script(src='/assets/js/wow.min.js')
     script(src='/assets/js/meanmenu/jquery.meanmenu.js')
 
-        script(src='/assets/js/sparkline/jquery.sparkline.min.js')
-        script(src='/assets/js/sparkline/sparkline-active.js')
-        //
-            knob JS
-            ============================================
-        script(src='/assets/js/knob/jquery.knob.js')
-        script(src='/assets/js/knob/jquery.appear.js')
-        script(src='/assets/js/knob/knob-active.js')
-        //
-            wave JS
-            ============================================
-        script(src='/assets/js/wave/waves.min.js')
-        script(src='/assets/js/wave/wave-active.js')
-        //
-            plugins JS
-            ============================================
-        script(src='/assets/js/plugins.js')
-        //
-            main JS
-            ============================================
-        script(src='/assets/js/main.js')
-        block script
+    script(src='/assets/js/sparkline/jquery.sparkline.min.js')
+    script(src='/assets/js/sparkline/sparkline-active.js')
+    //
+        knob JS
+        ============================================
+    script(src='/assets/js/knob/jquery.knob.js')
+    script(src='/assets/js/knob/jquery.appear.js')
+    script(src='/assets/js/knob/knob-active.js')
+    //
+        wave JS
+        ============================================
+    script(src='/assets/js/wave/waves.min.js')
+    script(src='/assets/js/wave/wave-active.js')
+    //
+        plugins JS
+        ============================================
+    script(src='/assets/js/plugins.js')
+    //
+        main JS
+        ============================================
+    script(src='/assets/js/main.js')
+    block script

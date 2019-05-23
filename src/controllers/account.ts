@@ -1,6 +1,7 @@
 ﻿import User from "../models/User";
 import { Request, Response } from "express";
 import GeneralInfomation from "../models/General";
+const request = require("request");
 
 export let getListAccounts = async (req: Request, res: Response) => {
     try {
@@ -27,6 +28,15 @@ export let getListAccounts = async (req: Request, res: Response) => {
     }
 };
 
+export let getCTXH = async (req: Request, res: Response) => {
+    let socialdaysreq = 0;
+    request("https://socialdays.herokuapp.com/" + req.params.id.toString(), (error: any, response: any, body: any) => {
+        const a = 3;
+        socialdaysreq = body;
+        res.send(body);
+    });
+
+};
 export let getAddAccounts = async (req: Request, res: Response) => {
     const faculties = (await GeneralInfomation.find({}))[0].facultyList;
     return res.render("admin/accounts/add", {

@@ -34,12 +34,13 @@ export let index = async (req: Request, res: Response) => {
             for (let i = 0; i < a.length; i++) {
                 a[i] = { ...a[i], ...b[i] };
             }
-            const activity = await Activity.find({ "members.mssv": req.user.code });
+            const activity = await Activity.find({ "members.info.code": req.user.code });
+
             return res.render("newsfeed", {
                 user: req.user,
                 activities: activityList.reverse(),
                 orgUnit: a,
-                userActivities: activity
+                userActivities: activity,
             });
         }
         catch (err) {

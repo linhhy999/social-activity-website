@@ -34,7 +34,7 @@ import { NextFunction } from "express";
 // };
 
 export let profile = async (req: Request, res: Response) => {
-    const activity = await Activity.find({ "members.mssv": req.user.code });
+    const activity = await Activity.find({ "members.info.code": req.user.code });
     const faculties = (await GeneralInfomation.find({}))[0].facultyList;
     return res.render("profile", {
         user: req.user,

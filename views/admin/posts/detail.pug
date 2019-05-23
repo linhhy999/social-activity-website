@@ -16,6 +16,14 @@ block content
                                         p
                                             | Hoạt động > Hoạt động của tôi > #{activity.name}
 
+    // Noti zone
+    .container
+        .row
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .errmessage(id="errorContainer")
+                    p Vui lòng sửa những lỗi dưới đây và thử lại:
+                    <ul/>
+
     .form-element-area#edit
         .container
             .row
@@ -27,7 +35,8 @@ block content
                                     i.notika-icon.notika-support
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                        label Tên Hoạt động
+                                        label Tên Hoạt động 
+                                            span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                         .input-group.nk-int-st
                                             input.form-control(type='text' value=activity.name name='activityName')
                             .row
@@ -37,49 +46,27 @@ block content
                                             i.notika-icon.notika-calendar
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Hạn cuối đăng ký
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
-                                                    input.form-control(type='text' value=activity.registerEnd name='register_deadline')
+                                                label Hạn cuối đăng ký 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                input#datetimepicker1.form-control(type='text' name='register_deadline' )
                                 .col-sm-4
                                     .form-group.ic-cmp-int.float-lb.floating-lb
                                         .form-ic-cmp
                                             i.notika-icon.notika-calendar
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Ngày bắt đầu
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
-                                                    input.form-control(type='text' value=activity.dateStart name='startDate')
+                                                label Ngày bắt đầu 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                input#datetimepicker2.form-control(type='text' name='startDate')
                                 .col-sm-4
                                     .form-group.ic-cmp-int.float-lb.floating-lb
                                         .form-ic-cmp
                                             i.notika-icon.notika-calendar
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Ngày kết thúc
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
-                                                    input.form-control(type='text' value=activity.dateEnd name='endDate')
-                            .row
-                                .col-sm-6
-                                    .form-group.ic-cmp-int.float-lb.floating-lb
-                                        .form-ic-cmp
-                                            i.notika-icon.notika-calendar
-                                        .nk-int-st
-                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Thời gian bắt đầu
-                                                .input-group.nk-int-st
-                                                    input.form-control(type='text' data-mask='99:99' name="startTime" value=activity.timeStart)
-                                .col-sm-6
-                                    .form-group.ic-cmp-int.float-lb.floating-lb
-                                        .form-ic-cmp
-                                            i.notika-icon.notika-calendar
-                                        .nk-int-st
-                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Thời gian kết thúc
-                                                .input-group.nk-int-st
-                                                    input.form-control(type='text' data-mask='99:99' value=activity.timeEnd name="endTime")
+                                                label Ngày kết thúc 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                input#datetimepicker3.form-control(type='text' name='endDate')
                             .row
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -87,10 +74,10 @@ block content
                                             i.notika-icon.notika-map
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Địa điểm nhận tập chung
+                                                label Địa điểm nhận tập trung 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                                 .input-group.nk-int-st
                                                     input.form-control(type='text' name="gathering_place" value=activity.gatheringPlace)
-
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
                                         .form-ic-cmp
@@ -100,22 +87,27 @@ block content
                                                 label Địa điểm di chuyển đến (nếu có)
                                                 .input-group.nk-int-st
                                                     input.form-control(type='text' name='target_place' value=activity.targetPlace)
-                            .form-group.ic-cmp-int.float-lb.floating-lb
-                                .form-ic-cmp
-                                    i.notika-icon.notika-star
-                                .nk-int-st
-                                    #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                        label Quyền lợi sẽ được hưởng
-                                        .input-group.nk-int-st
-                                            input.form-control(type='number' step=any name="benefit"  value=activity.benefit)
-                            .form-group.ic-cmp-int.float-lb.floating-lb
-                                .form-ic-cmp
-                                    i.notika-icon.notika-star
-                                .nk-int-st
-                                    #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                        label Số lượng tình nguyện viên cần tuyển
-                                        .input-group.nk-int-st
-                                            input.form-control(type='number' name="numMember"  value=activity.maxMember)
+                            .row
+                                .col-sm-6
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-star
+                                        .nk-int-st
+                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
+                                                label Số ngày ctxh sẽ được hưởng (tối đa) 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                .input-group.nk-int-st
+                                                    input.form-control(type='number' step=any name="benefit" value=activity.benefit)
+                                .col-sm-6
+                                    .form-group.ic-cmp-int.float-lb.floating-lb
+                                        .form-ic-cmp
+                                            i.notika-icon.notika-star
+                                        .nk-int-st
+                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
+                                                label Số lượng tình nguyện viên cần tuyển 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                .input-group.nk-int-st
+                                                    input.form-control(type='number' name="numMember" value=activity.maxMember)
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-star
@@ -128,15 +120,16 @@ block content
                                 .form-ic-cmp
                                     i.notika-icon.notika-star
                                 .nk-int-st.nk-toggled
-                                    h4 Nội dung hoạt động
-                                    p #{activity.content}
+                                    h4 Nội dung hoạt động 
+                                        span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                     textarea(name="content")
                                         = activity.content
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-support
                                 .nk-int-st
-                                    label Người giám sát
+                                    label Người giám sát 
+                                        span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                     .fm-checkbox
                                         .bootstrap-select
                                             select.selectpicker(name="superVisor" multiple)
@@ -155,63 +148,117 @@ block content
                                 input(type="file", name="image" multiple)
                             .btn-demo-notika
                             .btn-list
-                                button.btn.btn-success.notika-btn-success.btn-lg.mx-5#submit(style="display: none" type="submit") Lưu
-                                a.btn.btn-danger.notika-btn-danger.btn-lg.mx-5#btnCancel(style="display: none" onClick = "Lock()") Hủy
-                                a.btn.btn-warning.notika-btn-warning.btn-lg.mx-5#btnEdit(onClick = "Unlock()") Chỉnh sửa
+                                button.btn.btn-success.notika-btn-default.btn-lg.mx-5#submit(style="display: none" type="submit") Lưu
+                                a.btn.btn-danger.notika-btn-default.btn-lg.mx-5#btnCancel(style="display: none" onClick = "Lock()") Hủy
+                                a.btn.btn-warning.notika-btn-default.btn-lg.mx-5#btnEdit(onClick = "Unlock()") Chỉnh sửa
 
 block script
-    script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
-    script(src='/assets/js/wizard/wizard-active.js')
+    script.
+        $("#post")[0].classList.add("active")
+
+    script(src='/assets/js/jasny-bootstrap.min.js')
+
+    script(type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js")
+    script(type="text/javascript" src="/bower_components/moment/min/moment.min.js")
+    script(type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js")
+    link(rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css")
+    //<link rel="stylesheet" href="/css/mdb.min.css" />
+    script(src="/js/jquery.validate.min.js")
+    script(src='/assets/js/wave/waves.min.js')
+    script(src='/assets/js/wave/wave-active.js')
+    script.
+        const datetimeformat = {
+            format: 'DD/MM/YYYY HH:mm',
+            minDate: moment(Date.now()),
+            maxDate: moment(Date.now() + 5184000000),
+        };
+        $('#datetimepicker1').datetimepicker(datetimeformat);
+        $('#datetimepicker2').datetimepicker(datetimeformat);
+        $('#datetimepicker3').datetimepicker(datetimeformat);
+        $('#datetimepicker1').data("DateTimePicker").date('#{activity.registerEnd}')
+        $('#datetimepicker2').data("DateTimePicker").date('#{activity.dateStart}')
+        $('#datetimepicker3').data("DateTimePicker").date('#{activity.dateEnd}')
+
     script(src="https://cdn.ckeditor.com/4.11.4/full-all/ckeditor.js")
+
     script(src="/assets/js/bootstrap-select/bootstrap-select.js")
     script.
-        delimg = [];
-        CKEDITOR.replace("content");
-        CKEDITOR.on("instanceReady",(event)=>{
-            event.editor.setReadOnly(true);
-        })
         $('select').selectpicker();
+    script.
         function Unlock() {
             $('#editform *').filter(':input').each(function(index, value) {
-                if (value.name == "content" || value.name == "image") { }
-                value.disabled = false;
+                if (value.name == "content" || value.name == "image" || value.name == "orgUnit") { }
+                else value.disabled = false;
             });
             try{CKEDITOR.instances['content'].setReadOnly(false);} catch{}
             $('div[class="btn-delete"]').show();
-            $("input[type='file'").show();
+            $("input[type='file']").show();
             $('#btnEdit').hide();
             $('#submit').show();
             $('#btnCancel').show();
         }
+    script.
         function Lock() {
             $('#editform *').filter(':input').each(function(index, value) {
                 if (value.name == "content" || value.name == "image") { }
                 else value.disabled = true;
             });
-            try{CKEDITOR.instances['content'].setReadOnly(true);} catch {}
             $('div[class="btn-delete"]').hide();
-            $("input[type='file'").hide();
+            $("input[type='file']").hide();
             $('#btnEdit').show();
             $('#submit').hide();
             $('#btnCancel').hide();
+            for (var i=0;i<100000;i++)
+                try{
+                    CKEDITOR.replace("content");
+                    CKEDITOR.instances["content"].setReadOnly(true);
+                    break;
+                }
+                catch {}
         }
+    script.
+        delimg = [];
         deleteImage = (activity, link) => {
             delimg.push({'activity':activity, 'link':'/uploads/'+link});
             $('#image_'+link).hide();
             $('#delimg')[0].value = JSON.stringify(delimg);
         }
-            //- $.ajax({
-            //-     type: "POST",
-            //-     url: "/ajax/delete/image",
-            //-     data: {
-            //-         activity: activity,
-            //-         id: id,
-            //-     },
-            //-     success: function (res) {
-            //-         if (res == "ok") {
-            //-             $("#image"+id).css("display", "none");
-            //-         }
-            //-     },
-            //-     dataType: "json"
-            //- });
         Lock();
+    //- script.
+    //-     $('#submit').click(function() {
+    //-         $('#datetimepicker1').data("DateTimePicker").format('X');
+    //-         $('#datetimepicker2').data("DateTimePicker").format('X');
+    //-         $('#datetimepicker3').data("DateTimePicker").format('X');
+    //-         $('#form1').submit();
+    //-     });
+    script.
+        $(document).ready(function() {
+            $("#editform").validate({
+                rules: {
+                    activityName: "required",
+                    register_deadline: "required",
+                    startDate: "required",
+                    endDate: "required",
+                    gathering_place: "required",
+                    benefit: "required",
+                    numMember: "required",
+                    content: "required",
+                    superVisor: "required",
+                },
+                messages: {
+                    activityName: "Vui lòng nhập tên hoạt động",
+                    register_deadline: "Vui lòng chọn hạn đăng ký",
+                    startDate: "Vui lòng chọn ngày bắt đầu",
+                    endDate: "Vui lòng chọn ngày kết thúc",
+                    benefit: "Vui lòng nhập số ngày ctxh",
+                    numMember: "Vui lòng nhập số lượng tình nguyện viên",
+                    gathering_place: "Vui lòng nhập địa điểm tập trung",
+                    content: "Vui lòng nhập nội dung hoạt động",
+                    superVisor: "Vui lòng chọn ít nhất một người giám sát",
+                },
+                onfocusout: function(element) {$(element).valid();},
+                errorContainer: $('#errorContainer'),
+                errorLabelContainer: $('#errorContainer ul'),
+                wrapper: 'li'
+            });
+        });

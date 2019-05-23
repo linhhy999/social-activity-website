@@ -142,7 +142,7 @@ app.post("/admin/account/add", Guard.isLogin, Guard.isFill, Guard.hasPermission(
 app.get("/admin/account/block/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.postBlockAccount);
 app.get("/admin/account/unblock/:id", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin), accountController.postUnBlockAccount);
 app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), accountController.postChangeRole);
-
+app.get("/ctxh/:id", accountController.getCTXH);
 // app.post("/ajax/delete/image", activityController.postDeleteImage);
 app.get("*", (req, res) => { res.render("404"); });
 export default app;

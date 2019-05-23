@@ -1,5 +1,4 @@
 extends ./layout
-
 block content
     .notika-status-area
         .container
@@ -34,3 +33,7 @@ block content
                                 span.counter 1,000
                             p Total Support Tickets
                         .sparkline-bar-stats4 2,4,8,4,5,7,4,7,3,5,7,5
+
+block script
+    script.
+        $("#home")[0].classList.add("active")

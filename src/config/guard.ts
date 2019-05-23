@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import User, { Role } from "../models/User";
+import { start } from "repl";
 
 export let isLogin = (req: Request, res: Response, next: NextFunction) => {
     if (req.user) {
@@ -32,8 +33,6 @@ export let legitActivityInfo = (req: any, res: Response, next: NextFunction) => 
     req.checkBody("register_deadline", "Hạn đăng ký không được để trống").notEmpty();
     req.checkBody("startDate", "Ngày bắt đầu không được để trống").notEmpty();
     req.checkBody("endDate", "Ngày kết thúc không được để trống").notEmpty();
-    req.checkBody("startTime", "Giờ bắt đầu không được để trống").notEmpty();
-    req.checkBody("endTime", "Giờ kết thúc không được để trống").notEmpty();
     req.checkBody("gathering_place", "Địa điểm tập trung không được để trống").notEmpty();
     req.checkBody("numMember", "Số thành viên tối đa không được để trống").notEmpty();
     req.checkBody("content", "Nội dung hoạt động không được để trống").notEmpty();

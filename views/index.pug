@@ -20,12 +20,9 @@ html(lang='en')
                 br(style="line-height:10")
                 h1 Theo dõi hoạt động công tác xã hội của các khoa một cách nhanh chóng
             .caption-right
-                ul.navbar-nav
-                    li.nav-item
-                        if (!user)
-                            a.btn.btn-primary(href="/auth/google") Đăng Nhập
-                        else
-                            a.btn.btn-primary(href="/") Thông tin hoạt động
+                a.btn.btn-primary(href="/auth/google") 
+                    img(src="/img/hcmut.png", alt="hcmut.png", heigh = "30", width = "30")
+                    | &nbsp Đăng Nhập
 
         script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
         script(type="text/javascript" src="/js/popper.min.js")

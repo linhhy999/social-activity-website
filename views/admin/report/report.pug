@@ -1,55 +1,53 @@
 extends ../layout
 
 block content
-	.normal-table-area
-		.container
-			.row
-				.col-lg-12.col-md-12.col-sm-12.col-xs-12
-					.normal-table-list
-						.basic-tb-hd
-							h2 Basic Table
-							p Basic example without any additional modification classes
-						.bsc-tbl
-							table.table.table-sc-ex
-								thead
-									tr
-										th #
-										th Họ và tên
-										th Mã số sinh viên
-										th Có mặt
-										th Vắng KP
-										th Vắng CP
-										th Cộng điểm
-										th Ghi chú
+    .normal-table-area
+        .container
+            .row
+                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                    .normal-table-list
+                        .basic-tb-hd
+                            h2 Basic Table
+                            p Basic example without any additional modification classes
+                        .bsc-tbl
+                            table.table.table-sc-ex
+                                thead
+                                    tr
+                                        th #
+                                        th Họ và tên
+                                        th Mã số sinh viên
+                                        th Có mặt
+                                        th Vắng KP
+                                        th Vắng CP
+                                        th Cộng điểm
+                                        th Ghi chú
+                                tbody
+                                    form(method="POST")
+                                        button.btn.btn-success.notika-btn-success.waves-effect(type="submit") Tạo báo cáo
+                                        each member, index in activity.members
+                                            tr
+                                                td= index+1
+                                                td= member.name
+                                                td= member.mssv
+                                                th
+                                                    .fm-checkbox
+                                                        label
+                                                            input(type='radio' name="member[]" value="1" checked=true)
+                                                th
+                                                    .fm-checkbox
+                                                        label
+                                                            input(type='radio'  name="member[]" value="2")
+                                                th
+                                                    .fm-checkbox
+                                                        label
+                                                            input(type='radio'  name="member[]" value="3")
+                                                th
+                                                    .input-group.nk-int-st
+                                                        input.form-control(type="number", max=activity.benefit, data-mask='9999', name="point[]", value=activity.benefit, style="width: 40px;")
+                                                th
+                                                    .input-group.nk-int-st
+                                                        input.form-control(type='text' name="note[]")
 
-								tbody
-									form(method="POST")
-										button.btn.btn-success.notika-btn-success.waves-effect(type="submit")
-											|	Tạo báo cáo
-										each member, index in activity.members
-											tr
-												td= index+1
-												td= member.name
-												td= member.mssv
-												th
-													.fm-checkbox
-														label
-															input(type='radio' name="member[]" value="1" checked=true)
-
-												th
-													.fm-checkbox
-														label
-															input(type='radio'  name="member[]" value="2")
-
-												th
-													.fm-checkbox
-														label
-															input(type='radio'  name="member[]" value="3")
-												th
-													.input-group.nk-int-st
-														input.form-control(type="number", max=activity.benefit, data-mask='9999', name="point[]", value=activity.benefit, style="width: 40px;")
-												th
-													.input-group.nk-int-st
-														input.form-control(type='text' name="note[]")
-											
 block script
+    script.
+        $("#home")[0].classList.add("active")

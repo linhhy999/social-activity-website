@@ -40,19 +40,19 @@ block content
                     .view.overlay
                         #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
                             ol.carousel-indicators
-                                each image in activity.images
-                                    if image == 0
+                                each image, index in activity.images
+                                    if index == 0
                                         li(data-target="#carousel-example-1z" data-slide-to=i).active
                                     else
                                         li(data-target="#carousel-example-1z" data-slide-to=i)
                             .carousel-inner(role="listbox")
-                                each image, index in activity.image
+                                each image, index in activity.images
                                     if index == 0
                                         .carousel-item.active
-                                            img.newfeedimage(src=image.link alt="First slide")
+                                            img.newfeedimage(src=image alt="First slide")
                                     else
                                         .carousel-item
-                                            img.newfeedimage(src=image.link alt="First slide")
+                                            img.newfeedimage(src=image alt="First slide")
                             a.carousel-control-prev(href="#carousel-example-1z" role="button" data-slide="prev")
                                 span.carousel-control-prev-icon(aria-hidden="true")
                                 span.sr-only
@@ -66,7 +66,7 @@ block content
                     .card-body
                         span.show-short-content !{activity.content}
                         div
-                            a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="activity-detail/"+activity._id )
+                            a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="/activity-detail/"+activity._id )
                                 | See more
                             i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
                             i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
@@ -88,8 +88,7 @@ block content
                             .col-sm-4
                                 p.grey-text.small CTXH
                                 p.text-primary(style="line-height: 0px;")
-                                    strong.small
-                                        iframe(src="https://socialdays.herokuapp.com/"+user.code)
+                                    strong.small#socialday
                             .col-sm-4
                                 p.grey-text.small Level
                                 p.text-primary(style="line-height: 0px;")
@@ -106,3 +105,13 @@ block content
                                 strong.mb-2= notification.title
                                 p.small= moment(notification.time).format("DD/MM/YYYY HH:mm")
                             p.small.mb-2= notification.content
+block script
+    script.
+        $.ajax({
+           url: '/ctxh/'+!{user.code},
+           type:'GET',
+           success: function(data){
+               console.log(data);
+               $('#socialday').text(data);
+           }
+        });

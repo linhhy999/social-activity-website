@@ -1,5 +1,4 @@
 extends ../layout
-
 block content
     .breadcomb-area
         .container
@@ -16,18 +15,27 @@ block content
                                         p
                                             | Hoạt động > Thêm hoạt động
 
+    // Noti zone
+    .container
+        .row
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .errmessage(id="errorContainer")
+                    p Vui lòng sửa những lỗi dưới đây và thử lại:
+                    <ul/>
+
     .form-element-area
         .container
             .row
-                .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                .col-lg-12
                     .form-element-list
-                        form(action="/admin/post/add" method="POST" enctype="multipart/form-data")
+                        form#activityform(action="/admin/post/add" method="POST" enctype="multipart/form-data")
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-support
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                        label Tên Hoạt động
+                                        label Tên Hoạt động 
+                                            span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                         .input-group.nk-int-st
                                             input.form-control(type='text' name='activityName')
                             .row
@@ -37,50 +45,27 @@ block content
                                             i.notika-icon.notika-calendar
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Hạn cuối đăng ký
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
-                                                    input.form-control(type='text' name='register_deadline' data-mask='99/99/9999' placeholder="mm/dd/yyyy")
+                                                label Hạn cuối đăng ký 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                input#datetimepicker1.form-control(type='text' name='register_deadline' )
                                 .col-sm-4
                                     .form-group.ic-cmp-int.float-lb.floating-lb
                                         .form-ic-cmp
                                             i.notika-icon.notika-calendar
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Ngày bắt đầu
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
-                                                    input.form-control(type='text' name='startDate' data-mask='99/99/9999' placeholder="mm/dd/yyyy")
+                                                label Ngày bắt đầu 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                input#datetimepicker2.form-control(type='text' name='startDate')
                                 .col-sm-4
                                     .form-group.ic-cmp-int.float-lb.floating-lb
                                         .form-ic-cmp
                                             i.notika-icon.notika-calendar
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Ngày kết thúc
-                                                .input-group.date.nk-int-st
-                                                    span.input-group-addon
-                                                    input.form-control(type='text' name='endDate' data-mask='99/99/9999' placeholder="mm/dd/yyyy")
-
-                            .row
-                                .col-sm-6
-                                    .form-group.ic-cmp-int.float-lb.floating-lb
-                                        .form-ic-cmp
-                                            i.notika-icon.notika-calendar
-                                        .nk-int-st
-                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Thời gian bắt đầu
-                                                .input-group.nk-int-st
-                                                    input.form-control(type='text' data-mask="99:99" name="startTime")
-                                .col-sm-6
-                                    .form-group.ic-cmp-int.float-lb.floating-lb
-                                        .form-ic-cmp
-                                            i.notika-icon.notika-calendar
-                                        .nk-int-st
-                                            #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Thời gian kết thúc
-                                                .input-group.nk-int-st
-                                                    input.form-control(type='text' data-mask='99:99' name="endTime")
+                                                label Ngày kết thúc 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
+                                                input#datetimepicker3.form-control(type='text' name='endDate')
                             .row
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -88,9 +73,10 @@ block content
                                             i.notika-icon.notika-map
                                         .nk-int-st
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                                label Địa điểm nhận tập trung
+                                                label Địa điểm nhận tập trung 
+                                                    span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                                 .input-group.nk-int-st
-                                                    input.form-control.input-lg(type='text' name="gathering_place")
+                                                    input.form-control(type='text' name="gathering_place")
 
                                 .col-sm-6
                                     .form-group.ic-cmp-int.float-lb.floating-lb
@@ -100,13 +86,14 @@ block content
                                             #data_1.form-group.nk-datapk-ctm.form-elet-mg
                                                 label Địa điểm di chuyển đến (nếu có)
                                                 .input-group.nk-int-st
-                                                    input.form-control.input-lg(type='text' name='target_place')
+                                                    input.form-control(type='text' name='target_place')
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-star
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                        label Số ngày ctxh sẽ được hưởng (tối đa)
+                                        label Số ngày ctxh sẽ được hưởng (tối đa) 
+                                            span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                         .input-group.nk-int-st
                                             input.form-control(type='number' step='0.5' name="benefit")
                             .form-group.ic-cmp-int.float-lb.floating-lb
@@ -114,7 +101,8 @@ block content
                                     i.notika-icon.notika-star
                                 .nk-int-st
                                     #data_1.form-group.nk-datapk-ctm.form-elet-mg
-                                        label Số lượng tình nguyện viên cần tuyển
+                                        label Số lượng tình nguyện viên cần tuyển 
+                                            span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                         .input-group.nk-int-st
                                             input.form-control(type='number' name="numMember")
                             .form-group.ic-cmp-int.float-lb.floating-lb
@@ -128,13 +116,14 @@ block content
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                 .nk-int-st
-                                    h4 Nội dung hoạt động
+                                    h4 Nội dung hoạt động 
+                                        span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                     <textarea name="content"></textarea>
-
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                 .nk-int-st
-                                    label Người giám sát
+                                    label Người giám sát 
+                                        span.freebirdFormviewerViewItemsItemRequiredAsterisk *
                                     .fm-checkbox
                                         .bootstrap-select
                                             select.selectpicker(name="superVisor" multiple)
@@ -145,42 +134,72 @@ block content
                                     i.notika-icon.notika-start
                                 h4 Hình ảnh
                                 input(type="file", name="image" multiple)
-                            <!-- Button -->
                             .btn-demo-notika
                             .btn-list
-                                button.btn.btn-default.notika-btn-default.btn-lg(type="submit")
-                                    | Thêm
-                                a.btn.btn-danger.notika-btn-danger.btn-lg(href="/admin/post/list")
-                                    | Hủy
-
-
+                                button.btn.btn-success.notika-btn-default.btn-lg(type="submit") Thêm
+                                a.btn.btn-danger.notika-btn-default.btn-lg(href="/admin/post/list") Hủy
 
 block script
-    script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
-    script(src='/assets/js/wizard/wizard-active.js')
+    script.
+        $("#post")[0].classList.add("active")
 
-    <!-- datapicker JS ============================================ -->
-    script(src='/assets/js/datapicker/bootstrap-datepicker.js')
-    script(src='/assets/js/datapicker/datepicker-active.js')
-
-    <!-- Input Mask JS ============================================ -->
     script(src='/assets/js/jasny-bootstrap.min.js')
 
-    <!-- dropzone JS ============================================ -->
-    script(src='/assets/js/dropzone/dropzone.js')
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js")
+
+    script.
+        const datetimeformat = {
+            format: 'DD/MM/YYYY HH:mm',
+            minDate: moment(Date.now()),
+            maxDate: moment(Date.now() + 5184000000),
+        };
+        $('#datetimepicker1').datetimepicker(datetimeformat);
+        $('#datetimepicker2').datetimepicker(datetimeformat);
+        $('#datetimepicker3').datetimepicker(datetimeformat);
 
     <!--  wave JS ============================================ -->
     script(src='/assets/js/wave/waves.min.js')
     script(src='/assets/js/wave/wave-active.js')
 
     script(src="https://cdn.ckeditor.com/4.11.4/full-all/ckeditor.js")
-    script
-        | CKEDITOR.replace( "content" )
+    script.
+        CKEDITOR.replace( "content" )
     script(src="/assets/js/bootstrap-select/bootstrap-select.js")
     script.
         $('select').selectpicker();
+
     script.
-        $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-            startDate: '-3d'
-        })
+        $(document).ready(function() {
+            $("#activityform").validate({
+                rules: {
+                    activityName: "required",
+                    register_deadline: "required",
+                    startDate: "required",
+                    endDate: "required",
+                    gathering_place: "required",
+                    benefit: "required",
+                    numMember: "required",
+                    content: "required",
+                    superVisor: "required",
+                },
+                messages: {
+                    activityName: "Vui lòng nhập tên hoạt động",
+                    register_deadline: "Vui lòng chọn hạn đăng ký",
+                    startDate: "Vui lòng chọn ngày bắt đầu",
+                    endDate: "Vui lòng chọn ngày kết thúc",
+                    benefit: "Vui lòng nhập số ngày ctxh",
+                    numMember: "Vui lòng nhập số lượng tình nguyện viên",
+                    gathering_place: "Vui lòng nhập địa điểm tập trung",
+                    content: "Vui lòng nhập nội dung hoạt động",
+                    superVisor: "Vui lòng chọn ít nhất một người giám sát",
+                },
+                onfocusout: function(element) {$(element).valid();},
+                errorContainer: $('#errorContainer'),
+                errorLabelContainer: $('#errorContainer ul'),
+                wrapper: 'li'
+            });
+        });

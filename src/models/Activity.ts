@@ -5,8 +5,6 @@ export type ActivityModel = mongoose.Document & {
     registerEnd: string,
     dateStart: string,
     dateEnd: string,
-    timeStart: string,
-    timeEnd: string,
     gatheringPlace: string,
     targetPlace: number,
     content: string,
@@ -18,27 +16,25 @@ export type ActivityModel = mongoose.Document & {
     comment: Comment[],
     superVisor: [],
     benefit: number,
-    status: boolean
+    status: boolean,
+    ctxh: CTXH,
+};
+
+export type CTXH = {
+    value: number,
+    lastUpdate: Date,
 };
 
 export type Comment = {
-    fullName: string
-    userAvatar: string
+    fullName: string,
+    userAvatar: string,
     timeComment: Date,
     content: string
     reply: Comment[]
 };
 
-export type Media = {
-    id: string,
-    link: string
-};
 export type Member = {
-    mssv: string,
-    name: string,
-    faculty: string,
-    phone: string,
-    email: string,
+    info: any,
     status: Status,
     isJoined: Join,
     point: number,
@@ -64,8 +60,6 @@ const activitySchema = new mongoose.Schema({
     registerEnd: String,
     dateStart: String,
     dateEnd: String,
-    timeStart: String,
-    timeEnd: String,
     gatheringPlace: String,
     targetPlace: String,
     content: String,
@@ -78,16 +72,29 @@ const activitySchema = new mongoose.Schema({
     },
     images: [String],
     maxMember: Number,
-    members: [],
+    members: [{
+        info: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            autopopulate: true
+        },
+        status: Number,
+        isJoined: Number,
+        point: Number,
+        note: String,
+    }],
     comment: [],
     superVisor: [],
     status: Boolean,
-    isJoined: Number
+    isJoined: Number,
+    ctxh: {
+        value: Number,
+        lastUpdate: Date
+    }
+
 }, { timestamps: true });
 
 activitySchema.plugin(require("mongoose-autopopulate"));
 
-
-// export const User: UserType = mongoose.model<UserType>('User', userSchema);
 const Activity = mongoose.model<ActivityModel>("Activity", activitySchema);
 export default Activity;

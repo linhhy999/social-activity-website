@@ -34,7 +34,7 @@ export let listOwnActivity = async (req: Request, res: Response) => {
         activities.push({
             id: activity.id,
             name: activity.name,
-            start: activity.dateStart + " " + activity.timeStart,
+            start: activity.dateStart,
             numMember: numMember,
             numPendingMember: numPendingMember,
             status: activity.status ? "Đang diễn ra" : "Đã xong"
@@ -59,7 +59,7 @@ export let listManageActivity = async (req: Request, res: Response) => {
         activities.push({
             id: activity.id,
             name: activity.name,
-            start: activity.dateStart + " " + activity.timeStart,
+            start: activity.dateStart,
             numMember: numMember,
             numPendingMember: numPendingMember,
             status: activity.status ? "Đang diễn ra" : "Đã xong"
@@ -164,7 +164,6 @@ export let postEditActivity = async (req: any, res: Response) => {
             gatheringPlace: req.body.gathering_place,
             targetPlace: req.body.target_place,
             content: req.body.content,
-            orgUnit: req.body.orgUnit,
             host: req.user._id,
             maxMember: req.body.numMember,
             superVisor: superVisor,
@@ -305,7 +304,7 @@ export let getMember = async (req: Request, res: Response) => {
 };
 
 export let getAcceptMember = async (req: Request, res: Response, next: NextFunction) => {
-    await Activity.updateOne({ _id: req.params.activity, "members.mssv": req.params.mssv }, { "$set": { "members.$.status": 2 } });
+    await Activity.updateOne({ _id: req.params.activity, "members.info.code": req.params.mssv }, { "$set": { "members.$.status": 2 } });
     await createNotificationByCode(req.params.mssv, {
         image: req.user.auth[0].picture,
         title: "Đăng ký hoạt động thành công",
@@ -320,7 +319,7 @@ export let getAcceptMember = async (req: Request, res: Response, next: NextFunct
 };
 
 export let getRefuseMember = async (req: Request, res: Response) => {
-    await Activity.updateOne({ _id: req.params.activity, "members.mssv": req.params.mssv }, {
+    await Activity.updateOne({ _id: req.params.activity, "members.info.code": req.params.mssv }, {
         "$set": {
             "members.$.status": 3
         }
@@ -384,18 +383,15 @@ export let activityDetail = async (req: Request, res: Response) => {
     }
     try {
         const activity = await Activity.findOne({ "_id": activityId });
-        let registered = false;
-        if (activity.members.filter(member => member.mssv === req.user.code).length > 0) registered = true;
         const userActivity = activity.members.find(function (element) {
-            return element.mssv == req.user.code;
+            return element.info.code == req.user.code;
         });
         let status = 0;
         userActivity ? status = userActivity.status : status = 0;
-        const uA = await Activity.find({ "members.mssv": req.user.code });
+        const uA = await Activity.find({ "members.info.code": req.user.code });
         return res.render("activityDetail", {
             user: req.user,
             activity: activity,
-            registered: registered,
             orgUnit: a,
             status: status,
             userActivities: uA
@@ -411,7 +407,7 @@ export let un_apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
         const activity = await Activity.findOne({ "_id": activityId });
-        const membersAfterRemove = activity.members.filter(member => member.mssv !== req.user.code);
+        const membersAfterRemove = activity.members.filter(member => member.info.code !== req.user.code);
         await Activity.updateOne({ "_id": activityId }, {
             members: membersAfterRemove
         }, { upset: false });
@@ -429,14 +425,11 @@ export let apply = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     try {
         const activity = await Activity.findOne({ "_id": activityId });
-        const registered = (activity.members.filter(member => member.mssv === req.user.code).length > 0);
+        const registered = (activity.members.filter(member => member.info.code === req.user.code).length > 0);
         if (registered) return res.redirect("back");
+        const user = await User.findOne((user: any) => user.code);
         activity.members.push({
-            mssv: req.user.code,
-            name: req.user.fullName,
-            faculty: req.user.faculty,
-            phone: req.user.phone,
-            email: req.user.email,
+            info: user._id,
             status: Status.PENDING,
             isJoined: Join.WAITING,
             point: 0,
@@ -502,11 +495,11 @@ export let postReport = async (req: Request, res: Response) => {
             console.log(member.isJoined == Join.ABSENT, member);
             dataset.push({
                 id: index + 1,
-                fullName: member.name,
-                code: member.mssv,
-                faculty: member.faculty,
-                email: member.email,
-                phone: member.phone,
+                fullName: member.info.fullName,
+                code: member.info.code,
+                faculty: member.info.faculty,
+                email: member.info.email,
+                phone: member.info.phone,
                 socialDay: member.point,
                 note: (member.note == "") ? ((member.isJoined == Join.ABSENT) ? "Vắng không phép" : ((member.isJoined == Join.ABSENT_WITH_PERMISSION) ? "Vắng có phép" : member.note)) : member.note
             });

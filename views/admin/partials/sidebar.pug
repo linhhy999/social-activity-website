@@ -3,20 +3,20 @@
         .row
             .col-lg-12.col-md-12.col-sm-12.col-xs-12
                 ul.nav.nav-tabs.notika-menu-wrap.menu-it-icon-pro
-                    li.active
+                    li#home
                         a(data-toggle='tab' href='#Home')
                             i.fa.fa-home
                             |  Tổng quan
-                    li
+                    li#general
                         a(href='/admin/general')
                             i.fa.fa-envelope-o
                             |  Thông tin chung
-                    li
+                    li#post
                         a(data-toggle='tab' href='#Post')
                             i.fa.fa-envelope-o
                             |  Hoạt động
                     if user.role == 1
-                        li
+                        li#account
                             a(data-toggle='tab' href='#Account')
                                 i.fa.fa-user
                                 |  Quản Lý Tài Khoản

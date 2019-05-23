@@ -48,11 +48,11 @@ block content
                                                 if (member.status == 2)
                                                     tr
                                                         td= index + 1
-                                                        td= member.name
-                                                        td= member.mssv
-                                                        td= member.faculty
-                                                        td= member.phone
-                                                        td= member.email
+                                                        td= member.info.fullName
+                                                        td= member.info.code
+                                                        td= member.info.faculty
+                                                        td= member.info.phone
+                                                        td= member.info.email
                                                         th
                                                             form(action="/admin/post/member/"+activity+"/refuse/"+member.mssv method='post')
                                                                 button.btn.btn-primary.btn-rounded.btn-sm.waves-light
@@ -76,11 +76,11 @@ block content
                                                 if (member.status == 1)
                                                     tr
                                                         td= index + 1
-                                                        td= member.name
-                                                        td= member.mssv
-                                                        td= member.faculty
-                                                        td= member.phone
-                                                        td= member.email
+                                                        td= member.info.fullName
+                                                        td= member.info.code
+                                                        td= member.info.faculty
+                                                        td= member.info.phone
+                                                        td= member.info.email
                                                         th
                                                             form(action="/admin/post/member/"+activity+"/accept/"+member.mssv method='post')
                                                                 button.btn.btn-primary.btn-rounded.btn-sm.waves-light
@@ -101,13 +101,15 @@ block content
                                                 if (member.status == 3)
                                                     tr
                                                         td= index + 1
-                                                        td= member.name
-                                                        td= member.mssv
-                                                        td= member.faculty
-                                                        td= member.phone
-                                                        td= member.email
+                                                        td= member.info.fullName
+                                                        td= member.info.code
+                                                        td= member.info.faculty
+                                                        td= member.info.phone
+                                                        td= member.info.email
 
 
 block script
     script(src='/assets/js/wizard/jquery.bootstrap.wizard.min.js')
     script(src='/assets/js/wizard/wizard-active.js')
+    script.
+        $("#post")[0].classList.add("active")

@@ -18,7 +18,7 @@ html(lang='en')
         include partials/header
         form(id="infoform" action="/profile" method="POST" enctype="multipart/form-data")
             .mt-100
-            .container 
+            .container
                 .row
                     .col-lg-3.hidden-sm
                         .card.testimonial-card.mb-2
@@ -43,7 +43,6 @@ html(lang='en')
                                         p.grey-text.small Level
                                         p.text-primary(style="line-height: 0px;")
                                             strong.small=user.role
-
                     br
                     .col-lg-9.col-sm-12
                         // Card
@@ -162,6 +161,7 @@ html(lang='en')
                             range: "Vui lòng nhập ngày ctxh hợp lệ"
                         }
                     },
+                    onfocusout: function(element) {$(element).valid();},
                     errorContainer: $('#errorContainer'),
                     errorLabelContainer: $('#errorContainer ul'),
                     wrapper: 'li'

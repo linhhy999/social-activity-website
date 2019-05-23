@@ -18,7 +18,7 @@ block content
                         p.card-text.mb-0
                             i.far.fa-clock.pr-2
                             strong
-                                | Thời gian: 
+                                | Thời gian:
                             = activity.timeStart
                         p.card-text.mb-0
                             i.far.fa-map.pr-2
@@ -46,19 +46,19 @@ block content
                 .view.overlay
                     #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
                         ol.carousel-indicators
-                            each image in activity.image
+                            each image in activity.images
                                 if image == 0
                                     li(data-target="#carousel-example-1z" data-slide-to=i).active
                                 else
                                     li(data-target="#carousel-example-1z" data-slide-to=i)
                         .carousel-inner(role="listbox")
-                            each image, index in activity.image
+                            each image, index in activity.images
                                 if index == 0
                                     .carousel-item.active
-                                        img.newfeedimage(src=image.link alt="First slide")
+                                        img.newfeedimage(src=image alt="First slide")
                                 else
                                     .carousel-item
-                                        img.newfeedimage(src=image.link alt="First slide")
+                                        img.newfeedimage(src=image alt="First slide")
                         a.carousel-control-prev(href="#carousel-example-1z" role="button" data-slide="prev")
                             span.carousel-control-prev-iconz(aria-hidden="true")
                             span.sr-only

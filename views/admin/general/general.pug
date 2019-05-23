@@ -1,5 +1,4 @@
 extends ../layout
-
 block content
     .breadcomb-area
         .container
@@ -55,3 +54,5 @@ block script
     script.
         $('.selectpicker').selectpicker();
         $("select.selectpicker").css('backgroundColor', '#4267b2');
+    script.
+        $("#general")[0].classList.add("active")
