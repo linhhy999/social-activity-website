@@ -11,7 +11,10 @@ export let registered = async (student: any, activity: any) => {
     mail.registered(student.fullName, student.email, activity.name, "http://localhost:3000/activity-detail/" + activity._id);
     console.log("Sending " + ++i + " mail(s) to " + student.fullName + " " + student.email + " " + activity.name + " " + "http://localhost:3000/activity-detail/" + activity._id);
 };
-
+export let refused = async (student: any, activity: any) => {
+    mail.refused(student.fullName, student.email, activity.name, "http://localhost:3000/activity-detail/" + activity._id);
+    console.log("Sending " + ++i + " mail(s) to " + student.fullName + " " + student.email + " " + activity.name + " " + "http://localhost:3000/activity-detail/" + activity._id);
+};
 export let reminder = async () => {
     const activities = await Activity.find({status: true});
     activities.forEach(activity => {

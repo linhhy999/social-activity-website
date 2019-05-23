@@ -5,7 +5,7 @@ import User from "../models/User";
 import { createNotificationByCode } from "./notification";
 import { buildReport, ExportFile } from "./export";
 import { find } from "shelljs";
-import { registered } from "./email";
+import { registered, refused } from "./email";
 
 export let getAddActivity = async (req: Request, res: Response) => {
     try {
@@ -206,10 +206,13 @@ export let searchActivity = async (req: Request, res: Response) => {
                 ]
         });
     }
+
     return res.render("search", {
         title: req.query.keyword + "- Sociofy",
         activities: activities,
-        action: {}
+        action: {},
+        key: req.query.keyword,
+        isSearch: true
     });
 };
 
@@ -278,8 +281,10 @@ export let searchAdvancedActivity = async (req: Request, res: Response) => {
         action: {
             type: req.body.type,
             status: req.body.status,
-            benefit: req.body.benefit
-        }
+            benefit: req.body.benefit,
+        },
+        isSearch: true,
+        key: req.query.keyword
     });
 };
 
@@ -308,7 +313,7 @@ export let getMember = async (req: Request, res: Response) => {
 export let getAcceptMember = async (req: Request, res: Response, next: NextFunction) => {
     const activity = await Activity.findOne({ _id: req.params.activity, "members._id": req.params.memberId });
     const member = activity.members.filter(member => member.info.code == req.params.mssv)[0];
-    await Activity.updateOne({ _id: req.params.activity, "members._id": req.params.memberId }, { "$set": { "members.$.status": 2 } });
+    await Activity.updateOne({ _id: req.params.activity, "members._id": req.params.memberId }, { "$set": { "members.$.status": Status.ACCEPT } });
     await createNotificationByCode(req.params.mssv, {
         image: req.user.auth[0].picture,
         title: "Đăng ký hoạt động thành công",
@@ -321,11 +326,17 @@ export let getAcceptMember = async (req: Request, res: Response, next: NextFunct
 };
 
 export let getRefuseMember = async (req: Request, res: Response) => {
-    await Activity.updateOne({ _id: req.params.activity, "members.info.code": req.params.mssv }, {
-        "$set": {
-            "members.$.status": 3
-        }
+    const activity = await Activity.findOne({ _id: req.params.activity, "members._id": req.params.memberId });
+    const member = activity.members.filter(member => member.info.code == req.params.mssv)[0];
+    await Activity.updateOne({ _id: req.params.activity, "members._id": req.params.memberId }, { "$set": { "members.$.status": Status.REFUSE } });
+    await createNotificationByCode(req.params.mssv, {
+        image: req.user.auth[0].picture,
+        title: "Bị loại khỏi hoạt động",
+        time: new Date(),
+        content: "Bạn đã bị loại khỏi hoạt động " + activity.name,
+        link: "/activity-detail/" + req.params.activity
     });
+    refused(member.info, activity);
     return res.redirect("back");
 };
 

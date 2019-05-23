@@ -54,7 +54,7 @@ block content
                                                         td= member.info.phone
                                                         td= member.info.email
                                                         th
-                                                            form(action="/admin/post/member/"+activity+"/refuse/"+member.mssv method='post')
+                                                            form(action="/admin/post/member/"+activity+"/refuse/"+member.id+"/"+member.info.code method='post')
                                                                 button.btn.btn-primary.btn-rounded.btn-sm.waves-light
                                                                     | Hủy đăng ký
                                                             //a(href="/admin/post/member/"+activity+"/refuse/"+member.mssv  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Hủy đăng ký").mr-3
