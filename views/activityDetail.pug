@@ -104,8 +104,8 @@ block content
                     ul.comment
                         each comment in activity.comment
                             li.comment-item
-                                img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=comment.userAvatar, alt="avatar.jpg")
-                                span.name= comment.fullName
+                                img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=comment.info.avatar, alt="avatar.jpg")
+                                span.name= comment.info.fullName
                                 i.far.fa-clock.pr-2= comment.timeComment
                                 p= comment.content
     #modalSubscriptionForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
@@ -151,19 +151,16 @@ block content
                                 th Họ và tên 
                                 th mssv
                                 th Khoa
-
                         tbody
                             - i=1
                             each member in activity.members
                                 if member.status == 2
                                     tr
                                         th(scope='row')= i
-                                        td.font-weight-bold= member.name
-                                        td= member.mssv 
-                                        td= member.faculty
+                                        td.font-weight-bold= member.info.fullName
+                                        td= member.info.code
+                                        td= member.info.faculty
                                     - i++
-
-
 
                     // Footer
                     .modal-footer

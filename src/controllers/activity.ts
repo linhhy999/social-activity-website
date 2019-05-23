@@ -340,11 +340,9 @@ export let postComment = async (req: any, res: Response) => {
     try {
         const activity = await Activity.findOne({ "_id": activityId });
         activity.comment.unshift({
-            fullName: req.user.fullName,
-            timeComment: new Date,
-            userAvatar: req.user.avatar,
+            info: req.user._id,
+            timeComment: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
             content: req.body.comment,
-            reply: []
         });
         await activity.save();
         return res.redirect("back");

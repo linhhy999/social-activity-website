@@ -22,7 +22,8 @@ html(lang='en')
                 .row
                     .col-lg-3.hidden-sm
                         .card.testimonial-card.mb-2
-                            .avatar-wrapper
+                            .card-up.aqua-gradient(style="height:150px")
+                            .avatar-wrapper.avatar(style="margin-top:-100px")
                                 img.profile-pic(src=user.avatar)
                                 .upload-button
                                     i.fa.fa-arrow-circle-up(aria-hidden='true')
@@ -38,7 +39,8 @@ html(lang='en')
                                     .col-sm-4
                                         p.grey-text.small CTXH
                                         p.text-primary(style="line-height: 0px;")
-                                            strong.small=user.socialday
+                                            strong.small#socialday
+                                            i.spinner#spinner
                                     .col-sm-4
                                         p.grey-text.small Level
                                         p.text-primary(style="line-height: 0px;")
@@ -77,9 +79,6 @@ html(lang='en')
                                                     option(value=faculty selected) #{faculty}
                                                 else
                                                     option(value=faculty) #{faculty}
-                                    .md-form.form-sm
-                                        label(for='inputSocialWork')  Số ngày Công tác xã hội:
-                                        input#inputSocialWork.form-control.form-control-sm(type='text' value=user.socialday name="socialday")
                                     // Button
                                     button.btn.btn-primary Cập nhật
                         // Card
@@ -135,12 +134,7 @@ html(lang='en')
                             number: true,
                             rangelength: [10,10],
                             range: [0, 999999999]
-                        },
-                        socialday: {
-                            required: true,
-                            number: true,
-                            range: [0,200]
-                        },
+                        }
                     },
                     messages: {
                         mssv: {
@@ -154,11 +148,6 @@ html(lang='en')
                             number: "Vui lòng nhập số điện thoại hợp lệ",
                             rangelength: "Vui lòng nhập số điện thoại hợp lệ",
                             range: "Vui lòng nhập số điện thoại hợp lệ"
-                        },
-                        socialday: {
-                            required: "Vui lòng nhập ngày ctxh",
-                            number: "Vui lòng nhập ngày ctxh hợp lệ",
-                            range: "Vui lòng nhập ngày ctxh hợp lệ"
                         }
                     },
                     onfocusout: function(element) {$(element).valid();},
@@ -185,4 +174,18 @@ html(lang='en')
                     $(".file-upload").click();
                 });
             });
-        block script
+        script.
+            $.ajax({
+                url: '/ctxh/'+!{user.code},
+                type:'GET',
+                success: function(data){
+                    console.log(data);
+                    $('#socialday').text(data);
+                }
+            });
+        script.
+            $(document).ajaxStart(function() {
+                $("#spinner").show();
+            }).ajaxStop(function() {
+                $("#spinner").hide('slow');
+            });

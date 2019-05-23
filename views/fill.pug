@@ -63,11 +63,6 @@ html(lang='en')
                                             option(value=faculty selected) #{faculty}
                                         else
                                             option(value=faculty) #{faculty}
-                            .md-form.form-sm
-                                input#materialFormSocialModal.form-control.form-control-sm(type='text', name="socialday", required value = user.socialday)
-                                label(for='materialFormSocialModal') Số ngày công tác xã hội
-                                .valid-feedback
-                                    | Looks good!
                             .text-center.mt-4.mb-2
                                 button.btn.btn-primary
                                     | Xác nhận
@@ -116,12 +111,7 @@ html(lang='en')
                             number: true,
                             rangelength: [10,10],
                             range: [0, 999999999]
-                        },
-                        socialday: {
-                            required: true,
-                            number: true,
-                            range: [0,200]
-                        },
+                        }
                     },
                     messages: {
                         mssv: {
@@ -137,11 +127,6 @@ html(lang='en')
                             number: "Vui lòng nhập số điện thoại hợp lệ",
                             rangelength: "Vui lòng nhập số điện thoại hợp lệ",
                             range: "Vui lòng nhập số điện thoại hợp lệ"
-                        },
-                        socialday: {
-                            required: "Vui lòng nhập số ngày công tác xã hội",
-                            number: "Vui lòng nhập số ngày công tác xã hội hợp lệ",
-                            range: "Vui lòng nhập số ngày công tác xã hội hợp lệ"
                         }
                     },
                     onfocusout: function(element) {$(element).valid();},
@@ -168,5 +153,3 @@ html(lang='en')
                     $(".file-upload").click();
                 });
             });
-
-        block script

@@ -78,7 +78,6 @@ export let postInfo = async (req: any, res: any) => {
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
-    req.checkBody("socialday", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -98,8 +97,7 @@ export let postInfo = async (req: any, res: any) => {
                 "phone": req.body.phone,
                 "faculty": req.body.faculty,
                 "fullName": req.body.name,
-                "avatar": avatarlink,
-                "socialday": req.body.socialday
+                "avatar": avatarlink
             }
         }, { upsert: false });
         return res.redirect("/");
@@ -115,7 +113,6 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
     req.checkBody("name", "Tên không được để trống").notEmpty();
-    req.checkBody("socialday", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -134,7 +131,6 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
         "faculty": req.body.faculty,
         "fullName": req.body.name,
         "avatar": avatarlink,
-        "socialday": req.body.socialday
     };
     try {
         await User.updateOne({ "_id": req.user._id }, {

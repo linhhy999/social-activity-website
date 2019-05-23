@@ -26,11 +26,9 @@ export type CTXH = {
 };
 
 export type Comment = {
-    fullName: string,
-    userAvatar: string,
-    timeComment: Date,
+    info: any,
+    timeComment: string,
     content: string
-    reply: Comment[]
 };
 
 export type Member = {
@@ -53,7 +51,6 @@ export enum Status {
     ACCEPT = 2,
     REFUSE = 3
 }
-
 
 const activitySchema = new mongoose.Schema({
     name: String,
@@ -83,8 +80,20 @@ const activitySchema = new mongoose.Schema({
         point: Number,
         note: String,
     }],
-    comment: [],
-    superVisor: [],
+    comment: [{
+        info: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            autopopulate: true
+        },
+        timeComment: String,
+        content: String
+    }],
+    superVisor: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        autopopulate: true
+    }],
     status: Boolean,
     isJoined: Number,
     ctxh: {

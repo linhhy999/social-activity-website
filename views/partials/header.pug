@@ -13,7 +13,7 @@ nav.navbar.navbar-expand-sm.navbar-dark.fixed-top
                             i.fas.fa-search.pr-2(aria-hidden="true") 
             ul.navbar-nav
                 li.nav-item.dropdown
-                    a.nav-link.dropdown-toggle#notification(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true ") 
+                    a.nav-link.dropdown-toggle.center#notification(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true " style="height:70px; width:70px;padding: 22px;")
                         i.fas.fa-bell
                     div.dropdown-menu.dropdown-menu-right.scrollbar.scrollbar-primary(aria-labelledby="notification" style="overflow-y: auto; height:500px;")
                         each notification in user.notifications
@@ -35,10 +35,9 @@ nav.navbar.navbar-expand-sm.navbar-dark.fixed-top
                                             br
                                             span.card-text
                                                 = notification.content
-                        
                 li.nav-item.dropdown
                     a.nav-link.dropdown-toggle#dropdownId(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") 
-                        i.fas.fa-user
+                        img.float-right.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=user.avatar, alt="avatar.jpg")
                     .dropdown-menu(aria-labelledby="dropdownId")
                         a.dropdown-item(href="/profile") Profile
                         a.dropdown-item(href="/logout") Logout

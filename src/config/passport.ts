@@ -23,6 +23,7 @@ passport.use(new GoogleStrategy({
 }, (accessToken, refreshToken, profile, done) => {
     if (profile) {
         // if (profile._json.hd != "hcmut.edu.vn") return done(new Error("Bạn phải là sinh viên Bách khoa để truy cập trang này"), false);
+
         return done(undefined, {
             auth: {
                 googleId: profile.id,
@@ -33,7 +34,8 @@ passport.use(new GoogleStrategy({
             fullName: profile.displayName,
             avatar: profile.photos[0].value,
             code: /^\d+$/.test(profile.emails[0].value.substr(0, 7)) ? profile.emails[0].value.substr(0, 7) : undefined,
-            role: profile.emails[0].value[6] == "@" ? Role.Host : Role.Student
+            role: profile.emails[0].value[6] == "@" ? Role.Host : Role.Student,
+            socialdays: { lastUpdate: 0 }
         });
     }
     else

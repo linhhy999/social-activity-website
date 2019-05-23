@@ -9,10 +9,13 @@ export type UserModel = mongoose.Document & {
     code: string,
     role: Role,
     fullName: string,
-    socialday: number,
     faculty: string,
     isBlocked: boolean,
     avatar: string
+    socialdays: {
+        value: number,
+        lastUpdate: number
+    }
 };
 
 const userSchema = new mongoose.Schema({
@@ -23,10 +26,13 @@ const userSchema = new mongoose.Schema({
     code: String,
     role: Number,
     fullName: String,
-    socialday: Number,
     faculty: String,
     isBlocked: Boolean,
     avatar: String,
+    socialdays: {
+        value: Number,
+        lastUpdate: Number
+    }
 }, { timestamps: true });
 
 export enum Role {

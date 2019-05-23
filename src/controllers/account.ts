@@ -29,14 +29,20 @@ export let getListAccounts = async (req: Request, res: Response) => {
 };
 
 export let getCTXH = async (req: Request, res: Response) => {
-    let socialdaysreq = 0;
-    request("https://socialdays.herokuapp.com/" + req.params.id.toString(), (error: any, response: any, body: any) => {
-        const a = 3;
-        socialdaysreq = body;
-        res.send(body);
-    });
-
+    const user = await User.findOne({ code: req.params.id });
+    if (Date.now() - user.socialdays.lastUpdate < 86400000) {
+        res.send(user.socialdays.value.toString());
+    }
+    else {
+        request("https://socialdays.herokuapp.com/" + req.params.id.toString(), (error: any, response: any, body: any) => {
+            user.socialdays.value = body;
+            user.socialdays.lastUpdate = Date.now();
+            user.save();
+            res.send(body);
+        });
+    }
 };
+
 export let getAddAccounts = async (req: Request, res: Response) => {
     const faculties = (await GeneralInfomation.find({}))[0].facultyList;
     return res.render("admin/accounts/add", {
