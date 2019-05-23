@@ -14,7 +14,9 @@ block content
                         else if status == 3
                             label.badge-pill.badge.badge-danger Rejected
                         if activity.members.length == activity.maxMember
-                                .badge.badge-danger Đã đủ thành viên 
+                            .badge.badge-pill.badge-danger Đã đủ thành viên 
+                        if moment(activity.registerEnd, "MM/DD/YYYY").isBefore(moment())
+                            .badge.badge-pill.badge-danger Đã hết hạn đăng ký
                         p.card-text.mb-0
                             i.far.fa-clock.pr-2
                             strong
