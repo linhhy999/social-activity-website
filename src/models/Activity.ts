@@ -26,11 +26,9 @@ export type CTXH = {
 };
 
 export type Comment = {
-    fullName: string,
-    userAvatar: string,
+    info: any,
     timeComment: Date,
     content: string
-    reply: Comment[]
 };
 
 export type Member = {
@@ -83,7 +81,15 @@ const activitySchema = new mongoose.Schema({
         point: Number,
         note: String,
     }],
-    comment: [],
+    comment: [{
+        info: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            autopopulate: true
+        },
+        timeComment: Date,
+        content: String
+    }],
     superVisor: [],
     status: Boolean,
     isJoined: Number,

@@ -4,6 +4,8 @@ import GeneralInfomation from "../models/General";
 import User from "../models/User";
 import { createNotificationByCode } from "./notification";
 import { buildReport, ExportFile } from "./export";
+import { find } from "shelljs";
+import { registered } from "./email";
 
 export let getAddActivity = async (req: Request, res: Response) => {
     try {
@@ -304,7 +306,9 @@ export let getMember = async (req: Request, res: Response) => {
 };
 
 export let getAcceptMember = async (req: Request, res: Response, next: NextFunction) => {
-    await Activity.updateOne({ _id: req.params.activity, "members.info.code": req.params.mssv }, { "$set": { "members.$.status": 2 } });
+    const activity = await Activity.findOne({ _id: req.params.activity, "members._id": req.params.memberId });
+    const member = activity.members.filter(member => member.info.code == req.params.mssv)[0];
+    await Activity.updateOne({ _id: req.params.activity, "members._id": req.params.memberId }, { "$set": { "members.$.status": 2 } });
     await createNotificationByCode(req.params.mssv, {
         image: req.user.auth[0].picture,
         title: "Đăng ký hoạt động thành công",
@@ -312,9 +316,7 @@ export let getAcceptMember = async (req: Request, res: Response, next: NextFunct
         content: "Yêu cầu tham gia hoạt động của bạn đã được chấp nhận",
         link: "/activity-detail/" + req.params.activity
     });
-    res.locals.mssv = req.params.mssv;
-    res.locals.activity = req.params.activity;
-    // next();
+    registered(member.info, activity);
     return res.redirect("back");
 };
 
@@ -340,11 +342,9 @@ export let postComment = async (req: any, res: Response) => {
     try {
         const activity = await Activity.findOne({ "_id": activityId });
         activity.comment.unshift({
-            fullName: req.user.fullName,
+            info: req.user._id,
             timeComment: new Date,
-            userAvatar: req.user.avatar,
             content: req.body.comment,
-            reply: []
         });
         await activity.save();
         return res.redirect("back");
@@ -427,7 +427,7 @@ export let apply = async (req: Request, res: Response) => {
         const activity = await Activity.findOne({ "_id": activityId });
         const registered = (activity.members.filter(member => member.info.code === req.user.code).length > 0);
         if (registered) return res.redirect("back");
-        const user = await User.findOne((user: any) => user.code);
+        const user = await User.findOne({code: req.user.code});
         activity.members.push({
             info: user._id,
             status: Status.PENDING,
