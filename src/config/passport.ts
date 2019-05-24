@@ -35,7 +35,10 @@ passport.use(new GoogleStrategy({
             avatar: profile.photos[0].value,
             code: /^\d+$/.test(profile.emails[0].value.substr(0, 7)) ? profile.emails[0].value.substr(0, 7) : undefined,
             role: profile.emails[0].value[6] == "@" ? Role.Host : Role.Student,
-            socialdays: { lastUpdate: 0 }
+            socialdays: {
+                value: 0,
+                lastUpdate: 0
+            }
         });
     }
     else
@@ -46,27 +49,3 @@ passport.use(new GoogleStrategy({
 
 export let isGoogleAuthenticated = passport.authenticate("google", { failureRedirect: "/auth/google" });
 export default passport;
-
-// /**
-//  * Login Required middleware.
-//  */
-// export let isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-//     if (req.isAuthenticated()) {
-//         return next();
-//     }
-//     res.redirect("/intro");
-// };
-
-// /**
-//  * Authorization Required middleware.
-//  */
-// export let isAuthorized = (req: Request, res: Response, next: NextFunction) => {
-//     const provider = req.path.split("/").slice(-1)[0];
-
-//     if (_.find(req.user.tokens, { kind: provider })) {
-//         next();
-//     } else {
-//         res.redirect(`/auth/${provider}`);
-//     }
-// };
-

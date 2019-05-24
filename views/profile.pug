@@ -39,8 +39,8 @@ html(lang='en')
                                     .col-sm-4
                                         p.grey-text.small CTXH
                                         p.text-primary(style="line-height: 0px;")
-                                            strong.small#socialday
-                                            i.spinner#spinner
+                                            strong.small#socialday=user.socialdays.value
+                                            i.spinner#spinner(style="display:none")
                                     .col-sm-4
                                         p.grey-text.small Level
                                         p.text-primary(style="line-height: 0px;")
@@ -175,6 +175,13 @@ html(lang='en')
                 });
             });
         script.
+            $(document).ajaxStart(function() {
+                if ($('#socialday').text() == "")
+                    $("#spinner").show();
+            }).ajaxStop(function() {
+                $("#spinner").hide('slow');
+            });
+        script.
             $.ajax({
                 url: '/ctxh/'+!{user.code},
                 type:'GET',
@@ -182,10 +189,4 @@ html(lang='en')
                     console.log(data);
                     $('#socialday').text(data);
                 }
-            });
-        script.
-            $(document).ajaxStart(function() {
-                $("#spinner").show();
-            }).ajaxStop(function() {
-                $("#spinner").hide('slow');
             });

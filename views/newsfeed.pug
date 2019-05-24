@@ -66,11 +66,9 @@ block content
                     .card-body
                         span.show-short-content !{activity.content}
                         div
-                            a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="/activity-detail/"+activity._id )
-                                | See more
+                            a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="/activity-detail/"+activity._id ) See more
                             i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
-                            i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
-                                | 200
+                            i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it") 200
         .col-lg-4.hidden-sm
             a(href="/profile")
                 .card.testimonial-card.mb-2
@@ -89,6 +87,7 @@ block content
                                 p.grey-text.small CTXH
                                 p.text-primary(style="line-height: 0px;")
                                     strong.small#socialday=user.socialdays.value
+                                    i.spinner#spinner(style="display:none")
                             .col-sm-4
                                 p.grey-text.small Level
                                 p.text-primary(style="line-height: 0px;")
@@ -105,6 +104,13 @@ block content
                                 p.small= moment(notification.time).format("DD/MM/YYYY HH:mm")
                             p.small.mb-2= notification.content
 block script
+    script.
+        $(document).ajaxStart(function() {
+            if ($('#socialday').text() == "")
+                $("#spinner").show();
+        }).ajaxStop(function() {
+            $("#spinner").hide('slow');
+        });
     script.
         $.ajax({
            url: '/ctxh/'+!{user.code},

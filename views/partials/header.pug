@@ -14,7 +14,7 @@ nav.navbar.navbar-expand-sm.navbar-dark.fixed-top
             ul.navbar-nav
                 li.nav-item.dropdown
                     a.nav-link.dropdown-toggle.center#notification(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true " style="")
-                        i.fas.fa-bell
+                        i.fas.fa-bell.fa-2x
                     div.dropdown-menu.dropdown-menu-right.scrollbar.scrollbar-primary(aria-labelledby="notification" style="overflow-y: auto; max-height:500px;")
                         if  (!user.notifications.length)
                             p.dropdown-item Không có thông báo nào để hiển thị
@@ -40,7 +40,7 @@ nav.navbar.navbar-expand-sm.navbar-dark.fixed-top
                                                     = notification.content
                 li.nav-item.dropdown
                     a.nav-link.dropdown-toggle#dropdownId(href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="") 
-                        img.rounded-circle(height="20px", width="20px", style="object-fit:cover" src=user.avatar, alt="avatar.jpg")
+                        img.rounded-circle(height="40px", width="40px", style="object-fit:cover" src=user.avatar, alt="avatar.jpg")
                     .dropdown-menu(aria-labelledby="dropdownId")
                         a.dropdown-item(href="/profile") Profile
                         a.dropdown-item(href="/logout") Logout
