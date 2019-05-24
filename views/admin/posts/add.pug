@@ -118,7 +118,7 @@ block content
                                 .nk-int-st
                                     h4 Nội dung hoạt động 
                                         span.freebirdFormviewerViewItemsItemRequiredAsterisk *
-                                    <textarea name="content"></textarea>
+                                    textarea#editor(name="content")
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                 .nk-int-st
@@ -165,9 +165,14 @@ block script
     script(src='/assets/js/wave/waves.min.js')
     script(src='/assets/js/wave/wave-active.js')
 
-    script(src="https://cdn.ckeditor.com/4.11.4/full-all/ckeditor.js")
+    script(src="/js/ckeditor.min.js")
     script.
-        CKEDITOR.replace( "content" )
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) ).
+            then(Lock()
+            ).catch( error => {
+                console.error( error );
+            });
     script(src="/assets/js/bootstrap-select/bootstrap-select.js")
     script.
         $('select').selectpicker();
