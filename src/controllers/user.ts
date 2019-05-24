@@ -42,12 +42,19 @@ export let profile = async (req: Request, res: Response) => {
         activity: activity
     });
 };
+
+function getValidMSSV(name: string): number[] {
+    // met qua deo lam
+    return [1612115, 1711947];
+}
+
 export let info = async (req: Request, res: Response) => {
     try {
         const faculties = (await GeneralInfomation.find({}))[0].facultyList;
         return res.render("fill", {
             user: req.user,
-            faculties: faculties
+            faculties: faculties,
+            validmssv: getValidMSSV(req.user.fullName)
         });
     }
     catch (err) {
