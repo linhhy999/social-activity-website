@@ -1,0 +1,110 @@
+doctype
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        //- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+        meta(name='description', content='')
+        meta(name='author', content='')
+        title
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
+        link(href="/css/bootstrap.min.css" rel="stylesheet")
+        link(href="/css/mdb.min.css" rel="stylesheet")
+        link(href="/css/style.css" rel="stylesheet")
+        link(href="/css/styleprofileother.css" rel="stylesheet")
+
+    body
+        include partials/header
+        .mt-100
+        .container
+            .row
+                .col-lg-3.hidden-sm
+                    .card.testimonial-card.mb-2
+                        .card-up.aqua-gradient(style="height:150px")
+                        .avatar-wrapper.avatar(style="margin-top:-100px;")
+                            img.profile-pic(src=otheruser.avatar)
+                        .card-body.text-center
+                            h4.card-title= otheruser.fullName
+                            hr
+                            .row
+                                .col-sm-4(style="padding-left:8px; padding-right: 0px;")
+                                    p.grey-text.small MSSV
+                                    p.text-primary(style="line-height: 0px;font")
+                                        strong.small=otheruser.code
+                                .col-sm-4
+                                    p.grey-text.small CTXH
+                                    p.text-primary(style="line-height: 0px;")
+                                        strong.small#socialday=otheruser.socialdays.value
+                                        i.spinner#spinner(style="display:none")
+                                .col-sm-4
+                                    p.grey-text.small Level
+                                    p.text-primary(style="line-height: 0px;")
+                                        strong.small=otheruser.role
+                br
+                .col-lg-9.col-sm-12
+                    // Card
+                    .card
+                        // Card content
+                        .card-body
+                            // Title
+                            h4.card-title
+                                a Thông tin người dùng
+                            div
+                                div
+                                    label(style="font-size: .75rem") MSSV:
+                                    h6 #{otheruser.code}
+                                if otheruser.phone
+                                    div
+                                        label(style="font-size: .75rem") Email:
+                                        h6 #{otheruser.email}
+                                    div
+                                        label(style="font-size: .75rem") Số điện thoại:
+                                        h6 #{otheruser.phone}
+                                div
+                                    label(style="font-size: .75rem") Khoa
+                                    h6 #{user.faculty}
+                    .card.mt-3
+                        .card-body
+                            h4.card-title
+                                a Hoạt động cá nhân
+                            .table-responsive
+                                table.table
+                                    thead
+                                        tr
+                                            th(scope='col') STT
+                                            th(scope='col') Mã Hoạt động
+                                            th(scope='col') Tên hoạt động
+                                            th(scope='col') Khoa tổ chức
+                                            th(scope='col') Ngày CTXH
+                                    tbody
+                                        - let i= 0
+                                        each act in activity
+                                            - i++
+                                            tr
+                                                th(scope='row')= i
+                                                td= act.id
+                                                td= act.name
+                                                td= act.orgUnit
+                                                td= act.benefit
+                // Card
+    script(type="text/javascript" src="/js/jquery-3.3.1.min.js")
+    script(type="text/javascript" src="/js/popper.min.js")
+    script(type="text/javascript" src="/js/bootstrap.min.js")
+    script(type="text/javascript" src="/js/mdb.min.js")
+
+    script.
+        $(document).ajaxStart(function() {
+            if ($('#socialday').text() == "")
+                $("#spinner").show();
+        }).ajaxStop(function() {
+            $("#spinner").hide('slow');
+        });
+    script.
+        $.ajax({
+            url: '/ctxh/'+!{otheruser.code},
+            type:'GET',
+            success: function(data){
+                $('#socialday').text(data);
+            }
+        });

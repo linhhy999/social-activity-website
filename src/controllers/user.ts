@@ -4,37 +4,8 @@ import User from "../models/User";
 import GeneralInfomation from "../models/General";
 import { NextFunction } from "express";
 
-
-// /**
-//  * GET /
-//  * Home page.
-//  */
-// export let getUser = (req: Request, res: Response) => {
-//     // todo
-// };
-
-// export let postUser = (req: Request, res: Response) => {
-//     // todo
-// };
-
-// export let updateUserInfo = (req: Request, res: Response) => {
-//     // todo
-// };
-
-// export let blockUser = (req: Request, res: Response) => {
-//     // todo
-// };
-
-// export let unBlockUser = (req: Request, res: Response) => {
-//     // todo
-// };
-
-// export let changeRole = (req: Request, res: Response) => {
-//     // todo
-// };
-
 export let profile = async (req: Request, res: Response) => {
-    if (req.params.code == undefined) {
+    if (req.query.code == undefined || req.query.code == req.user.code) {
         const activity = await Activity.find({ "members.info.code": req.user.code });
         const faculties = (await GeneralInfomation.find({}))[0].facultyList;
         return res.render("profile", {
@@ -45,12 +16,36 @@ export let profile = async (req: Request, res: Response) => {
         });
     }
     else {
+        const mssv = req.query.code;
+        const user = await User.findOne({ "code": mssv });
+        if (user == undefined) {
+            return res.render("404");
+        }
+        let userinfo = {
+            fullName: user.fullName,
+            code: user.code,
+            falcuty: user.faculty,
+            avatar: user.avatar,
+            role: user.role,
+            socialdays: user.socialdays
+        };
+        if (req.user.role == 1 || req.user.role == 10) {
+            userinfo = { ...userinfo, ...{ phone: user.phone } };
+            userinfo = { ...userinfo, ...{ email: user.email } };
+        }
+        const activity = await Activity.find({ "members.info.code": req.user.code });
+        return res.render("otherprofile", {
+            otheruser: userinfo,
+            user: req.user,
+            accessible: req.user.role,
+            activity: activity,
+        });
     }
 };
 
 function getValidMSSV(name: string): number[] {
     // met qua deo lam
-    return [1612115, 1711947];
+    return [1612115, 1612116, 1612117, 1611967];
 }
 
 export let info = async (req: Request, res: Response) => {

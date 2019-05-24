@@ -61,7 +61,8 @@ block content
                                 | Số ngày công tác xã hội (tối đa): 
                             = activity.benefit
                     .m-auto
-                    img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, style="object-fit:cover" alt="avatar.jpg")
+                    a(href="/profile?code="+activity.host.code, style="height: 50px")
+                        img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, style="object-fit:cover" alt="avatar.jpg")
                     //<button type="button" class="btn btn-primary btn-rounded">Primary</button>
                 .view.overlay
                     #carousel-example-1z.carousel.slide.carousel-fade(data-ride="carousel")
@@ -118,13 +119,15 @@ block content
                             | 200
                 .card-body
                     form(action="/comment/"+activity._id, method="POST")
-                        img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=user.avatar, alt="avatar.jpg")
+                        a(href="/profile?code="+activity.host.code, style="height: 50px")
+                            img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=user.avatar, alt="avatar.jpg")
                         input#comment.input-rounded(type="text", name="comment", placeholder="comment...")
                 .card-body
                     ul.comment
                         each comment in activity.comment
                             li.comment-item
-                                img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=comment.info.avatar, alt="avatar.jpg")
+                                a(href="/profile?code="+activity.host.code, style="height: 50px")
+                                    img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=comment.info.avatar, alt="avatar.jpg")
                                 span.name= comment.info.fullName
                                 i.far.fa-clock.pr-2= comment.timeComment
                                 p= comment.content
@@ -173,16 +176,14 @@ block content
                                 th Khoa
                         tbody
                             - i=1
+
                             each member in activity.members
                                 if member.status == 2
                                     tr
                                         th(scope='row')= i
-                                        td.font-weight-bold= member.info.fullName
+                                        a(href="/profile?code=" + member.info.code, style="height: 50px")
+                                            td.font-weight-bold= member.info.fullName
                                         td= member.info.code
                                         td= member.info.faculty
                                     - i++
-
-                    // Footer
                     .modal-footer
-                        // button.btn.btn-outline-primary(type='button' data-dismiss='modal') Close
-                        // Modal: modalMember
