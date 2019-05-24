@@ -123,7 +123,7 @@ html(lang='en')
                         mssv: {
                             required: true,
                             rangelength: [7,7],
-                            range: [1400000, 1899999]
+                            validcode: true
                         },
                         name: "required",
                         phone: {
@@ -172,6 +172,11 @@ html(lang='en')
                 });
             });
         script.
+            const validmssv = [#{validmssv}];
+            jQuery.validator.addMethod("validcode", function (value, element) {
+                return this.optional(element) || validmssv.includes(parseInt(element.value));
+            }, 'Vui lòng nhập mã số sinh viên hợp lệ');
+        script.
             $(document).ajaxStart(function() {
                 if ($('#socialday').text() == "")
                     $("#spinner").show();
@@ -183,7 +188,6 @@ html(lang='en')
                 url: '/ctxh/'+!{user.code},
                 type:'GET',
                 success: function(data){
-                    console.log(data);
                     $('#socialday').text(data);
                 }
             });

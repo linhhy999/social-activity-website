@@ -122,7 +122,7 @@ block content
                                 .nk-int-st.nk-toggled
                                     h4 Nội dung hoạt động 
                                         span.freebirdFormviewerViewItemsItemRequiredAsterisk *
-                                    textarea(name="content")
+                                    textarea#editor(name="content")
                                         = activity.content
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
@@ -169,7 +169,7 @@ block script
     script.
         const datetimeformat = {
             format: 'DD/MM/YYYY HH:mm',
-            minDate: moment(Date.now()),
+            minDate: moment(Date.now() - 604800000),
             maxDate: moment(Date.now() + 10184000000),
         };
         $('#datetimepicker1').datetimepicker(datetimeformat);
@@ -179,7 +179,6 @@ block script
         $('#datetimepicker2').data("DateTimePicker").date('#{activity.dateStart}')
         $('#datetimepicker3').data("DateTimePicker").date('#{activity.dateEnd}')
 
-    script(src="https://cdn.ckeditor.com/4.11.4/full-all/ckeditor.js")
 
     script(src="/assets/js/bootstrap-select/bootstrap-select.js")
     script.
@@ -190,7 +189,7 @@ block script
                 if (value.name == "content" || value.name == "image" || value.name == "orgUnit") { }
                 else value.disabled = false;
             });
-            try{CKEDITOR.instances['content'].setReadOnly(false);} catch{}
+            try{CKEDITOR.instances['content'].isReadOnly =false;} catch{}
             $('div[class="btn-delete"]').show();
             $("input[type='file']").show();
             $('#btnEdit').hide();
@@ -208,14 +207,16 @@ block script
             $('#btnEdit').show();
             $('#submit').hide();
             $('#btnCancel').hide();
-            for (var i=0;i<100000;i++)
-                try{
-                    CKEDITOR.replace("content");
-                    CKEDITOR.instances["content"].setReadOnly(true);
-                    break;
-                }
-                catch {}
+            try{CKEDITOR.instances["content"].isReadOnly = true;} catch{}
         }
+    script(src="/js/ckeditor.min.js")
+    script.
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) ).
+            then(Lock()
+            ).catch( error => {
+                console.error( error );
+            });
     script.
         delimg = [];
         deleteImage = (activity, link) => {
@@ -223,7 +224,6 @@ block script
             $('#image_'+link).hide();
             $('#delimg')[0].value = JSON.stringify(delimg);
         }
-        Lock();
     //- script.
     //-     $('#submit').click(function() {
     //-         $('#datetimepicker1').data("DateTimePicker").format('X');

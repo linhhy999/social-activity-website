@@ -62,9 +62,7 @@ module.exports = {
         const mailOptions = {
             from: '"Sociofy" noreply.sociofy@gmail.com',
             to: email,
-            //cc: 'madddogite01@gmail.com',
             subject: 'Sociofy: Remind',
-            //text: 'Plaintext version of the message',
             html: htmlData
         };
 

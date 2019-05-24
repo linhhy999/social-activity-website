@@ -1,4 +1,6 @@
 extends layout
+
+
 block content
     .row
         .col-lg-12
@@ -20,13 +22,29 @@ block content
                         p.card-text.mb-0
                             i.far.fa-clock.pr-2
                             strong
-                                | Thời gian:
-                            = activity.timeStart
+                                | Hạn đăng ký: 
+                            = activity.registerEnd
+                        p.card-text.mb-0
+                            i.far.fa-clock.pr-2
+                            strong
+                                | Thời gian: 
+                            = activity.dateStart
+                        p.card-text.mb-0
+                            i.far.fa-clock.pr-2
+                            strong
+                                | Thời gian kết thúc (dự kiến): 
+                            = activity.dateEnd
                         p.card-text.mb-0
                             i.far.fa-map.pr-2
                             strong
-                                | Địa điểm: 
-                            = activity.targetPlace
+                                | Địa điểm tập trung: 
+                            = activity.gatheringPlace
+                        if activity.targetPlace
+                            p.card-text.mb-0
+                                i.far.fa-map.pr-2
+                                strong
+                                    | Địa điểm di chuyển đến: 
+                                = activity.targetPlace
                         p.card-text.mb-0
                             i.far.fa-map.pr-2
                             strong
@@ -40,7 +58,7 @@ block content
                         p.card-text.mb-0
                             i.far.fa-map.pr-2
                             strong
-                                | Số ngày công tác xã hội: 
+                                | Số ngày công tác xã hội (tối đa): 
                             = activity.benefit
                     .m-auto
                     img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, style="object-fit:cover" alt="avatar.jpg")

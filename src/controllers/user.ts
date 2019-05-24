@@ -34,13 +34,18 @@ import { NextFunction } from "express";
 // };
 
 export let profile = async (req: Request, res: Response) => {
-    const activity = await Activity.find({ "members.info.code": req.user.code });
-    const faculties = (await GeneralInfomation.find({}))[0].facultyList;
-    return res.render("profile", {
-        user: req.user,
-        faculties: faculties,
-        activity: activity
-    });
+    if (req.params.code == undefined) {
+        const activity = await Activity.find({ "members.info.code": req.user.code });
+        const faculties = (await GeneralInfomation.find({}))[0].facultyList;
+        return res.render("profile", {
+            user: req.user,
+            faculties: faculties,
+            activity: activity,
+            validmssv: getValidMSSV(req.user.fullName)
+        });
+    }
+    else {
+    }
 };
 
 function getValidMSSV(name: string): number[] {

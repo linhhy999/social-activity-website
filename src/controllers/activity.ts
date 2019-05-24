@@ -340,6 +340,29 @@ export let getRefuseMember = async (req: Request, res: Response) => {
     return res.redirect("back");
 };
 
+declare global {
+    interface Date {
+        toIsoString(): string;
+    }
+}
+
+Date.prototype.toIsoString = function () {
+    const tzo = -this.getTimezoneOffset(),
+        dif = tzo >= 0 ? "+" : "-",
+        pad = function (num: any) {
+            const norm = Math.floor(Math.abs(num));
+            return (norm < 10 ? "0" : "") + norm;
+        };
+    return this.getFullYear() +
+        "-" + pad(this.getMonth() + 1) +
+        "-" + pad(this.getDate()) +
+        "T" + pad(this.getHours()) +
+        ":" + pad(this.getMinutes()) +
+        ":" + pad(this.getSeconds()) +
+        dif + pad(tzo / 60) +
+        ":" + pad(tzo % 60);
+};
+
 export let postComment = async (req: any, res: Response) => {
     req.checkBody("comment", "Comment không được để trống").notEmpty();
 
@@ -354,7 +377,7 @@ export let postComment = async (req: any, res: Response) => {
         const activity = await Activity.findOne({ "_id": activityId });
         activity.comment.unshift({
             info: req.user._id,
-            timeComment: new Date,
+            timeComment: new Date().toIsoString(),
             content: req.body.comment,
         });
         await activity.save();
@@ -438,7 +461,7 @@ export let apply = async (req: Request, res: Response) => {
         const activity = await Activity.findOne({ "_id": activityId });
         const registered = (activity.members.filter(member => member.info.code === req.user.code).length > 0);
         if (registered) return res.redirect("back");
-        const user = await User.findOne({code: req.user.code});
+        const user = await User.findOne({ code: req.user.code });
         activity.members.push({
             info: user._id,
             status: Status.PENDING,

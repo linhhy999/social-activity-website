@@ -1,9 +1,6 @@
 import Activity, { Status } from "../models/Activity";
-import User from "../models/User";
-const mail = require("../util/email");
-
-import { NextFunction, Request, Response } from "express";
 import moment = require("moment");
+const mail = require("../util/email");
 moment.locale("de");
 let i = 0;
 
