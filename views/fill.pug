@@ -39,11 +39,8 @@ html(lang='en')
                                 .upload-button
                                     i.fa.fa-arrow-circle-up(aria-hidden='true')
                                 input.file-upload(type='file'  name="avatar", id="avatar", style="visibility: hidden")
-                            .md-form.form-sm
-                                input#materialFormNameModal.form-control.form-control-sm(type='text', name="name", required, value = user.fullName autofocus)
-                                label(for='materialFormNameModal') Tên của bạn
-                                .valid-feedback
-                                    | Looks good!
+                            h2(style="text-align: center;")
+                                b #{user.fullName}
                             .md-form.form-sm
                                 input#materialFormMSSVModal.form-control.form-control-sm(type='text', name="mssv", required value= user.code)
                                 label(for='materialFormMSSVModal') Mã số sinh viên

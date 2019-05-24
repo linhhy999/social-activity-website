@@ -77,7 +77,6 @@ export let postInfo = async (req: any, res: any) => {
     req.checkBody("mssv", "MSSV không được để trống").notEmpty();
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
-    req.checkBody("name", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -96,7 +95,6 @@ export let postInfo = async (req: any, res: any) => {
                 "code": req.body.mssv,
                 "phone": req.body.phone,
                 "faculty": req.body.faculty,
-                "fullName": req.body.name,
                 "avatar": avatarlink
             }
         }, { upsert: false });
@@ -112,7 +110,6 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
     req.checkBody("mssv", "MSSV không được để trống").notEmpty();
     req.checkBody("phone", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("faculty", "Tên khoa không được để trống").notEmpty();
-    req.checkBody("name", "Tên không được để trống").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -129,7 +126,6 @@ export let updateProfile = async (req: any, res: Response, next: NextFunction) =
         "code": req.body.mssv,
         "phone": req.body.phone,
         "faculty": req.body.faculty,
-        "fullName": req.body.name,
         "avatar": avatarlink,
     };
     try {
