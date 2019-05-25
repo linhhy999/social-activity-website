@@ -45,7 +45,7 @@ export let profile = async (req: Request, res: Response) => {
 
 function getValidMSSV(name: string): number[] {
     // met qua deo lam
-    return [1612115, 1612116, 1612117, 1611967];
+    return [1610131, 1611134, 1611244, 1611967, 1612115, 1612116, 1612117];
 }
 
 export let info = async (req: Request, res: Response) => {
