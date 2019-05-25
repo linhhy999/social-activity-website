@@ -35,7 +35,6 @@ export let index = async (req: Request, res: Response) => {
                 a[i] = { ...a[i], ...b[i] };
             }
             const activity = await Activity.find({ "members.info.code": req.user.code });
-
             return res.render("newsfeed", {
                 user: req.user,
                 activities: activityList.reverse(),

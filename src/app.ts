@@ -153,5 +153,6 @@ app.get("/admin/account/unblock/:id", Guard.isLogin, Guard.isFill, Guard.hasPerm
 app.get("/admin/account/modifyRole/:id/:newRole", Guard.isLogin, Guard.isFill, Guard.hasPermission(Role.Admin, Role.Host), accountController.postChangeRole);
 app.get("/ctxh/:id", accountController.getCTXH);
 // app.post("/ajax/delete/image", activityController.postDeleteImage);
+app.post("/ajax/like", activityController.postLike);
 app.get("*", (req, res) => { res.render("404"); });
 export default app;

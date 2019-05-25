@@ -29,7 +29,7 @@ block content
                             li
                                 a(data-toggle='tab' href='#pending') Chờ duyệt (#{pending})
                             li
-                                a(data-toggle='tab' href='#reject') Hủy đăng ký (#{refuse})
+                                a(data-toggle='tab' href='#reject') Hủy đăng ký / Từ chối(#{refuse})
                         .tab-content.tab-custom-st
                             #registered.tab-pane.fade.in.active
                                 .tab-ctn
@@ -82,9 +82,13 @@ block content
                                                         td= member.info.phone
                                                         td= member.info.email
                                                         th
-                                                            form(action="/admin/post/member/"+activity+"/accept/"+member.id+"/"+member.info.code method='post')
-                                                                button.btn.btn-primary.btn-rounded.btn-sm.waves-light
-                                                                    | Chấp nhận
+                                                            row
+                                                                form.col-sm-6(action="/admin/post/member/"+activity+"/accept/"+member.id+"/"+member.info.code method='post' style="padding: 0")
+                                                                    button.btn.btn-primary.btn-rounded.btn-sm.waves-light
+                                                                        i.fa.fa-check
+                                                                form.col-sm-6(action="/admin/post/member/"+activity+"/refuse/"+member.id+"/"+member.info.code method='post' style="padding: 0")
+                                                                    button.btn.btn-danger.btn-rounded.btn-sm.waves-light
+                                                                        t.fa.fa-times
                             #reject.tab-pane.fade
                                 .tab-ctn
                                     table.table.table-sc-ex

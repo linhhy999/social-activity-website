@@ -14,6 +14,7 @@ export type ActivityModel = mongoose.Document & {
     maxMember: number,
     members: Member[],
     comment: Comment[],
+    like: any[]
     superVisor: [],
     benefit: number,
     status: boolean,
@@ -67,6 +68,7 @@ const activitySchema = new mongoose.Schema({
         ref: "User",
         autopopulate: true
     },
+    like: [],
     images: [String],
     maxMember: Number,
     members: [{
