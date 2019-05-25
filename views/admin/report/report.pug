@@ -25,28 +25,29 @@ block content
                                     form(method="POST")
                                         button.btn.btn-success.notika-btn-success.waves-effect(type="submit") Tạo báo cáo
                                         each member, index in activity.members
-                                            tr
-                                                td= index+1
-                                                td= member.name
-                                                td= member.mssv
-                                                th
-                                                    .fm-checkbox
-                                                        label
-                                                            input(type='radio' name="member[]" value="1" checked=true)
-                                                th
-                                                    .fm-checkbox
-                                                        label
-                                                            input(type='radio'  name="member[]" value="2")
-                                                th
-                                                    .fm-checkbox
-                                                        label
-                                                            input(type='radio'  name="member[]" value="3")
-                                                th
-                                                    .input-group.nk-int-st
-                                                        input.form-control(type="number", max=activity.benefit, data-mask='9999', name="point[]", value=activity.benefit, style="width: 40px;")
-                                                th
-                                                    .input-group.nk-int-st
-                                                        input.form-control(type='text' name="note[]")
+                                            if (member.status == 2)
+                                                tr
+                                                    td= index+1
+                                                    td= member.info.fullName
+                                                    td= member.info.code
+                                                    th
+                                                        .fm-checkbox
+                                                            label
+                                                                input(type='radio' name="member[]" value="1" checked=true)
+                                                    th
+                                                        .fm-checkbox
+                                                            label
+                                                                input(type='radio'  name="member[]" value="2")
+                                                    th
+                                                        .fm-checkbox
+                                                            label
+                                                                input(type='radio'  name="member[]" value="3")
+                                                    th
+                                                        .input-group.nk-int-st
+                                                            input.form-control(type="number", max=activity.benefit, data-mask='9999', name="point[]", value=activity.benefit, style="width: 40px;")
+                                                    th
+                                                        .input-group.nk-int-st
+                                                            input.form-control(type='text' name="note[]")
 
 block script
     script.

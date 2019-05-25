@@ -66,10 +66,20 @@ block content
                             .mask.rgba-white-slight
                     .card-body
                         span.show-short-content !{activity.content}
-                        div
+                        div 
+                            a.btn.btn-flat.red-text.p-1.my-1.mr-2.mml-1.btn-danger(onclick="like('"+activity.id+"', '"+user.id+"');" style="color: white !important")
+                                i.fas.fa-thumbs-up
+                                span(id=activity.id+"like")
+                                    if activity.like.includes(user.id)
+                                        |   UnLike
+                                    else 
+                                        |   Like
+                           
+                                    
+                            
                             a.btn.btn-flat.red-text.p-1.my-1.mr-0.mml-1( href="/activity-detail/"+activity._id ) See more
-                            i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
-                            i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it") 200
+                            
+                            i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(id=activity.id data-toggle="tooltip" data-placement="top" title="I like it")= activity.like.length
         .col-lg-4.hidden-sm
             a(href="/profile")
                 .card.testimonial-card.mb-2
@@ -114,10 +124,28 @@ block script
         });
     script.
         $.ajax({
-           url: '/ctxh/'+!{user.code},
-           type:'GET',
-           success: function(data){
-               console.log(data);
-               $('#socialday').text(data);
-           }
+            url: '/ctxh/'+!{user.code},
+            type:'GET',
+            success: function(data){
+                console.log(data);
+                $('#socialday').text(data);
+            }
         });
+        like = (activity, user) => {
+            $.ajax({
+                type: "POST",
+                url: "/ajax/like",
+                data: {
+                    activity: activity,
+                    user: user, 
+                },
+                success: function (res) {
+                    $('#'+activity).text(res.like)
+                    $('#'+activity+"like").text(res.text)
+                },
+                dataType: "json"
+            });
+
+            return false;
+        }
+        

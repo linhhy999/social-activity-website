@@ -93,6 +93,13 @@ block content
                 .card-body !{activity.content}
 
                     div
+                        button.btn.btn-danger.btn-rounded.btn-sm(onclick="like('"+activity.id+"', '"+user.id+"');" style="color: white !important")
+                                i.fas.fa-thumbs-up
+                                span(id=activity.id+"like")
+                                    if activity.like.includes(user.id)
+                                        |   UnLike
+                                    else 
+                                        |   Like
                         if status == 1
                             button.btn.btn-danger.btn-rounded.btn-sm(disabled)
                                 | Đang chờ duyệt
@@ -114,9 +121,7 @@ block content
                             | Bình Luận
                         button.btn.btn-primary.btn-rounded.btn-sm(data-toggle='modal' data-target='#modalMember') 
                             | Thành Viên
-                        i.fas.fa-share-alt.text-muted.float-right.p-1.my-1(data-toggle="tooltip" data-placement="top" title="Share this post")
-                        i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(data-toggle="tooltip" data-placement="top" title="I like it")
-                            | 200
+                        i.fas.fa-heart.text-muted.float-right.p-1.my-1.mr-3.red-text(id=activity.id data-toggle="tooltip" data-placement="top" title="I like it")= activity.like.length
                 .card-body
                     form(action="/comment/"+activity._id, method="POST")
                         a(href="/profile?code="+activity.host.code, style="height: 50px")
@@ -186,3 +191,22 @@ block content
                                         td= member.info.faculty
                                     - i++
                     .modal-footer
+block script
+    script.
+        like = (activity, user) => {
+            $.ajax({
+                type: "POST",
+                url: "/ajax/like",
+                data: {
+                    activity: activity,
+                    user: user, 
+                },
+                success: function (res) {
+                    $('#'+activity).text(res.like)
+                    $('#'+activity+"like").text(res.text)
+                },
+                dataType: "json"
+            });
+
+            return false;
+        }

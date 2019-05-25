@@ -30,7 +30,7 @@ module.exports = {
             else console.log('Email sent: ' + info.response);
         });
     },
-    refuse: async (username, email, activityName, link) => {
+    refused: async (username, email, activityName, link) => {
         const htmlData =
             '<p>Dear ' + username + ',</p>\
             <p>Sociofy is pleased to announce that you has been <font color="red">rejected</font> to join in <font color="red">' + activityName + '</font>.<br>\

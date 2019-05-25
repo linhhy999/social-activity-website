@@ -202,7 +202,7 @@ export let searchActivity = async (req: Request, res: Response) => {
                     { gatheringPlace: { $regex: req.query.keyword, $options: "$i" } },
                     { dateStart: { $regex: req.query.keyword, $options: "$i" } },
                     { orgUnit: { $regex: req.query.keyword, $options: "$i" } },
-                    // { "host.fullName": { $regex: req.query.keyword, $options: "$i" } },
+                    // { "host.info.fullName": { $regex: req.query.keyword, $options: "$i" } },
                 ]
         });
     }
@@ -511,8 +511,9 @@ export let getReport = async (req: Request, res: Response) => {
 export let postReport = async (req: Request, res: Response) => {
     try {
         const activity = await Activity.findOne({ "_id": req.params.activity });
-        const members = activity.members;
+        const members = activity.members.filter(member => member.status == 2);
         if (members.length != req.body.member.length) {
+            console.log(members.length, req.body.member.length);
             return res.redirect("back");
         }
         members.map(function (member, index) {
@@ -542,9 +543,29 @@ export let postReport = async (req: Request, res: Response) => {
         await Activity.updateOne({ _id: req.params.activity }, {
             status: false
         });
-
         res.attachment("report.xlsx"); // This is sails.js specific (in general you need to set headers)
         return res.send(report);
+    }
+    catch (err) {
+        console.log(err.message);
+        return res.status(404).json("fail");
+    }
+};
+
+export let postLike = async (req: Request, res: Response) => {
+    try {
+        let text = "Unlike";
+        const activity = await Activity.findOne({ "_id": req.body.activity });
+        if (activity.like.includes(req.body.user)) {
+            activity.like = activity.like.filter(user => user != req.body.user);
+            text = "Like";
+        }
+        else {
+            activity.like.unshift(req.body.user);
+        }
+        await activity.save();
+        console.log(activity.like.length);
+        return res.json({like: activity.like.length, text: text});
     }
     catch (err) {
         console.log(err.message);
