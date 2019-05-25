@@ -133,8 +133,11 @@ block content
                                     .fm-checkbox
                                         .bootstrap-select
                                             select.selectpicker(name="superVisor" multiple)
-                                                each sp in superVisor
-                                                    option(value=sp._id selected)= sp.fullName
+                                                //- each sp in superVisor
+                                                //-     option(value=sp._id selected)= sp.fullName - sp.code
+                                                each sp in allsuperVisor
+                                                    option(value=sp._id) #{sp.fullName} - #{sp.code}
+
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-start

@@ -32,7 +32,7 @@ passport.use(new GoogleStrategy({
             auth: {
                 googleId: profile.id,
                 picture: profile.photos[0].value,
-                displayName: profile.displayName.split(" ")
+                displayName: profile.displayName
             },
             email: profile.emails[0].value,
             fullName: VNName,

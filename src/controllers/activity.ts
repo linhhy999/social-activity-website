@@ -9,7 +9,7 @@ import { registered, refused } from "./email";
 
 export let getAddActivity = async (req: Request, res: Response) => {
     try {
-        const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1 });
+        const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1, "code": 1 });
         const faculties = (await GeneralInfomation.find({}))[0].facultyList;
         return res.render("admin/posts/add", {
             superVisors: sp,
@@ -81,9 +81,11 @@ export let getActivityDetail = async (req: Request, res: Response) => {
         for (const visor of activity.superVisor) {
             superVisor.push(await User.findById(visor));
         }
+        const sp = await User.find({ "role": 1 }, { "_id": 1, "fullName": 1, "code": 1 });
         return res.render("admin/posts/detail", {
             activity: activity,
             superVisor: superVisor,
+            allsuperVisor: sp,
             title: activity.name,
         });
     }
@@ -91,10 +93,6 @@ export let getActivityDetail = async (req: Request, res: Response) => {
         console.log(er.message);
     }
     const activity = await Activity.findById(req.params.id);
-};
-
-export let getActivity = (req: Request, res: Response) => {
-    // todo
 };
 
 export let postActivity = async (req: any, res: Response) => {
@@ -397,20 +395,18 @@ export let getUserActivity = (req: Request, res: Response) => {
 export let activityDetail = async (req: Request, res: Response) => {
     const activityId = req.params.id;
     const unit = await Activity.find({}, { orgUnit: 1, _id: 0 });
-    const a = [], b = [];
-    let prev;
+    const a = [];
     unit.sort();
     for (let i = 0; i < unit.length; i++) {
-        if (unit[i].orgUnit !== prev) {
-            a.push({ orgUnit: unit[i].orgUnit });
-            b.push({ num: 1 });
-        } else {
-            b[b.length - 1].num++;
+        let meet: boolean = false;
+        for (let j = a.length; j > 0; j--) {
+            if (unit[i].orgUnit == a[j - 1].orgUnit) {
+                a[j - 1].num++;
+                meet = true;
+                break;
+            }
         }
-        prev = unit[i].orgUnit;
-    }
-    for (let i = 0; i < a.length; i++) {
-        a[i] = { ...a[i], ...b[i] };
+        if (!meet) a.push({ orgUnit: unit[i].orgUnit, num: 1 });
     }
     try {
         const activity = await Activity.findOne({ "_id": activityId });
@@ -562,7 +558,7 @@ export let postLike = async (req: Request, res: Response) => {
         }
         await activity.save();
         console.log(activity.like.length);
-        return res.json({like: activity.like.length, text: text});
+        return res.json({ like: activity.like.length, text: text });
     }
     catch (err) {
         console.log(err.message);

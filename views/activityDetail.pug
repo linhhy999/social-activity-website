@@ -131,7 +131,7 @@ block content
                     ul.comment
                         each comment in activity.comment
                             li.comment-item
-                                a(href="/profile?code="+activity.host.code, style="height: 50px")
+                                a(href="/profile?code="+comment.info.code, style="height: 50px")
                                     img.rounded-circle(height="50px", width="50px", style="object-fit:cover" src=comment.info.avatar, alt="avatar.jpg")
                                 span.name= comment.info.fullName
                                 i.far.fa-clock.pr-2= comment.timeComment

@@ -6,7 +6,7 @@ import { NextFunction } from "express";
 
 export let profile = async (req: Request, res: Response) => {
     if (req.query.code == undefined || req.query.code == req.user.code) {
-        const activity = await Activity.find({ "members.info.code": req.user.code });
+        const activity = await Activity.find({ members: { $elemMatch: { "info.code": req.user.code } } });
         const faculties = (await GeneralInfomation.find({}))[0].facultyList;
         return res.render("profile", {
             user: req.user,

@@ -128,7 +128,7 @@ block content
                                         .bootstrap-select
                                             select.selectpicker(name="superVisor" multiple)
                                                 each sp in superVisors
-                                                    option(value=sp._id)= sp.fullName
+                                                    option(value=sp._id) #{sp.fullName} - #{sp.code}
                             .form-group.ic-cmp-int.float-lb.floating-lb
                                 .form-ic-cmp
                                     i.notika-icon.notika-start

@@ -19,20 +19,18 @@ export let index = async (req: Request, res: Response) => {
         try {
             const activityList = await Activity.find().limit(10);
             const unit = await Activity.find({}, { orgUnit: 1, _id: 0 });
-            const a = [], b = [];
-            let prev;
+            const a: any[] = [];
             unit.sort();
             for (let i = 0; i < unit.length; i++) {
-                if (unit[i].orgUnit !== prev) {
-                    a.push({ orgUnit: unit[i].orgUnit });
-                    b.push({ num: 1 });
-                } else {
-                    b[b.length - 1].num++;
+                let meet: boolean = false;
+                for (let j = a.length; j > 0; j--) {
+                    if (unit[i].orgUnit == a[j - 1].orgUnit) {
+                        a[j - 1].num++;
+                        meet = true;
+                        break;
+                    }
                 }
-                prev = unit[i].orgUnit;
-            }
-            for (let i = 0; i < a.length; i++) {
-                a[i] = { ...a[i], ...b[i] };
+                if (!meet) a.push({ orgUnit: unit[i].orgUnit, num: 1 });
             }
             const activity = await Activity.find({ "members.info.code": req.user.code });
             return res.render("newsfeed", {
