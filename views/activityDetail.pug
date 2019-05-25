@@ -176,13 +176,12 @@ block content
                                 th Khoa
                         tbody
                             - i=1
-
                             each member in activity.members
                                 if member.status == 2
                                     tr
                                         th(scope='row')= i
-                                        a(href="/profile?code=" + member.info.code, style="height: 50px")
-                                            td.font-weight-bold= member.info.fullName
+                                        td.font-weight-bold
+                                            a(href="/profile?code=" + member.info.code, style="height: 50px")= member.info.fullName
                                         td= member.info.code
                                         td= member.info.faculty
                                     - i++

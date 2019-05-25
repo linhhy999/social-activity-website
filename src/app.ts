@@ -42,11 +42,11 @@ import { Role } from "./models/User";
 import { reminder } from "./controllers/email";
 const CronJob = require("cron").CronJob;
 
-const job = new CronJob("00 43 1 * * 0-6", function() {
+const job = new CronJob("00 43 1 * * 0-6", function () {
     reminder();
-    }, function () {
-        console.log("ok");
-    },
+}, function () {
+    console.log("ok");
+},
 );
 job.start();
 // Create Express server
