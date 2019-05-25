@@ -189,7 +189,7 @@ block script
                 if (value.name == "content" || value.name == "image" || value.name == "orgUnit") { }
                 else value.disabled = false;
             });
-            try{CKEDITOR.instances['content'].isReadOnly =false;} catch{}
+            try{CKEDITOR.instances['content'].setReadOnly(false);} catch{}
             $('div[class="btn-delete"]').show();
             $("input[type='file']").show();
             $('#btnEdit').hide();
@@ -207,7 +207,7 @@ block script
             $('#btnEdit').show();
             $('#submit').hide();
             $('#btnCancel').hide();
-            try{CKEDITOR.instances["content"].isReadOnly = true;} catch{}
+            try{CKEDITOR.instances["content"].setReadOnly(true);} catch{}
         }
     script(src="/js/ckeditor.min.js")
     script.

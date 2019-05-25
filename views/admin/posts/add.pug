@@ -167,12 +167,7 @@ block script
 
     script(src="/js/ckeditor.min.js")
     script.
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) ).
-            then(Lock()
-            ).catch( error => {
-                console.error( error );
-            });
+        ClassicEditor.create(document.querySelector( '#editor' )).catch( error => {console.error( error );});
     script(src="/assets/js/bootstrap-select/bootstrap-select.js")
     script.
         $('select').selectpicker();
