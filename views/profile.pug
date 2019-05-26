@@ -60,7 +60,7 @@ html(lang='en')
                                 div
                                     .md-form.form-sm
                                         label(for='inputMSSV') MSSV:
-                                        input#inputMSSV.form-control.form-control-sm(type='text' value=user.code name="mssv")
+                                        input#inputMSSV.form-control.form-control-sm(type='number' value=user.code name="mssv")
                                     .md-form.form-sm
                                         label(for='inputEmail') Email:
                                         input#inputEmail.form-control.form-control-sm(type='text' value=user.email name="email" disabled)
@@ -123,6 +123,7 @@ html(lang='en')
                         mssv: {
                             required: true,
                             rangelength: [7,7],
+                            range:[1500000,1899999],
                             validcode: true
                         },
                         name: "required",
