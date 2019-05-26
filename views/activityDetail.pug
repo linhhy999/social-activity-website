@@ -17,7 +17,7 @@ block content
                             label.badge-pill.badge.badge-danger Rejected
                         if activity.members.length == activity.maxMember
                             .badge.badge-pill.badge-danger Đã đủ thành viên 
-                        if moment(activity.registerEnd, "MM/DD/YYYY").isBefore(moment())
+                        if moment(activity.registerEnd, "DD/MM/YYYY HH:mm").isBefore(moment())
                             .badge.badge-pill.badge-danger Đã hết hạn đăng ký
                         p.card-text.mb-0
                             i.far.fa-clock.pr-2
@@ -60,6 +60,13 @@ block content
                             strong
                                 | Số ngày công tác xã hội (tối đa): 
                             = activity.benefit
+                        p.card-text.mb-0
+                            i.far.fa-map.pr-2
+                            strong
+                                | Người quản lý: 
+                            each sp in activity.superVisor
+                                a(href="/profile?code="+sp.code) #{sp.fullName} 
+
                     .m-auto
                     a(href="/profile?code="+activity.host.code, style="height: 50px")
                         img.float-right.rounded-circle(height="50px", width="50px", src=activity.host.avatar, style="object-fit:cover" alt="avatar.jpg")

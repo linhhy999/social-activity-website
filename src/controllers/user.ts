@@ -29,7 +29,7 @@ export let profile = async (req: Request, res: Response) => {
             role: user.role,
             socialdays: user.socialdays
         };
-        if (req.user.role == 1 || req.user.role == 10) {
+        if (req.user.role == 1 || req.user.role == 10 || userinfo.role == 1 || userinfo.role == 10) {
             userinfo = { ...userinfo, ...{ phone: user.phone } };
             userinfo = { ...userinfo, ...{ email: user.email } };
         }
@@ -37,7 +37,6 @@ export let profile = async (req: Request, res: Response) => {
         return res.render("otherprofile", {
             otheruser: userinfo,
             user: req.user,
-            accessible: req.user.role,
             activity: activity,
         });
     }
