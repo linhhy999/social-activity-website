@@ -118,7 +118,6 @@ app.post("/comment/:id", Guard.isLogin, Guard.isFill, activityController.postCom
 app.get("/search/", Guard.isLogin, Guard.isFill, activityController.searchActivity);
 app.post("/search/", Guard.isLogin, Guard.isFill, activityController.searchAdvancedActivity);
 
-
 app.get("/intro", homeController.intro);
 app.get("/auth/google", passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/userinfo.email"] }));
 app.get("/auth/google/callback", passportConfig.isGoogleAuthenticated, homeController.login);
